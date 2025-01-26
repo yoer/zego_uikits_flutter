@@ -1,0 +1,6 @@
+###
+dependency_overrides:
+  chewie: 1.8.5
+  flutter_dtmf:
+    path: ./3rdparty/flutter_dtmf-3.0.2
+  file_picker: 8.1.4

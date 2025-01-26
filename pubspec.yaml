@@ -1,0 +1,74 @@
+name: zego_uikits_demo
+description: "demo of uikits"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  zego_uikit: ^2.28.4
+  zego_uikit_signaling_plugin: ^2.8.8
+  zego_uikit_beauty_plugin: ^1.7.6
+  zego_uikit_prebuilt_video_conference: ^2.9.8
+
+  zego_uikit_prebuilt_call: ^4.17.0-beta.6
+  zego_uikit_prebuilt_live_audio_room: ^3.16.0-beta.7
+  zego_uikit_prebuilt_live_streaming: ^3.14.0-beta.7
+  zego_zimkit: ^1.19.0-beta.4
+
+  cupertino_icons: ^1.0.8
+  go_router: ^14.6.2
+  circle_nav_bar: ^2.1.1
+  flutter_screenutil: ^5.9.3
+  device_info_plus: any
+  shared_preferences: ^2.2.3
+  fluttertoast: ^8.2.6
+  cached_network_image: ^3.3.0
+  connectivity_plus: ^6.1.0
+  introduction_screen: ^3.1.14
+  easy_localization: ^3.0.7
+  easy_localization_loader: ^2.0.2
+  flutter_local_notifications: ^18.0.1
+  flutter_email_sender: ^6.0.3
+  url_launcher: ^6.3.1
+  lottie: ^3.1.2
+  circular_countdown: ^2.1.0
+  cloud_firestore: ^5.6.1
+  firebase_core: ^3.10.0
+  firebase_auth: ^5.4.0
+  flutter_slidable: ^3.1.2
+  flutter_dialpad:
+    path: ./3rdparty/flutter_dialpad-1.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.2
+  import_sorter: ^4.6.0  # run 'flutter pub run import_sorter:main'
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/csv/
+    - assets/icon/
+    - assets/images/
+    - assets/call/
+    - assets/live_streaming/
+    - assets/audio_room/
+    - assets/conference/
+    - assets/chat/
+    - assets/json/
+    - assets/lottie/gifts/
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21

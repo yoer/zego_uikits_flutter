@@ -1,0 +1,259 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
+import 'package:zego_uikits_demo/common/toast.dart';
+import 'package:zego_uikits_demo/firestore/defines.dart';
+import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
+
+import '../../../common/avatar.dart';
+import '../../../data/assets.dart';
+import '../../../data/translations.dart';
+import '../../../data/user.dart';
+import '../../../firestore/kits_service.dart';
+import '../../../firestore/user_doc.dart';
+
+class LiveStreamingPKHostList extends StatefulWidget {
+  const LiveStreamingPKHostList({
+    super.key,
+    required this.stateNotifier,
+  });
+  final ValueNotifier<ZegoLiveStreamingState> stateNotifier;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _LiveStreamingPKForegroundState();
+  }
+}
+
+class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
+  bool autoAccept = false;
+  @override
+  void initState() {
+    super.initState();
+
+    autoAccept = LiveStreamingCache().pkAutoAccept;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.r,
+        vertical: 20.r,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraint) {
+          return ValueListenableBuilder<Map<String, UserDoc>>(
+            valueListenable: KitsFirebaseService().userTable.cacheNotifier,
+            builder: (context, userDocsMap, _) {
+              final currentLoginUser = UserService().loginUserNotifier.value;
+
+              var userDocs = KitsFirebaseService().queryRoomActiveUsersWithType(
+                roomType: RoomType.liveStreamingPK,
+                isHost: true,
+              );
+              userDocs.removeWhere((e) => e.id == currentLoginUser?.id);
+              userDocs.sort((left, right) => left.id.compareTo(right.id));
+
+              return userDocs.isEmpty
+                  ? hostEmptyTips()
+                  : Column(
+                      children: [
+                        SizedBox(
+                          height: 50.r,
+                          child: controls(),
+                        ),
+                        SizedBox(
+                          height: 5.r,
+                        ),
+                        SizedBox(
+                          height: constraint.maxHeight - 50.r - 5.r,
+                          child: ListView.builder(
+                            itemCount: userDocs.length,
+                            itemBuilder: (context, index) {
+                              final userDoc = userDocs[index];
+                              return hostItem(userDoc, index);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget controls() {
+    final currentLoginUser = UserService().loginUserNotifier.value;
+
+    return ValueListenableBuilder(
+      valueListenable: widget.stateNotifier,
+      builder: (context, state, _) {
+        return state == ZegoLiveStreamingState.inPKBattle
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (currentLoginUser?.id ==
+                      ZegoUIKitPrebuiltLiveStreamingController()
+                          .pk
+                          .currentInitiatorID)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.red,
+                      ),
+                      child: Text(Translations.liveStreaming.endPK),
+                      onPressed: () {
+                        ZegoUIKitPrebuiltLiveStreamingController().pk.stop();
+                      },
+                    ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                    ),
+                    child: Text(Translations.liveStreaming.quitPK),
+                    onPressed: () {
+                      ZegoUIKitPrebuiltLiveStreamingController().pk.quit();
+                    },
+                  ),
+                ],
+              )
+            : const SizedBox();
+      },
+    );
+  }
+
+  Widget hostEmptyTips() {
+    return Center(
+      child: Text(
+        Translations.liveStreaming.pkHostEmptyTips,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 30.r,
+        ),
+      ),
+    );
+  }
+
+  Widget hostItem(
+    UserDoc userDoc,
+    int index,
+  ) {
+    final iconSize = 100.r;
+
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20.r),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: iconSize,
+            height: iconSize,
+            child: CircleAvatar(
+              child: avatar(userDoc.id),
+            ),
+          ),
+          SizedBox(width: 5.r),
+          Text(
+            userDoc.name,
+            style: TextStyle(
+              color: userDoc.isLogin ? Colors.black : Colors.grey,
+              fontSize: 30.r,
+            ),
+          ),
+          const Expanded(child: SizedBox()),
+          muteButton(userDoc.id),
+          SizedBox(width: 5.r),
+          pkWidget(userDoc),
+        ],
+      ),
+    );
+  }
+
+  Widget muteButton(String hostID) {
+    final currentLoginUser = UserService().loginUserNotifier.value;
+
+    return currentLoginUser?.id == hostID
+        ? const SizedBox()
+        : ValueListenableBuilder(
+            valueListenable: widget.stateNotifier,
+            builder: (context, state, _) {
+              return ValueListenableBuilder<List<String>>(
+                valueListenable: ZegoUIKitPrebuiltLiveStreamingController()
+                    .pk
+                    .mutedUsersNotifier,
+                builder: (context, muteUsers, _) {
+                  return state == ZegoLiveStreamingState.inPKBattle
+                      ? GestureDetector(
+                          onTap: () {
+                            ZegoUIKitPrebuiltLiveStreamingController()
+                                .pk
+                                .muteAudios(
+                              targetHostIDs: [hostID],
+                              isMute: !muteUsers.contains(hostID),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(20.r),
+                            child: Icon(
+                              muteUsers.contains(hostID)
+                                  ? Icons.volume_off
+                                  : Icons.volume_up,
+                              color: Colors.black,
+                            ),
+                          ),
+                        )
+                      : const SizedBox();
+                },
+              );
+            },
+          );
+  }
+
+  Widget pkWidget(
+    UserDoc userDoc,
+  ) {
+    return userDoc.pkState == LiveStreamingPKState.idle
+        ? ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+            ),
+            child: Text(Translations.liveStreaming.invitePK),
+            onPressed: () {
+              ZegoUIKitPrebuiltLiveStreamingController().pk.sendRequest(
+                targetHostIDs: [userDoc.id],
+                isAutoAccept: autoAccept,
+              ).then(
+                (result) {
+                  if (result.error != null) {
+                    showFailedToast(
+                      '${Translations.liveStreaming.invitePK}:${result.error.toString()}',
+                    );
+                  }
+                },
+              );
+            },
+          )
+        : Stack(
+            children: [
+              Image.asset(
+                userDoc.pkState == LiveStreamingPKState.waiting
+                    ? MyIcons.waiting
+                    : MyIcons.inPK,
+                width: 66.r,
+                height: 66.r,
+                // color: Colors.white,
+              ),
+              CircularProgressIndicator(
+                color: userDoc.pkState == LiveStreamingPKState.waiting
+                    ? Colors.yellow
+                    : Colors.red,
+              ),
+            ],
+          );
+  }
+}
