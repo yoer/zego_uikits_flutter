@@ -52,36 +52,44 @@ class CallInvitationDialPadState extends State<CallInvitationDialPad> {
   @override
   Widget build(BuildContext context) {
     final topBarHeight = 80.r;
-    return Stack(
-      children: [
-        Positioned(
-          left: 0,
-          right: 0,
-          top: topBarHeight,
-          bottom: 0,
-          child: dialPad(),
-        ),
-        Positioned(
-          child: SizedBox(
-            height: topBarHeight,
-            child: listview(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SizedBox(
+          height: constraints.maxHeight,
+          width: constraints.maxWidth,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: topBarHeight,
+                bottom: 0,
+                child: dialPad(),
+              ),
+              Positioned(
+                child: SizedBox(
+                  height: topBarHeight,
+                  child: listview(),
+                ),
+              ),
+              Positioned(
+                top: 10.r,
+                right: 10.r,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.help,
+                    color: Colors.yellow,
+                    size: 60.r,
+                  ),
+                  onPressed: () {
+                    showInfoToast('Press \'#\' to continue add caller');
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-        Positioned(
-          top: 10.r,
-          right: 10.r,
-          child: IconButton(
-            icon: Icon(
-              Icons.help,
-              color: Colors.yellow,
-              size: 60.r,
-            ),
-            onPressed: () {
-              showInfoToast('Press \'#\' to continue add caller');
-            },
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 

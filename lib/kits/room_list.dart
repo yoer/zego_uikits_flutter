@@ -155,58 +155,60 @@ class _RoomListState extends State<RoomList> {
 
   Widget startButton(String roomID) {
     return ValueListenableBuilder<bool>(
-        valueListenable: inRoomNotifier,
-        builder: (context, isInRoom, _) {
-          return ElevatedButton(
-            onPressed: isInRoom
-                ? null
-                : () {
-                    widget.onStart?.call(roomID);
-                  },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(
-                vertical: 20.r,
-                horizontal: 20.r,
-              ), // 设置高度和宽度
+      valueListenable: inRoomNotifier,
+      builder: (context, isInRoom, _) {
+        return ElevatedButton(
+          onPressed: isInRoom
+              ? null
+              : () {
+                  widget.onStart?.call(roomID);
+                },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
-            child: Text(
-              Translations.tips.start,
-              style: TextStyle(color: Colors.white, fontSize: 20.r),
+            padding: EdgeInsets.symmetric(
+              vertical: 20.r,
+              horizontal: 20.r,
             ),
-          );
-        });
+          ),
+          child: Text(
+            Translations.tips.start,
+            style: TextStyle(color: Colors.white, fontSize: 20.r),
+          ),
+        );
+      },
+    );
   }
 
   Widget joinButton(String roomID) {
     return ValueListenableBuilder<bool>(
-        valueListenable: inRoomNotifier,
-        builder: (context, isInRoom, _) {
-          return ElevatedButton(
-            onPressed: isInRoom
-                ? null
-                : () {
-                    widget.onJoin?.call(roomID);
-                  },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(
-                vertical: 20.r,
-                horizontal: 20.r,
-              ), // 设置高度和宽度
+      valueListenable: inRoomNotifier,
+      builder: (context, isInRoom, _) {
+        return ElevatedButton(
+          onPressed: isInRoom
+              ? null
+              : () {
+                  widget.onJoin?.call(roomID);
+                },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
-            child: Text(
-              Translations.tips.join,
-              style: TextStyle(color: Colors.white, fontSize: 20.r),
-            ),
-          );
-        });
+            padding: EdgeInsets.symmetric(
+              vertical: 20.r,
+              horizontal: 20.r,
+            ), // 设置高度和宽度
+          ),
+          child: Text(
+            Translations.tips.join,
+            style: TextStyle(color: Colors.white, fontSize: 20.r),
+          ),
+        );
+      },
+    );
   }
 
   void onRoomStateUpdated() {
