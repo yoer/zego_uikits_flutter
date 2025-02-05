@@ -17,6 +17,7 @@
 		41BA3E4E2D1C224A008CF9A3 /* ZegoExpressEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41BA3E4D2D1C224A008CF9A3 /* ZegoExpressEngine.xcframework */; };
 		41D4CC622D18542200AFE201 /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D4CC612D18542200AFE201 /* CallKit.framework */; };
 		41D4CC642D18542A00AFE201 /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D4CC632D18542A00AFE201 /* PushKit.framework */; };
+		6D1FB4CF13ECB39B9B04FC18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E5928C2AB6CA1281963F029 /* GoogleService-Info.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
+		3E5928C2AB6CA1281963F029 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		410AFE3E2D26999B0056E111 /* BeautyResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BeautyResources; path = ../../android/app/src/main/assets/BeautyResources; sourceTree = "<group>"; };
 		41BA3E3E2D1C21D6008CF9A3 /* ScreenShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ScreenShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BA3E3F2D1C21D6008CF9A3 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
@@ -196,6 +198,7 @@
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				7F27D7E2AE225ED63C91E024 /* Pods */,
 				39E79101F5A42E87D10906D6 /* Frameworks */,
+				3E5928C2AB6CA1281963F029 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -358,6 +361,7 @@
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				6D1FB4CF13ECB39B9B04FC18 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

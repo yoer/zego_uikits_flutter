@@ -12,6 +12,8 @@ import 'package:zego_uikits_demo/firestore/defines.dart';
 import 'package:zego_uikits_demo/firestore/user_doc.dart';
 import 'package:zego_uikits_demo/firestore/user_table.dart';
 
+import 'firebase_options.dart';
+
 class KitsFirebaseService {
   bool _init = false;
   UserTable? _userTable;
@@ -34,7 +36,9 @@ class KitsFirebaseService {
 
     _init = true;
 
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
     userTable.init();
 

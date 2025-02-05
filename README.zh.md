@@ -42,6 +42,7 @@ demo中介绍了五个kit的基本功能，通过firestore简单的将虚拟用�
        }
        ```
    - 下载你自己的google services文件，然后分别替换./android/app/google-services.json和./ios/Runner/GoogleService-Info.plist
+   - 按照[将Firebase添加到您的Flutter应用上](https://firebase.google.com/docs/flutter/setup?platform=ios)的说明进行操作。
 2. AppID/AppSign of Zego
    Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com/) , get the appID and appSign of your project.
    然后在demo的系统设置界面中设置

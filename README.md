@@ -42,6 +42,7 @@ Before using, you need to register Firestore and ZEGO AppID/AppSign.
        }
        ```
    - Download your own Google services file, then replace `./android/app/google-services.json` and `./ios/Runner/GoogleService-Info.plist` respectively.
+   - follow the instructions on [Add Firebase to your Flutter app](https://firebase.google.com/docs/flutter/setup?platform=ios)
 2. AppID/AppSign of Zego
    Go to [ZEGOCLOUD Admin Console](https://console.zegocloud.com/), get the appID and appSign of your project.
    Then set it in the demo's system settings interface.

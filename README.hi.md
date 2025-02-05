@@ -42,6 +42,7 @@ zego-uikits का डेमो
        }
        ```
    - अपना Google सेवाएँ फ़ाइल डाउनलोड करें, फिर `./android/app/google-services.json` और `./ios/Runner/GoogleService-Info.plist` को क्रमशः बदलें।
+   - [अपने Flutter ऐप में Firebase जोड़ने के लिए](https://firebase.google.com/docs/flutter/setup?platform=ios) दिए गए निर्देशों का पालन करें।
 2. Zego का AppID/AppSign
    [ZEGOCLOUD Admin Console](https://console.zegocloud.com/) पर जाएं, अपने प्रोजेक्ट का appID और appSign प्राप्त करें।
    फिर इसे डेमो के सिस्टम सेटिंग्स इंटरफ़ेस में सेट करें।
