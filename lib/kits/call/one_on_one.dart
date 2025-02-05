@@ -48,7 +48,7 @@ class _OneOnOneCallPageState extends State<OneOnOneCallPage> {
           userName: user.name,
           roomID: 'call_1v1_$callID',
           isGroup: false,
-          isVideo: true,
+          isVideo: CallCache().turnOnCameraWhenJoining,
         ),
       ),
     );

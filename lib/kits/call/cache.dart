@@ -184,6 +184,9 @@ class CallCache {
   bool _supportPIP = true;
   bool _supportAdvanceBeauty = true;
   bool _videoAspectFill = true;
+  bool _turnOnCameraWhenJoining = true;
+  bool _turnOnMicrophoneWhenJoining = true;
+  bool _useSpeakerWhenJoining = true;
 
   bool _durationVisible = true;
   bool _durationAutoHangUp = false;
@@ -222,6 +225,33 @@ class CallCache {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_supportVideoModeKey, value);
+    });
+  }
+
+  bool get turnOnCameraWhenJoining => _turnOnCameraWhenJoining;
+  set turnOnCameraWhenJoining(bool value) {
+    _turnOnCameraWhenJoining = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_turnOnCameraWhenJoiningKey, value);
+    });
+  }
+
+  bool get turnOnMicrophoneWhenJoining => _turnOnMicrophoneWhenJoining;
+  set turnOnMicrophoneWhenJoining(bool value) {
+    _turnOnMicrophoneWhenJoining = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_turnOnMicrophoneWhenJoiningKey, value);
+    });
+  }
+
+  bool get useSpeakerWhenJoining => _useSpeakerWhenJoining;
+  set useSpeakerWhenJoining(bool value) {
+    _useSpeakerWhenJoining = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_useSpeakerWhenJoiningKey, value);
     });
   }
 
@@ -281,12 +311,19 @@ class CallCache {
     _supportAdvanceBeauty = true;
     _videoAspectFill = true;
 
+    _turnOnCameraWhenJoining = true;
+    _turnOnMicrophoneWhenJoining = true;
+    _useSpeakerWhenJoining = true;
+
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheRoomIDListKey);
     prefs.remove(_supportScreenSharingKey);
     prefs.remove(_supportPIPKey);
     prefs.remove(_supportAdvanceBeautyKey);
     prefs.remove(_supportVideoModeKey);
+    prefs.remove(_turnOnCameraWhenJoiningKey);
+    prefs.remove(_turnOnMicrophoneWhenJoiningKey);
+    prefs.remove(_useSpeakerWhenJoiningKey);
 
     invitation.clear();
   }
@@ -316,6 +353,13 @@ class CallCache {
         prefs.get(_supportAdvanceBeautyKey) as bool? ?? true;
     _videoAspectFill = prefs.get(_supportVideoModeKey) as bool? ?? true;
 
+    _turnOnCameraWhenJoining =
+        prefs.get(_turnOnCameraWhenJoiningKey) as bool? ?? true;
+    _turnOnMicrophoneWhenJoining =
+        prefs.get(_turnOnMicrophoneWhenJoiningKey) as bool? ?? true;
+    _useSpeakerWhenJoining =
+        prefs.get(_useSpeakerWhenJoiningKey) as bool? ?? true;
+
     _durationVisible = prefs.get(_supportDurationVisibleKey) as bool? ?? true;
     _durationAutoHangUp =
         prefs.get(_supportDurationAutoHangUpKey) as bool? ?? false;
@@ -332,7 +376,12 @@ class CallCache {
   final String _supportPIPKey = 'cache_call_pip';
   final String _supportAdvanceBeautyKey = 'cache_call_advance_beauty';
   final String _supportVideoModeKey = 'cache_call_video_mode';
-
+  final String _turnOnCameraWhenJoiningKey =
+      'cache_call_turn_on_camera_when_joining';
+  final String _turnOnMicrophoneWhenJoiningKey =
+      'cache_call_turn_on_mic_when_joining';
+  final String _useSpeakerWhenJoiningKey =
+      'cache_call_use_speaker_when_joining';
   final String _supportDurationVisibleKey = 'cache_call_duration_visible';
   final String _supportDurationAutoHangUpKey =
       'cache_call_duration_auto_hangup';

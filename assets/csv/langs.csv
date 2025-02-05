@@ -68,6 +68,9 @@ settings.video_aspect_fill,Video Aspect Fill,视频等比填充,वीडिय�
 settings.audio_video,Audio & Video,音视频,ऑडियो और वीडियो
 settings.show_mic_state,Show Microphone Icon,显示麦克风图标,माइक्रोफोन आइकन दिखाएँ
 settings.show_user_name,Show User Name,显示用户名,उपयोगकर्ता नाम दिखाएँ
+settings.turn_on_camera_when_joining,Turn on camera when joining,开启摄像头进入,जुड़ते समय कैमरा चालू करें
+settings.turn_on_mic_when_joining,Turn on mic when joining,开启麦克风进入,जुड़ते समय माइक्रोफोन चालू करें
+settings.use_speaker_when_joining,Use speaker when joining,开启扬声器进入,जुड़ते समय स्पीकर का उपयोग करें
 settings.duration,"Duration","通话时长","काल की अवधि"
 settings.duration.auto_hang_up,"Auto Hang Up","自动挂断","स्वचालित हैंड अप"
 settings.duration.seconds_tips,"{} seconds remaining","剩余 {} 秒","{} सेकंड शेष"
@@ -119,7 +122,8 @@ live.media_sharing.title,"Media Sharing","媒体共享","मीडिया स�
 call.invitation.title,"Invitation",呼叫邀请,"आमंत्रण"
 call.one_on_one.title,"One on One",一对一通话,"एक-से-एक"
 call.group.title,"Group",多人通话,"समूह"
-call.contacts_empty_tips,"Contacts are empty, invite more people to use it.","联系人为空，去邀请更多的人使用吧","संपर्क खाली हैं, अधिक लोगों को उपयोग के लिए आमंत्रित करें।"
+call.contacts.title,"Contacts",联系人,संपर्क
+call.contacts.empty_tips,"Contacts are empty, invite more people to use it.","联系人为空，去邀请更多的人使用吧","संपर्क खाली हैं, अधिक लोगों को उपयोग के लिए आमंत्रित करें।"
 chat.title,"Chat",聊天,"चैट"
 chat.add_member,"Add Member",添加成员,"सदस्य जोड़ें"
 chat.remove_member,"Remove Member",移除成员,"सदस्य हटाएँ"

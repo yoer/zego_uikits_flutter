@@ -87,6 +87,33 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                     });
                   },
                 ),
+                settingsCheckBox(
+                  title: Translations.settings.turnOnCameraWhenJoining,
+                  value: CallCache().turnOnCameraWhenJoining,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().turnOnCameraWhenJoining = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.turnOnMicrophoneWhenJoining,
+                  value: CallCache().turnOnMicrophoneWhenJoining,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().turnOnMicrophoneWhenJoining = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.useSpeakerWhenJoining,
+                  value: CallCache().useSpeakerWhenJoining,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().useSpeakerWhenJoining = value ?? true;
+                    });
+                  },
+                ),
               ],
             ),
             settingsGroup(

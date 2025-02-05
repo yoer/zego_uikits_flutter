@@ -207,6 +207,7 @@ class HomePageState extends State<HomePage> {
       child: GestureDetector(
         onTap: () {
           openBottomSheet(
+            title: Translations.call.contactsTitle,
             context: context,
             child: Contact(
               pageController: pageController,

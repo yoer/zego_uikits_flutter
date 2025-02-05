@@ -122,6 +122,11 @@ class TranslationsSettings {
   String get audioVideo => tr('${base}audio_video');
   String get showMicState => tr('${base}show_mic_state');
   String get showUserName => tr('${base}show_user_name');
+  String get turnOnCameraWhenJoining =>
+      tr('${base}turn_on_camera_when_joining');
+  String get turnOnMicrophoneWhenJoining =>
+      tr('${base}turn_on_mic_when_joining');
+  String get useSpeakerWhenJoining => tr('${base}use_speaker_when_joining');
 
   String get callListId => tr('${base}call_list_id');
   String get invitationAbout => tr('${base}invitation_about');
@@ -210,7 +215,8 @@ class TranslationsCall {
   String get invitationTitle => tr('${base}invitation.title');
   String get oneOnOneTitle => tr('${base}one_on_one.title');
   String get groupTitle => tr('${base}group.title');
-  String get contactsEmptyTips => tr('${base}contacts_empty_tips');
+  String get contactsTitle => tr('${base}contacts.title');
+  String get contactsEmptyTips => tr('${base}contacts.empty_tips');
 }
 
 class TranslationsConference {

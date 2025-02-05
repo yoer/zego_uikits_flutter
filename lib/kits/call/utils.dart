@@ -324,11 +324,17 @@ ZegoUIKitPrebuiltCallConfig callConfig({
       },
     );
 
-    config.topMenuBar.extendButtons.add(sendCallingInvitationButton);
+    config.topMenuBar.extendButtons = [
+      ...config.topMenuBar.extendButtons,
+      sendCallingInvitationButton,
+    ];
   }
 
   /// todo bug
   config.pip.enableWhenBackground = false;
+
+  ///  beta config
+  config.pip.iOS.support = CallCache().supportPIP;
   if (CallCache().supportPIP) {
     config.topMenuBar.buttons.add(
       ZegoCallMenuBarButtonName.pipButton,
@@ -336,9 +342,6 @@ ZegoUIKitPrebuiltCallConfig callConfig({
   }
 
   config.translationText = CallInnerText.current(context.locale);
-
-  ///  beta config
-  config.pip.iOS.support = CallCache().supportPIP;
 
   return config;
 }
