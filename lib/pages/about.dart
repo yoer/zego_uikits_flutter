@@ -60,45 +60,31 @@ class _AboutsPagePageState extends State<AboutsPage> {
           TableCell(child: Center(child: Text('Kit'))),
           TableCell(child: Center(child: Text('Version'))),
         ]),
-
-        /// beta api
-        // TableRow(children: [
-        //   const TableCell(child: Center(child: Text('Call'))),
-        //   TableCell(
-        //     child: Center(
-        //       child: Text(ZegoUIKitPrebuiltCallController().version),
-        //     ),
-        //   ),
-        // ]),
-        // TableRow(children: [
-        //   const TableCell(child: Center(child: Text('LiveAudioRoom'))),
-        //   TableCell(
-        //     child: Center(
-        //       child: Text(ZegoUIKitPrebuiltLiveAudioRoomController().version),
-        //     ),
-        //   ),
-        // ]),
-        // TableRow(children: [
-        //   const TableCell(child: Center(child: Text('LiveStreaming'))),
-        //   TableCell(
-        //     child: Center(
-        //       child: Text(ZegoUIKitPrebuiltLiveStreamingController().version),
-        //     ),
-        //   ),
-        // ]),
-        // TableRow(children: [
-        //   const TableCell(child: Center(child: Text('VideoConference'))),
-        //   TableCell(
-        //     child: Center(
-        //       child: Text(ZegoUIKitPrebuiltVideoConferenceController().version),
-        //     ),
-        //   ),
-        // ]),
-        TableRow(children: [
-          const TableCell(child: Center(child: Text('ZIMKit'))),
-          TableCell(child: Center(child: Text(ZIMKit().getVersion()))),
-        ]),
+        version(
+          'Call',
+          ZegoUIKitPrebuiltCallController().version,
+        ),
+        version(
+          'LiveAudioRoom',
+          ZegoUIKitPrebuiltLiveAudioRoomController().version,
+        ),
+        version(
+          'LiveStreaming',
+          ZegoUIKitPrebuiltLiveStreamingController().version,
+        ),
+        version(
+          'VideoConference',
+          ZegoUIKitPrebuiltVideoConferenceController().version,
+        ),
+        version('ZIMKit', ZIMKit().getVersion()),
       ],
     );
+  }
+
+  TableRow version(String name, String version) {
+    return TableRow(children: [
+      TableCell(child: Center(child: Text(name))),
+      TableCell(child: Center(child: Text(version))),
+    ]);
   }
 }

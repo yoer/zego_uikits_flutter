@@ -52,6 +52,8 @@ settings.screen_sharing,"Screen Sharing",屏幕分享,"स्क्रीन स
 settings.media_sharing,"Media Sharing",多媒体分享,"मीडिया साझा करना"
 settings.auto_play,"Auto Play",自动播放,"स्वचालित चलाना"
 settings.pip,PIP,画中画,"PIP"
+settings.pk,PK,PK,PK
+settings.pk.auto_accept,"Auto Accept",自动接受,"स्वचालित रूप से स्वीकार करें।"
 settings.advance_beauty,"Advance Beauty",高级美颜,"उन्नत सुंदरता"
 settings.invitation_about,"Invitation Abouts",邀请相关,"आमंत्रण के बारे में"
 settings.invitation_timeout,"Timeout(seconds)",超时时间(秒),"टाइमआउट (सेकंड)"

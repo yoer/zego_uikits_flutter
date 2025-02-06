@@ -14,9 +14,9 @@ dependencies:
   zego_uikit: ^2.28.4
   zego_uikit_signaling_plugin: ^2.8.8
   zego_uikit_beauty_plugin: ^1.7.6
-  zego_uikit_prebuilt_video_conference: ^2.9.8
+  zego_uikit_prebuilt_video_conference: ^2.9.9
 
-  zego_uikit_prebuilt_call: ^4.17.0-beta.6
+  zego_uikit_prebuilt_call: ^4.17.0-beta.8
   zego_uikit_prebuilt_live_audio_room: ^3.16.0-beta.7
   zego_uikit_prebuilt_live_streaming: ^3.14.0-beta.7
   zego_zimkit: ^1.19.0-beta.4
@@ -39,7 +39,7 @@ dependencies:
   lottie: ^3.1.2
   circular_countdown: ^2.1.0
   cloud_firestore: ^5.6.1
-  firebase_core: ^3.10.0
+  firebase_core: ^3.10.1
   firebase_auth: ^5.4.0
   flutter_slidable: ^3.1.2
   flutter_dialpad:
