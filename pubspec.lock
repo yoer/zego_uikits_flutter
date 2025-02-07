@@ -154,7 +154,7 @@ packages:
     source: hosted
     version: "2.0.3"
   chewie:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: chewie
       sha256: "335df378c025588aef400c704bd71f0daea479d4cd57c471c88c056c1144e7cd"
@@ -1489,13 +1489,13 @@ packages:
     source: hosted
     version: "1.0.20"
   zego_express_engine:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: zego_express_engine
-      sha256: "202bd2faf95ce5c85ec632014935810391c9430927a7d8760404e60a004b8535"
+      sha256: "1af0359534c684cdf0ff2736b646ca9825cdb042b07c2fabc1fbbd148596b0ff"
       url: "https://pub.dev"
     source: hosted
-    version: "3.18.1"
+    version: "3.19.0"
   zego_plugin_adapter:
     dependency: transitive
     description:
