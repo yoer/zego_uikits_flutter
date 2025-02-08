@@ -42,15 +42,14 @@ Future<bool> initCallInvitation() async {
       ],
       config: ZegoCallInvitationConfig(
         /// beta config
-        // pip: ZegoCallInvitationPIPConfig(
-        //   iOS: ZegoCallInvitationPIPIOSConfig(
-        //     support: CallCache().supportPIP,
-        //   ),
-        // ),
-        // offline: ZegoCallInvitationOfflineConfig(
-        //   autoEnterAcceptedOfflineCall: false,
-        // ),
-        //
+        pip: ZegoCallInvitationPIPConfig(
+          iOS: ZegoCallInvitationPIPIOSConfig(
+            support: CallCache().supportPIP,
+          ),
+        ),
+        offline: ZegoCallInvitationOfflineConfig(
+          autoEnterAcceptedOfflineCall: false,
+        ),
         inCalling: ZegoCallInvitationInCallingConfig(
           canInvitingInCalling: CallCache().invitation.canInvitingInCalling,
           onlyInitiatorCanInvite:

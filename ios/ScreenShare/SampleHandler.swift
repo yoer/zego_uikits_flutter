@@ -29,6 +29,8 @@ class SampleHandler: RPBroadcastSampleHandler, ZegoReplayKitExtHandler {
     }
     
     override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        ZegoReplayKitExt.sharedInstance().send(sampleBuffer, with: sampleBufferType)
+
         switch sampleBufferType {
         case RPSampleBufferType.video:
             // Handle video sample buffer
