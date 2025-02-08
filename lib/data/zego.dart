@@ -65,6 +65,10 @@ class ZegoSDKer {
     }
   }
 
+  void uninit() {
+    isInit = false;
+  }
+
   ZegoSDKer._internal();
 
   factory ZegoSDKer() => _instance;
