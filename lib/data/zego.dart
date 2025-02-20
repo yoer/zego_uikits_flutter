@@ -61,7 +61,7 @@ class ZegoSDKer {
       );
       await initCallInvitation();
     } catch (e) {
-      debugPrint('init sdk on login failed:$e');
+      debugPrint('ERROR!!!! init sdk on login failed:$e');
     }
   }
 

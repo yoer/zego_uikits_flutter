@@ -59,8 +59,6 @@ class CallInvitationInnerText {
     innerText.missedGroupAudioCallNotificationContent = "Group Audio Call";
     innerText.missedVideoCallNotificationContent = "Video Call";
     innerText.missedAudioCallNotificationContent = "Audio Call";
-    innerText.systemAlertWindowConfirmDialogSubTitle =
-        "Display over other apps";
     innerText.permissionConfirmDialogTitle = 'Allow $param_1 to';
     innerText.permissionConfirmDialogAllowButton = "Allow";
     innerText.permissionConfirmDialogDenyButton = "Deny";
@@ -103,7 +101,6 @@ class CallInvitationInnerText {
     innerText.missedGroupAudioCallNotificationContent = "群组音频通话";
     innerText.missedVideoCallNotificationContent = "视频通话";
     innerText.missedAudioCallNotificationContent = "音频通话";
-    innerText.systemAlertWindowConfirmDialogSubTitle = "在其他应用上方显示";
     innerText.permissionConfirmDialogTitle = '允许 $param_1 进行';
     innerText.permissionConfirmDialogAllowButton = "允许";
     innerText.permissionConfirmDialogDenyButton = "拒绝";
@@ -147,8 +144,6 @@ class CallInvitationInnerText {
     innerText.missedGroupAudioCallNotificationContent = "समूह ऑडियो कॉल";
     innerText.missedVideoCallNotificationContent = "वीडियो कॉल";
     innerText.missedAudioCallNotificationContent = "ऑडियो कॉल";
-    innerText.systemAlertWindowConfirmDialogSubTitle =
-        "अन्य ऐप्स पर प्रदर्शित करें";
     innerText.permissionConfirmDialogTitle = 'अनुमति दें $param_1 को';
     innerText.permissionConfirmDialogAllowButton = "अनुमति दें";
     innerText.permissionConfirmDialogDenyButton = "अस्वीकृत करें";

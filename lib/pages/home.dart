@@ -54,9 +54,8 @@ class HomePageState extends State<HomePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ZegoSDKer().init().then((_) {
-        /// beta api
         /// skip to call page page if app active by offline call
-        // ZegoUIKitPrebuiltCallInvitationService().enterAcceptedOfflineCall();
+        ZegoUIKitPrebuiltCallInvitationService().enterAcceptedOfflineCall();
 
         /// skip to offline conversation page if app active by offline chat
         ZIMKit().getOfflineConversationInfo().then((value) {

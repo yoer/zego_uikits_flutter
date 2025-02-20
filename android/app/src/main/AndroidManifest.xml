@@ -15,8 +15,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <!--for bring app to foreground from background in Android 10 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+<!--    &lt;!&ndash;for bring app to foreground from background in Android 10 &ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
