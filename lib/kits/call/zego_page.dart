@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/kits/call/utils.dart';
@@ -47,6 +48,11 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
         userName: widget.userName,
         callID: widget.roomID,
         config: config,
+        plugins: [
+          ...(CallCache().supportAdvanceBeauty
+              ? [ZegoUIKitBeautyPlugin()]
+              : []),
+        ],
       ),
     );
   }
@@ -57,6 +63,13 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
       isGroup: widget.isGroup,
       isVideo: widget.isVideo,
     );
+
+    if (CallCache().supportAdvanceBeauty) {
+      config.bottomMenuBar.buttons.add(
+        ZegoCallMenuBarButtonName.beautyEffectButton,
+      );
+    }
+
     return config;
   }
 }

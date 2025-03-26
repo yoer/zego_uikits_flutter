@@ -265,6 +265,12 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     };
   }
 
+  if (CallCache().supportAdvanceBeauty) {
+    config.bottomMenuBar.buttons.add(
+      ZegoCallMenuBarButtonName.beautyEffectButton,
+    );
+  }
+
   if (CallCache().supportScreenSharing) {
     config.layout = ZegoLayout.gallery(
       showScreenSharingFullscreenModeToggleButtonRules:
