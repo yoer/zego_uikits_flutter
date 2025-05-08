@@ -110,6 +110,12 @@ class CallInvitationDialPadState extends State<CallInvitationDialPad> {
 
         if (brokeKey == key) {
           if (callNumber.isNotEmpty) {
+            if (UserService().loginUserNotifier.value?.id == callNumber) {
+              /// local user number should ignore
+              showInfoToast('Do not enter local user id');
+              return false;
+            }
+
             callNumbersNotifier.value = [
               ...callNumbersNotifier.value,
               callNumber,
