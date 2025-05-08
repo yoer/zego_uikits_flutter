@@ -64,9 +64,14 @@ if (localPropertiesFile.exists()) {
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+    //Introduce Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+
+    // Add dependencies for Firebase SDK for Google Analytics and FCM.
+    // When using BoM, do not specify the version in the Firebase dependency
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging:23.2.1'
+    implementation 'im.zego:zpns-fcm:2.8.0' //ZPNs package for Google FCM push
 
     /// if annotation not found
     /// implementation 'androidx.annotation:annotation:1.7.0'
