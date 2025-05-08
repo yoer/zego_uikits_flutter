@@ -71,17 +71,21 @@ Future<bool> initCallInvitation() async {
           showFullScreen: true,
           fullScreenBackgroundAssetURL: CallAssets.offlineBackground,
           callChannel: ZegoCallAndroidNotificationChannelConfig(
-            channelName: "Call Notifications",
+            channelID: "call_invitation",
+            channelName: "Call Invitation",
             sound: "call",
             icon: "call",
+            vibrate: true,
           ),
           missedCallChannel: ZegoCallAndroidNotificationChannelConfig(
+            channelID: "missed_call",
             channelName: "Missed Call",
             sound: "missed_call",
             icon: "missed_call",
             vibrate: false,
           ),
           messageChannel: ZegoCallAndroidNotificationChannelConfig(
+            channelID: "zimkit_message",
             channelName: 'Chat Message',
             sound: 'message',
             icon: 'message',
