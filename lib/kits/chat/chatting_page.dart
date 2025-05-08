@@ -23,7 +23,7 @@ class DemoChattingMessageListPage extends StatefulWidget {
   });
 
   final String conversationID;
-  final ZIMConversationType conversationType;
+  final ZIMKitConversationType conversationType;
 
   @override
   State<DemoChattingMessageListPage> createState() =>
@@ -38,7 +38,7 @@ class _DemoChattingMessageListPageState
   @override
   void initState() {
     subscriptions = [
-      if (widget.conversationType == ZIMConversationType.group)
+      if (widget.conversationType == ZIMKitConversationType.group)
         ZIMKit()
             .getGroupStateChangedEventStream()
             .listen(onGroupStateChangedEvent)
@@ -109,7 +109,7 @@ class _DemoChattingMessageListPageState
         return const ColoredBox(color: Colors.white);
       },
       messageContentBuilder: (context, message, defaultWidget) {
-        if (message.type == ZIMMessageType.custom &&
+        if (message.type == ZIMKitMessageType.custom &&
             message.customContent!.type ==
                 DemoCustomMessageType.redEnvelope.index) {
           return RedEnvelopeMessage(message: message);

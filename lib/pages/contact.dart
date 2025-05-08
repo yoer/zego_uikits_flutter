@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
@@ -16,13 +18,11 @@ import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/firestore/kits_service.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
 import 'package:zego_uikits_demo/pages/utils/bottom_nav.dart';
-import 'package:zego_uikits_demo/pages/utils/router.dart';
-
-import '../data/assets.dart';
-import '../data/user.dart';
-import '../firestore/user_doc.dart';
-import '../kits/call/utils.dart';
-import '../kits/chat/chatting_page.dart';
+import 'package:zego_uikits_demo/data/assets.dart';
+import 'package:zego_uikits_demo/data/user.dart';
+import 'package:zego_uikits_demo/firestore/user_doc.dart';
+import 'package:zego_uikits_demo/kits/call/utils.dart';
+import 'package:zego_uikits_demo/kits/chat/chatting_page.dart';
 
 class Contact extends StatefulWidget {
   const Contact({

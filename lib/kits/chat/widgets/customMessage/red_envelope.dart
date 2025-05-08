@@ -21,7 +21,7 @@ void demoSendRedEnvelope(conversationID, conversationType) {
 }
 
 Widget demoSendRedEnvelopeButton(
-    String conversationID, ZIMConversationType conversationType) {
+    String conversationID, ZIMKitConversationType conversationType) {
   return IconButton(
     onPressed: () => demoSendRedEnvelope(conversationID, conversationType),
     icon: const Icon(Icons.attach_money),

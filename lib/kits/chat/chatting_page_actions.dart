@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
+import 'package:zego_zim/zego_zim.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
@@ -15,9 +17,9 @@ import 'widgets/default_dialogs.dart';
 List<Widget>? demoAppBarActions(
   BuildContext context,
   String conversationID,
-  ZIMConversationType type,
+  ZIMKitConversationType type,
 ) {
-  return type == ZIMConversationType.peer
+  return type == ZIMKitConversationType.peer
       ? peerChatCallButtons(context, conversationID, type)
       : [
           GroupPageCallButton(groupID: conversationID),
@@ -28,7 +30,7 @@ List<Widget>? demoAppBarActions(
 List<Widget> peerChatCallButtons(
   BuildContext context,
   String conversationID,
-  ZIMConversationType type,
+  ZIMKitConversationType type,
 ) {
   return [
     for (final isVideoCall in [true, false])
