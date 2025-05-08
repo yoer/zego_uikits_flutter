@@ -11,9 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-  zego_uikit: ^2.28.11
+  zego_zim: ^2.20.0+1
+
+  zego_uikit: ^2.28.14
   zego_uikit_signaling_plugin: ^2.8.10
   zego_uikit_beauty_plugin: ^1.7.6
+  zego_plugin_adapter: ^2.13.9
 
   zego_uikit_prebuilt_video_conference: ^2.9.9
   zego_uikit_prebuilt_call: ^4.17.0-beta.8
@@ -39,7 +42,7 @@ dependencies:
   lottie: ^3.1.2
   circular_countdown: ^2.1.0
   cloud_firestore: ^5.6.1
-  firebase_core: ^3.10.1
+  firebase_core: ^3.13.0
   firebase_auth: ^5.4.0
   flutter_slidable: ^3.1.2
   flutter_dialpad:
