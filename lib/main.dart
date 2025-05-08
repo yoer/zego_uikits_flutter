@@ -14,27 +14,32 @@ import 'app.dart';
 import 'data/translations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await KitsFirebaseService().init();
+    await KitsFirebaseService().init();
 
-  await EasyLocalization.ensureInitialized();
+    await EasyLocalization.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-  );
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+    );
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: [
-        MyLocale.enUS,
-        MyLocale.zhCN,
-        MyLocale.hiIN,
-      ],
-      path: 'assets/csv/langs.csv',
-      assetLoader: CsvAssetLoader(),
-      fallbackLocale: const Locale('en', 'US'),
-      child: const App(),
-    ),
-  );
+    runApp(
+      EasyLocalization(
+        supportedLocales: [
+          MyLocale.enUS,
+          MyLocale.zhCN,
+          MyLocale.hiIN,
+        ],
+        path: 'assets/csv/langs.csv',
+        assetLoader: CsvAssetLoader(),
+        fallbackLocale: const Locale('en', 'US'),
+        child: const App(),
+      ),
+    );
+  } catch (e, stack) {
+    print('Error during initialization: $e');
+    print('Stack trace: $stack');
+  }
 }
