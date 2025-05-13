@@ -12,6 +12,12 @@ import 'package:zego_uikits_demo/firestore/kits_service.dart';
 // Project imports:
 import 'app.dart';
 import 'data/translations.dart';
+import 'data/user.dart';
+import 'kits/audio_room/cache.dart';
+import 'kits/call/cache.dart';
+import 'kits/conference/cache.dart';
+import 'kits/live_streaming/cache.dart';
+import 'kits/live_streaming/gifts/service.dart';
 
 void main() async {
   try {
@@ -21,9 +27,13 @@ void main() async {
 
     await EasyLocalization.ensureInitialized();
 
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
-    );
+    await SettingsCache().load();
+    await AudioRoomCache().load();
+    await CallCache().load();
+    await LiveStreamingCache().load();
+    await ConferenceCache().load();
+    await GiftService().init();
+    await UserService().tryAutoLogin();
 
     runApp(
       EasyLocalization(

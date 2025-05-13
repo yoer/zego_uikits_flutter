@@ -14,6 +14,8 @@ import 'package:zego_uikits_demo/kits/call/cache.dart';
 import 'package:zego_uikits_demo/kits/conference/cache.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/gifts/service.dart';
+import 'package:zego_uikits_demo/pages/home.dart';
+import 'package:zego_uikits_demo/pages/login.dart';
 import 'package:zego_uikits_demo/pages/utils/router.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -25,44 +27,12 @@ class LoadingPage extends StatefulWidget {
 
 class LoadingPageState extends State<LoadingPage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: Scaffold(
-        body: FutureBuilder(
-          future: Future.wait([
-            SettingsCache().load(),
-            AudioRoomCache().load(),
-            CallCache().load(),
-            LiveStreamingCache().load(),
-            ConferenceCache().load(),
-            GiftService().init(),
-            UserService().tryAutoLogin(),
-          ]),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Center(child: Text('load failed: ${snapshot.error}'));
-            }
-
-            if (snapshot.connectionState == ConnectionState.done) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (UserService().isLogin && SettingsCache().isAppKeyValid) {
-                  PageRouter.home.go(context);
-                } else {
-                  PageRouter.login.go(context);
-                }
-              });
-            }
-
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
+      child: UserService().isLogin && SettingsCache().isAppKeyValid
+          ? const HomePage()
+          : const LoginPage(),
     );
   }
 }

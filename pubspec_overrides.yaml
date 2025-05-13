@@ -1,6 +1,33 @@
 ###
 dependency_overrides:
-  chewie: 1.8.5
   flutter_dtmf:
     path: ./3rdparty/flutter_dtmf-3.0.2
-  file_picker: 8.1.4
+
+
+  #  chewie: 1.8.5
+
+  #  zego_uikit_prebuilt_video_conference: ^2.9.9
+  #  zego_uikit_prebuilt_call: ^4.16.26
+  #  zego_uikit_prebuilt_live_audio_room: ^3.15.8
+  #  zego_uikit_prebuilt_live_streaming: ^3.13.12
+  #  zego_zimkit: ^1.18.4
+
+  # local
+  zego_uikit:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_flutter
+  zego_plugin_adapter:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_plugin_adapter_flutter
+  zego_uikit_signaling_plugin:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_signaling_plugin_flutter
+  zego_uikit_beauty_plugin:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_beauty_plugin_flutter
+  zego_uikit_prebuilt_video_conference:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_prebuilt_video_conference_flutter
+  zego_uikit_prebuilt_call:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_prebuilt_call_flutter
+  zego_uikit_prebuilt_live_audio_room:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_prebuilt_live_audio_room_flutter
+  zego_uikit_prebuilt_live_streaming:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_uikit_prebuilt_live_streaming_flutter
+  zego_zimkit:
+    path: /Users/yoer/workspace/uikits/uikits/sdk/zego_zimkit_flutter

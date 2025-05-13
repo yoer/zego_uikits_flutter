@@ -9,6 +9,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
+import 'package:zego_uikits_demo/pages/loading.dart';
 import 'package:zego_uikits_demo/pages/utils/router.dart';
 
 class SplashPage extends StatefulWidget {
@@ -23,28 +24,7 @@ class SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      child: FutureBuilder(
-        future: Future.wait([
-          SettingsCache().load(),
-        ]),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('load failed: ${snapshot.error}'));
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (!SettingsCache().showSplash) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                PageRouter.loading.go(context);
-              });
-            } else {
-              return splash();
-            }
-          }
-
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+      child: SettingsCache().showSplash ? splash() : const LoadingPage(),
     );
   }
 
