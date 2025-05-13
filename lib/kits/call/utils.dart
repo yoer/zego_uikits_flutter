@@ -342,10 +342,7 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     ];
   }
 
-  /// todo bug
-  config.pip.enableWhenBackground = false;
-
-  ///  beta config
+  config.pip.enableWhenBackground = CallCache().supportPIP;
   config.pip.iOS.support = CallCache().supportPIP;
   if (CallCache().supportPIP) {
     config.topMenuBar.buttons.add(

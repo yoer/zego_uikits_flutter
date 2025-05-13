@@ -203,8 +203,8 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
       );
     }
 
-    /// todo bug
-    config.pip.enableWhenBackground = false;
+    config.pip.enableWhenBackground = LiveStreamingCache().supportPIP;
+    config.pip.iOS.support = LiveStreamingCache().supportPIP;
     if (LiveStreamingCache().supportPIP) {
       config.topMenuBar.buttons.add(
         ZegoLiveStreamingMenuBarButtonName.pipButton,
@@ -226,8 +226,6 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
       ];
     }
 
-    ///  beta config
-    config.pip.iOS.support = LiveStreamingCache().supportPIP;
     config.audioVideoView.showMicrophoneStateOnView =
         LiveStreamingCache().showMicrophoneStateOnView;
 

@@ -86,8 +86,7 @@ class _ZegoAudioRoomPageState extends State<ZegoAudioRoomPage> {
       ]
       ..userAvatarUrl = avatarURL(widget.userID);
 
-    /// todo bug
-    config.pip.enableWhenBackground = false;
+    config.pip.enableWhenBackground = true;
 
     /// call invitation need keep login status
     config.signalingPlugin = ZegoLiveAudioRoomSignalingPluginConfig(
