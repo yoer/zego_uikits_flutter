@@ -91,9 +91,21 @@ class _MoreDrawerState extends State<MoreDrawer> {
           color: Colors.white,
         ),
         onTap: () async {
-          UserService().logout().then((_) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+
+          await UserService().logout();
+          if (mounted) {
+            Navigator.of(context).pop();
             PageRouter.login.go(context);
-          });
+          }
         },
       ),
     );

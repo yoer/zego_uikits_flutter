@@ -15,6 +15,7 @@ import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'package:zego_uikits_demo/kits/call/utils.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -65,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
       fontWeight: FontWeight.bold,
     );
     final textStyle = TextStyle(fontSize: 18.r, color: Colors.black);
-    final consoleURL = 'https://console.zegocloud.com/';
+    const consoleURL = 'https://console.zegocloud.com/';
 
     return PopScope(
       canPop: true,
@@ -76,9 +77,9 @@ class _SettingsPageState extends State<SettingsPage> {
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16.r),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
                 settingsGroup(
                   'App Keys',
                   [
@@ -187,6 +188,38 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                       onChanged: (value) {
                         context.setLocale(value);
+                      },
+                    ),
+                  ],
+                ),
+                settingsGroup(
+                  '${Translations.settings.common}(${Translations.settings.starTips})',
+                  [
+                    settingsCheckBox(
+                      title: Translations.settings.screenSharing,
+                      value: KitCommonCache().supportScreenSharing,
+                      onChanged: (value) {
+                        setState(() {
+                          KitCommonCache().supportScreenSharing = value ?? true;
+                        });
+                      },
+                    ),
+                    settingsCheckBox(
+                      title: '${Translations.settings.pip}(*)',
+                      value: KitCommonCache().supportPIP,
+                      onChanged: (value) {
+                        setState(() {
+                          KitCommonCache().supportPIP = value ?? true;
+                        });
+                      },
+                    ),
+                    settingsCheckBox(
+                      title: '${Translations.settings.advanceBeauty}(*)',
+                      value: KitCommonCache().supportAdvanceBeauty,
+                      onChanged: (value) {
+                        setState(() {
+                          KitCommonCache().supportAdvanceBeauty = value ?? true;
+                        });
                       },
                     ),
                   ],

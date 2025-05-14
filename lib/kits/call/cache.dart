@@ -180,9 +180,6 @@ class CallCache {
 
   var invitation = CallInvitationCache();
 
-  bool _supportScreenSharing = true;
-  bool _supportPIP = true;
-  bool _supportAdvanceBeauty = true;
   bool _videoAspectFill = true;
   bool _turnOnCameraWhenJoining = true;
   bool _turnOnMicrophoneWhenJoining = true;
@@ -255,33 +252,6 @@ class CallCache {
     });
   }
 
-  bool get supportAdvanceBeauty => _supportAdvanceBeauty;
-  set supportAdvanceBeauty(bool value) {
-    _supportAdvanceBeauty = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportAdvanceBeautyKey, value);
-    });
-  }
-
-  bool get supportPIP => _supportPIP;
-  set supportPIP(bool value) {
-    _supportPIP = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportPIPKey, value);
-    });
-  }
-
-  bool get supportScreenSharing => _supportScreenSharing;
-  set supportScreenSharing(bool value) {
-    _supportScreenSharing = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportScreenSharingKey, value);
-    });
-  }
-
   void addRoomID(String roomID) {
     roomIDList.value = [
       ...roomIDList.value,
@@ -306,9 +276,6 @@ class CallCache {
   Future<void> clear() async {
     roomIDList.value = CallCache.defaultRoomIDList();
     dialInviteeIDs = [];
-    _supportScreenSharing = true;
-    _supportPIP = true;
-    _supportAdvanceBeauty = true;
     _videoAspectFill = true;
 
     _turnOnCameraWhenJoining = true;
@@ -317,9 +284,6 @@ class CallCache {
 
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheRoomIDListKey);
-    prefs.remove(_supportScreenSharingKey);
-    prefs.remove(_supportPIPKey);
-    prefs.remove(_supportAdvanceBeautyKey);
     prefs.remove(_supportVideoModeKey);
     prefs.remove(_turnOnCameraWhenJoiningKey);
     prefs.remove(_turnOnMicrophoneWhenJoiningKey);
@@ -346,11 +310,6 @@ class CallCache {
         ? cacheRoomIDList
         : CallCache.defaultRoomIDList();
 
-    _supportScreenSharing =
-        prefs.get(_supportScreenSharingKey) as bool? ?? true;
-    _supportPIP = prefs.get(_supportPIPKey) as bool? ?? true;
-    _supportAdvanceBeauty =
-        prefs.get(_supportAdvanceBeautyKey) as bool? ?? true;
     _videoAspectFill = prefs.get(_supportVideoModeKey) as bool? ?? true;
 
     _turnOnCameraWhenJoining =
@@ -372,9 +331,6 @@ class CallCache {
   }
 
   final String _cacheRoomIDListKey = 'cache_call_room_id_list';
-  final String _supportScreenSharingKey = 'cache_call_screen_sharing';
-  final String _supportPIPKey = 'cache_call_pip';
-  final String _supportAdvanceBeautyKey = 'cache_call_advance_beauty';
   final String _supportVideoModeKey = 'cache_call_video_mode';
   final String _turnOnCameraWhenJoiningKey =
       'cache_call_turn_on_camera_when_joining';

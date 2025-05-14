@@ -6,6 +6,7 @@ import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_c
 
 // Project imports:
 import 'package:zego_uikits_demo/kits/conference/cache.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 
 class ZegoConferencePage extends StatefulWidget {
   const ZegoConferencePage({
@@ -54,7 +55,7 @@ class _ZegoConferencePageState extends State<ZegoConferencePage> {
       ZegoMenuBarButtonName.showMemberListButton,
       ZegoMenuBarButtonName.switchCameraButton,
     ];
-    if (ConferenceCache().supportScreenSharing) {
+    if (KitCommonCache().supportScreenSharing) {
       config.topMenuBarConfig.buttons.add(
         ZegoMenuBarButtonName.toggleScreenSharingButton,
       );

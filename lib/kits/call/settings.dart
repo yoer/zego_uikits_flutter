@@ -44,38 +44,6 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               ],
             ),
             settingsGroup(
-              '${Translations.settings.common}(${Translations.settings.starTips})',
-              [
-                settingsCheckBox(
-                  title: Translations.settings.screenSharing,
-                  value: CallCache().supportScreenSharing,
-                  onChanged: (value) {
-                    setState(() {
-                      CallCache().supportScreenSharing = value ?? true;
-                    });
-                  },
-                ),
-                settingsCheckBox(
-                  title: Translations.settings.pip,
-                  value: CallCache().supportPIP,
-                  onChanged: (value) {
-                    setState(() {
-                      CallCache().supportPIP = value ?? true;
-                    });
-                  },
-                ),
-                settingsCheckBox(
-                  title: '${Translations.settings.advanceBeauty}(*)',
-                  value: CallCache().supportAdvanceBeauty,
-                  onChanged: (value) {
-                    setState(() {
-                      CallCache().supportAdvanceBeauty = value ?? true;
-                    });
-                  },
-                ),
-              ],
-            ),
-            settingsGroup(
               Translations.settings.audioVideo,
               [
                 settingsCheckBox(

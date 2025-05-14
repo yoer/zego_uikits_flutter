@@ -8,6 +8,7 @@ import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/firestore/kits_service.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 
 // Project imports:
 import 'app.dart';
@@ -28,6 +29,7 @@ void main() async {
     await EasyLocalization.ensureInitialized();
 
     await SettingsCache().load();
+    await KitCommonCache().load();
     await AudioRoomCache().load();
     await CallCache().load();
     await LiveStreamingCache().load();

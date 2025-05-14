@@ -22,10 +22,7 @@ class LiveStreamingCache {
   String _mediaDefaultURL = '';
   bool _autoPlayMedia = true;
 
-  bool _supportScreenSharing = true;
-  bool _supportPIP = true;
   bool _supportGift = true;
-  bool _supportAdvanceBeauty = true;
   bool _videoAspectFill = true;
   bool _showUserNameOnView = true;
   bool _showMicrophoneStateOnView = true;
@@ -48,15 +45,6 @@ class LiveStreamingCache {
     });
   }
 
-  bool get supportAdvanceBeauty => _supportAdvanceBeauty;
-  set supportAdvanceBeauty(bool value) {
-    _supportAdvanceBeauty = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportAdvanceBeautyKey, value);
-    });
-  }
-
   bool get videoAspectFill => _videoAspectFill;
   set videoAspectFill(bool value) {
     _videoAspectFill = value;
@@ -75,15 +63,6 @@ class LiveStreamingCache {
     });
   }
 
-  bool get supportPIP => _supportPIP;
-  set supportPIP(bool value) {
-    _supportPIP = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportPIPKey, value);
-    });
-  }
-
   String get mediaDefaultURL => _mediaDefaultURL;
   set mediaDefaultURL(String value) {
     _mediaDefaultURL = value;
@@ -99,15 +78,6 @@ class LiveStreamingCache {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_supportMediaAutoPlayKey, value);
-    });
-  }
-
-  bool get supportScreenSharing => _supportScreenSharing;
-  set supportScreenSharing(bool value) {
-    _supportScreenSharing = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportScreenSharingKey, value);
     });
   }
 
@@ -201,10 +171,7 @@ class LiveStreamingCache {
     _mediaDefaultURL = '';
     _autoPlayMedia = true;
 
-    _supportScreenSharing = true;
-    _supportPIP = true;
     _supportGift = true;
-    _supportAdvanceBeauty = true;
     _videoAspectFill = true;
     _showUserNameOnView = true;
     _showMicrophoneStateOnView = true;
@@ -217,14 +184,11 @@ class LiveStreamingCache {
 
     prefs.remove(_cachePKAutoAcceptKey);
 
-    prefs.remove(_supportScreenSharingKey);
-    prefs.remove(_supportAdvanceBeautyKey);
     prefs.remove(_supportShowUserNameKey);
     prefs.remove(_supportShowMicStateKey);
     prefs.remove(_supportMediaDefURLKey);
     prefs.remove(_supportMediaAutoPlayKey);
     prefs.remove(_supportVideoModeKey);
-    prefs.remove(_supportPIPKey);
     prefs.remove(_supportGiftKey);
   }
 
@@ -258,12 +222,7 @@ class LiveStreamingCache {
     _mediaDefaultURL =
         prefs.get(_supportMediaDefURLKey) as String? ?? defaultMediaURL;
 
-    _supportScreenSharing =
-        prefs.get(_supportScreenSharingKey) as bool? ?? true;
-    _supportPIP = prefs.get(_supportPIPKey) as bool? ?? true;
     _supportGift = prefs.get(_supportGiftKey) as bool? ?? true;
-    _supportAdvanceBeauty =
-        prefs.get(_supportAdvanceBeautyKey) as bool? ?? true;
     _videoAspectFill = prefs.get(_supportVideoModeKey) as bool? ?? true;
     _showMicrophoneStateOnView =
         prefs.get(_supportShowMicStateKey) as bool? ?? true;
@@ -281,8 +240,6 @@ class LiveStreamingCache {
 
   final String _cachePKAutoAcceptKey = 'cache_ls_pk_auto_accept';
 
-  final String _supportScreenSharingKey = 'cache_ls_screen_sharing';
-  final String _supportAdvanceBeautyKey = 'cache_ls_advance_beauty';
   final String _supportShowUserNameKey = 'cache_ls_show_user_name';
   final String _supportShowMicStateKey = 'cache_ls_show_mic_state';
 
@@ -290,7 +247,6 @@ class LiveStreamingCache {
   final String _supportMediaAutoPlayKey = 'cache_ls_media_auto_play';
 
   final String _supportVideoModeKey = 'cache_ls_video_mode';
-  final String _supportPIPKey = 'cache_ls_pip';
   final String _supportGiftKey = 'cache_ls_gift';
 
   bool _isLoaded = false;

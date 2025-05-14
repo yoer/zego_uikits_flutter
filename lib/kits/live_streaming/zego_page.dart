@@ -17,10 +17,11 @@ import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/user.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/gifts/button.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/language.dart';
-import 'foreground.dart';
+import 'package:zego_uikits_demo/kits/live_streaming/foreground.dart';
 
 void startLiveStreaming({
   required BuildContext context,
@@ -150,7 +151,7 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
   ZegoUIKitPrebuiltLiveStreamingConfig config() {
     final plugins = <IZegoUIKitPlugin>[
       ZegoUIKitSignalingPlugin(),
-      ...(LiveStreamingCache().supportAdvanceBeauty
+      ...(KitCommonCache().supportAdvanceBeauty
           ? [ZegoUIKitBeautyPlugin()]
           : []),
     ];
@@ -197,15 +198,15 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
       uninitOnDispose: false,
     );
 
-    if (LiveStreamingCache().supportScreenSharing) {
+    if (KitCommonCache().supportScreenSharing) {
       config.topMenuBar.buttons.add(
         ZegoLiveStreamingMenuBarButtonName.toggleScreenSharingButton,
       );
     }
 
-    config.pip.enableWhenBackground = LiveStreamingCache().supportPIP;
-    config.pip.iOS.support = LiveStreamingCache().supportPIP;
-    if (LiveStreamingCache().supportPIP) {
+    config.pip.enableWhenBackground = KitCommonCache().supportPIP;
+    config.pip.iOS.support = KitCommonCache().supportPIP;
+    if (KitCommonCache().supportPIP) {
       config.topMenuBar.buttons.add(
         ZegoLiveStreamingMenuBarButtonName.pipButton,
       );

@@ -9,7 +9,6 @@ class ConferenceCache {
     ConferenceCache.defaultRoomIDList(),
   );
 
-  bool _supportScreenSharing = true;
   bool _videoAspectFill = true;
 
   bool get videoAspectFill => _videoAspectFill;
@@ -18,15 +17,6 @@ class ConferenceCache {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_supportVideoModeKey, value);
-    });
-  }
-
-  bool get supportScreenSharing => _supportScreenSharing;
-  set supportScreenSharing(bool value) {
-    _supportScreenSharing = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportScreenSharingKey, value);
     });
   }
 
@@ -54,7 +44,6 @@ class ConferenceCache {
   Future<void> clear() async {
     roomIDList.value = ConferenceCache.defaultRoomIDList();
 
-    _supportScreenSharing = true;
     _videoAspectFill = true;
 
     final prefs = await SharedPreferences.getInstance();
@@ -79,8 +68,6 @@ class ConferenceCache {
         ? cacheRoomIDList
         : ConferenceCache.defaultRoomIDList();
 
-    _supportScreenSharing =
-        prefs.get(_supportScreenSharingKey) as bool? ?? true;
     _videoAspectFill = prefs.get(_supportVideoModeKey) as bool? ?? true;
   }
 

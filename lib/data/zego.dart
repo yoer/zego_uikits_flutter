@@ -67,6 +67,8 @@ class ZegoSDKer {
   }
 
   void uninit() {
+    ZegoUIKit().uninit();
+
     isInit = false;
   }
 

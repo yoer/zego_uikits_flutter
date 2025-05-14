@@ -9,7 +9,8 @@ import 'package:zego_uikits_demo/common/settings.dart';
 import 'package:zego_uikits_demo/common/string_list_editor.dart';
 import 'package:zego_uikits_demo/common/string_list_list_editor.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
-import 'cache.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
+import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
 
 class LiveStreamingPageSettings extends StatefulWidget {
   const LiveStreamingPageSettings({super.key});
@@ -35,38 +36,6 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
               Translations.settings.liveListId,
               [
                 liveIDEditor(),
-              ],
-            ),
-            settingsGroup(
-              Translations.settings.common,
-              [
-                settingsCheckBox(
-                  title: Translations.settings.screenSharing,
-                  value: LiveStreamingCache().supportScreenSharing,
-                  onChanged: (value) {
-                    setState(() {
-                      LiveStreamingCache().supportScreenSharing = value ?? true;
-                    });
-                  },
-                ),
-                settingsCheckBox(
-                  title: Translations.settings.pip,
-                  value: LiveStreamingCache().supportPIP,
-                  onChanged: (value) {
-                    setState(() {
-                      LiveStreamingCache().supportPIP = value ?? true;
-                    });
-                  },
-                ),
-                settingsCheckBox(
-                  title: Translations.settings.advanceBeauty,
-                  value: LiveStreamingCache().supportAdvanceBeauty,
-                  onChanged: (value) {
-                    setState(() {
-                      LiveStreamingCache().supportAdvanceBeauty = value ?? true;
-                    });
-                  },
-                ),
               ],
             ),
             settingsGroup(

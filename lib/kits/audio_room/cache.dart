@@ -23,20 +23,9 @@ class AudioRoomCache {
   bool _showBackground = true;
   bool _showHostInfo = true;
   AudioRoomLayoutMode _layoutMode = AudioRoomLayoutMode.defaultLayout;
-  bool _supportScreenSharing = true;
-  bool _supportPIP = true;
 
   String _mediaDefaultURL = '';
   bool _autoPlayMedia = true;
-
-  bool get supportPIP => _supportPIP;
-  set supportPIP(bool value) {
-    _supportPIP = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_supportPIPKey, value);
-    });
-  }
 
   String get mediaDefaultURL => _mediaDefaultURL;
   set mediaDefaultURL(String value) {
@@ -55,15 +44,6 @@ class AudioRoomCache {
       prefs.setBool(_supportMediaAutoPlayKey, value);
     });
   }
-
-  // bool get supportScreenSharing => _supportScreenSharing;
-  // set supportScreenSharing(bool value) {
-  //   _supportScreenSharing = value;
-  //
-  //   SharedPreferences.getInstance().then((prefs) {
-  //     prefs.setBool(_supportScreenSharingKey, value);
-  //   });
-  // }
 
   bool get showBackground => _showBackground;
 
@@ -136,9 +116,6 @@ class AudioRoomCache {
     _showHostInfo = prefs.get(_cacheShowHostInfoKey) as bool? ?? true;
     _layoutMode =
         AudioRoomLayoutMode.values[prefs.get(_cacheLayoutModeKey) as int? ?? 0];
-    _supportScreenSharing =
-        prefs.get(_supportScreenSharingKey) as bool? ?? true;
-    _supportPIP = prefs.get(_supportPIPKey) as bool? ?? true;
 
     _autoPlayMedia = prefs.get(_supportMediaAutoPlayKey) as bool? ?? true;
     _mediaDefaultURL =
@@ -151,8 +128,6 @@ class AudioRoomCache {
     _showBackground = true;
     _showHostInfo = true;
     _layoutMode = AudioRoomLayoutMode.defaultLayout;
-    _supportScreenSharing = true;
-    _supportPIP = true;
 
     _mediaDefaultURL = '';
     _autoPlayMedia = true;
@@ -162,8 +137,6 @@ class AudioRoomCache {
     prefs.remove(_cacheShowBackgroundKey);
     prefs.remove(_cacheShowHostInfoKey);
     prefs.remove(_cacheLayoutModeKey);
-    prefs.remove(_supportScreenSharingKey);
-    prefs.remove(_supportPIPKey);
 
     prefs.remove(_supportMediaDefURLKey);
     prefs.remove(_supportMediaAutoPlayKey);
@@ -184,8 +157,6 @@ class AudioRoomCache {
   final String _cacheShowBackgroundKey = 'cache_ar_show_bg';
   final String _cacheShowHostInfoKey = 'cache_ar_show_host_info';
   final String _cacheLayoutModeKey = 'cache_ar_layout_mode';
-  final String _supportScreenSharingKey = 'cache_ar_screen_sharing';
-  final String _supportPIPKey = 'cache_ar_pip';
 
   final String _supportMediaDefURLKey = 'cache_ar_media_def_url';
   final String _supportMediaAutoPlayKey = 'cache_ar_media_auto_play';

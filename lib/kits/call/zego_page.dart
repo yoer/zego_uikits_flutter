@@ -8,6 +8,7 @@ import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 // Project imports:
 import 'package:zego_uikits_demo/kits/call/utils.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 
 class ZegoCallPage extends StatefulWidget {
   const ZegoCallPage({
@@ -49,7 +50,7 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
         callID: widget.roomID,
         config: config,
         plugins: [
-          ...(CallCache().supportAdvanceBeauty
+          ...(KitCommonCache().supportAdvanceBeauty
               ? [ZegoUIKitBeautyPlugin()]
               : []),
         ],
@@ -64,7 +65,7 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
       isVideo: widget.isVideo,
     );
 
-    if (CallCache().supportAdvanceBeauty) {
+    if (KitCommonCache().supportAdvanceBeauty) {
       config.bottomMenuBar.buttons.add(
         ZegoCallMenuBarButtonName.beautyEffectButton,
       );

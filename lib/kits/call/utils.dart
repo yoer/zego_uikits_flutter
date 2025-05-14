@@ -20,6 +20,7 @@ import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
 import 'package:zego_uikits_demo/kits/call/language.dart';
 import 'package:zego_uikits_demo/kits/call/invitation/history.dart';
@@ -41,13 +42,15 @@ Future<bool> initCallInvitation() async {
       ),
       plugins: [
         ZegoUIKitSignalingPlugin(),
-        ...(CallCache().supportAdvanceBeauty ? [ZegoUIKitBeautyPlugin()] : []),
+        ...(KitCommonCache().supportAdvanceBeauty
+            ? [ZegoUIKitBeautyPlugin()]
+            : []),
       ],
       config: ZegoCallInvitationConfig(
         /// beta config
         pip: ZegoCallInvitationPIPConfig(
           iOS: ZegoCallInvitationPIPIOSConfig(
-            support: CallCache().supportPIP,
+            support: KitCommonCache().supportPIP,
           ),
         ),
         offline: ZegoCallInvitationOfflineConfig(
@@ -272,13 +275,13 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     };
   }
 
-  if (CallCache().supportAdvanceBeauty) {
+  if (KitCommonCache().supportAdvanceBeauty) {
     config.bottomMenuBar.buttons.add(
       ZegoCallMenuBarButtonName.beautyEffectButton,
     );
   }
 
-  if (CallCache().supportScreenSharing) {
+  if (KitCommonCache().supportScreenSharing) {
     config.layout = ZegoLayout.gallery(
       showScreenSharingFullscreenModeToggleButtonRules:
           ZegoShowFullscreenModeToggleButtonRules.alwaysShow,
@@ -342,9 +345,9 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     ];
   }
 
-  config.pip.enableWhenBackground = CallCache().supportPIP;
-  config.pip.iOS.support = CallCache().supportPIP;
-  if (CallCache().supportPIP) {
+  config.pip.enableWhenBackground = KitCommonCache().supportPIP;
+  config.pip.iOS.support = KitCommonCache().supportPIP;
+  if (KitCommonCache().supportPIP) {
     config.topMenuBar.buttons.add(
       ZegoCallMenuBarButtonName.pipButton,
     );
