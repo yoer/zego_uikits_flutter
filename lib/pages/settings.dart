@@ -224,7 +224,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ],
                 ),
-                const Expanded(child: SizedBox()),
+                SizedBox(height: 20.r),
                 saveButton(),
               ],
             ),
