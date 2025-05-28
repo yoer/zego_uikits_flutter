@@ -48,3 +48,4 @@ google-services.json
 GoogleService-Info.plist
 firebase.json
 firebase_options.dart
+pubspec.lock
