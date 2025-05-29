@@ -49,6 +49,7 @@ dependencies:
     path: ./3rdparty/flutter_dialpad-1.0.5
   archive: ^3.4.10
   path_provider: ^2.1.2
+  chunked_stream: ^1.4.2
 
 dev_dependencies:
   flutter_test:

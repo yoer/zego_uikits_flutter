@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path/path.dart' as p;
 
 // Package imports:
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -25,202 +26,292 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
-  bool _addLogs = false;
-  String? _logZipPath;
+  bool _addLogs = true;
+  bool _isLoading = false;
 
-  Future<String?> _getLogsZipPath() async {
-    if (!_addLogs) return null;
+  Future<List<String>> _getLogsZipPaths() async {
+    if (!_addLogs) return [];
 
     try {
       final tempDir = await getTemporaryDirectory();
-      final zipPath =
-          '${tempDir.path}/logs_${DateTime.now().millisecondsSinceEpoch}.zip';
-      final encoder = ZipEncoder();
-      final archive = Archive();
+      final List<String> zipPaths = [];
+      var currentArchive = Archive();
+      var currentSize = 0;
+      const maxArchiveSize = 20 * 1024 * 1024; // 20MB
+
+      Future<void> saveCurrentArchive() async {
+        if (currentArchive.isNotEmpty) {
+          debugPrint(
+              'feedback: Creating zip file ${zipPaths.length + 1} with ${currentArchive.length} files, total size: ${currentSize ~/ 1024}KB');
+          final encoder = ZipEncoder();
+          final zipData = encoder.encode(currentArchive);
+          if (zipData != null) {
+            final zipPath =
+                '${tempDir.path}/logs_${DateTime.now().millisecondsSinceEpoch}_${zipPaths.length}.zip';
+            final file = File(zipPath);
+            await file.writeAsBytes(zipData);
+            final zipSize = await file.length();
+            debugPrint(
+                'Created zip file: $zipPath (${zipSize ~/ 1024}KB, compression ratio: ${(currentSize / zipSize).toStringAsFixed(2)}x)');
+
+            // 如果压缩后仍然超过20MB，尝试重新压缩
+            if (zipSize > maxArchiveSize) {
+              debugPrint(
+                  'Zip file too large (${zipSize ~/ 1024}KB), trying to split...');
+              await file.delete();
+
+              // 计算需要分成多少份
+              final numParts = (zipSize / maxArchiveSize).ceil();
+              final partSize = (zipData.length / numParts).ceil();
+              debugPrint(
+                  'Splitting into $numParts parts, each part size: ${partSize ~/ 1024}KB');
+
+              for (var i = 0; i < numParts; i++) {
+                final start = i * partSize;
+                final end = (start + partSize > zipData.length)
+                    ? zipData.length
+                    : start + partSize;
+                final partData = zipData.sublist(start, end);
+
+                final partPath =
+                    '${tempDir.path}/logs_${DateTime.now().millisecondsSinceEpoch}_part$i.zip';
+                final partFile = File(partPath);
+                await partFile.writeAsBytes(partData);
+                zipPaths.add(partPath);
+                debugPrint(
+                    'Created part $i: $partPath (${partData.length ~/ 1024}KB)');
+              }
+
+              return;
+            }
+
+            zipPaths.add(zipPath);
+          }
+          currentArchive = Archive();
+          currentSize = 0;
+        }
+      }
+
+      Future<void> addFileToArchive(File file, String archivePath) async {
+        try {
+          final fileSize = await file.length();
+          final bytes = await file.readAsBytes();
+          currentArchive.addFile(ArchiveFile(archivePath, bytes.length, bytes));
+          currentSize += fileSize;
+          debugPrint(
+              'feedback: Added file to archive: $archivePath (${fileSize ~/ 1024}KB)');
+        } catch (e) {
+          debugPrint('feedback: Error processing file ${file.path}: $e');
+        }
+      }
 
       if (Platform.isAndroid) {
-        // Android logs path
+        debugPrint('feedback: Processing Android logs...');
         final appDir = await getExternalStorageDirectory();
+        debugPrint('feedback: appDir = \'${appDir?.path}\'');
         if (appDir != null) {
-          final parentDir = appDir.parent;
-          if (await parentDir.exists()) {
-            await _addDirectoryToArchive(parentDir, archive, 'android_logs');
+          final filesDir = Directory(appDir.path);
+          debugPrint(
+              'feedback: filesDir = \'${filesDir.path}\' exists: ${await filesDir.exists()}');
+          if (await filesDir.exists()) {
+            int totalFiles = 0;
+            int matchedFiles = 0;
+            await for (final entity in filesDir.list(recursive: true)) {
+              debugPrint('feedback: 遍历到: ${entity.path}');
+              final name = entity.uri.pathSegments.last;
+              final relativePath = p.relative(entity.path, from: filesDir.path);
+              if (entity is File) {
+                totalFiles++;
+
+                final lowerCaseName = name.toLowerCase();
+                // 1. 文件打包
+                if ((lowerCaseName.startsWith('zego') ||
+                        lowerCaseName.startsWith('zef') ||
+                        lowerCaseName.startsWith('zconnection')) &&
+                    (name.endsWith('.txt') || name.endsWith('.zip'))) {
+                  debugPrint('feedback: 匹配到 zego.*.txt/zip 文件: $relativePath');
+                  matchedFiles++;
+                  await addFileToArchive(entity, 'android_files/$relativePath');
+                }
+                // 2. 只要在 zego_prebuilt、ZIMAudioLog、ZIMLogs 这3个文件夹下的任何文件都要打包
+                else if (relativePath.startsWith('zego_prebuilt/') ||
+                    relativePath.startsWith('ZIMAudioLog/') ||
+                    relativePath.startsWith('ZIMLogs/')) {
+                  debugPrint('feedback: 匹配到指定文件夹内容: $relativePath');
+                  matchedFiles++;
+                  await addFileToArchive(entity, 'android_files/$relativePath');
+                }
+              } else if (entity is Directory) {
+                debugPrint('feedback: 遍历到文件夹: $relativePath');
+              }
+            }
+            debugPrint('feedback: 遍历总文件数: $totalFiles, 匹配打包文件数: $matchedFiles');
+          } else {
+            debugPrint('feedback: filesDir 不存在!');
           }
+        } else {
+          debugPrint('feedback: appDir 为空!');
         }
       } else if (Platform.isIOS) {
-        // iOS logs paths
+        debugPrint('feedback: Processing iOS logs...');
         final appSupportDir = await getApplicationSupportDirectory();
         final logsDir = Directory('${appSupportDir.path}/Logs');
         if (await logsDir.exists()) {
-          await _addDirectoryToArchive(logsDir, archive, 'ios_logs');
+          debugPrint('feedback: Processing iOS Logs directory...');
+          await for (final entity in logsDir.list(recursive: true)) {
+            if (entity is File) {
+              final relativePath =
+                  entity.path.substring(logsDir.path.length + 1);
+              final archivePath = 'ios_logs/$relativePath';
+              await addFileToArchive(entity, archivePath);
+            }
+          }
         }
 
         final cachesDir = await getTemporaryDirectory();
         final parentDir = cachesDir.parent;
-        final zimAudioLogDir =
-            Directory('${parentDir.path}/Caches/ZIMAudioLog');
-        final zimCachesDir = Directory('${parentDir.path}/Caches/ZIMCaches');
-        final zimLogsDir = Directory('${parentDir.path}/Caches/ZIMLogs');
-        final zefLogsDir = Directory('${parentDir.path}/Caches/ZefLogs');
-        final zegoLogsDir = Directory('${parentDir.path}/Caches/ZegoLogs');
+        final List<Directory> cacheDirs = [
+          Directory('${parentDir.path}/Caches/ZIMAudioLog'),
+          Directory('${parentDir.path}/Caches/ZIMCaches'),
+          Directory('${parentDir.path}/Caches/ZIMLogs'),
+          Directory('${parentDir.path}/Caches/ZefLogs'),
+          Directory('${parentDir.path}/Caches/ZegoLogs'),
+        ];
 
-        if (await zimAudioLogDir.exists()) {
-          await _addDirectoryToArchive(
-              zimAudioLogDir, archive, 'ios_caches/ZIMAudioLog');
-        }
-        if (await zimCachesDir.exists()) {
-          await _addDirectoryToArchive(
-              zimCachesDir, archive, 'ios_caches/ZIMCaches');
-        }
-        if (await zimLogsDir.exists()) {
-          await _addDirectoryToArchive(
-              zimLogsDir, archive, 'ios_caches/ZIMLogs');
-        }
-        if (await zefLogsDir.exists()) {
-          await _addDirectoryToArchive(
-              zefLogsDir, archive, 'ios_caches/ZefLogs');
-        }
-        if (await zegoLogsDir.exists()) {
-          await _addDirectoryToArchive(
-              zegoLogsDir, archive, 'ios_caches/ZegoLogs');
+        for (final dir in cacheDirs) {
+          if (await dir.exists()) {
+            final dirName = dir.path.split('/').last;
+            debugPrint('feedback: Processing iOS Caches directory: $dirName');
+            await for (final entity in dir.list(recursive: true)) {
+              if (entity is File) {
+                final relativePath = entity.path.substring(dir.path.length + 1);
+                final archivePath = 'ios_caches/$dirName/$relativePath';
+                await addFileToArchive(entity, archivePath);
+              }
+            }
+          }
         }
       }
 
-      final zipData = encoder.encode(archive);
-      if (zipData != null) {
-        final file = File(zipPath);
-        await file.writeAsBytes(zipData);
-        return zipPath;
-      }
+      // Save the last archive if it has any files
+      await saveCurrentArchive();
+      debugPrint('feedback: Created ${zipPaths.length} zip files in total');
+      return zipPaths;
     } catch (e) {
-      debugPrint('Error creating logs zip: $e');
-    }
-    return null;
-  }
-
-  Future<void> _addDirectoryToArchive(
-      Directory dir, Archive archive, String baseArchivePath) async {
-    await for (final entity in dir.list(recursive: true)) {
-      if (entity is File) {
-        final relativePath = entity.path.substring(dir.path.length + 1);
-        final fileArchivePath = '$baseArchivePath/$relativePath';
-        final bytes = await entity.readAsBytes();
-        archive.addFile(ArchiveFile(fileArchivePath, bytes.length, bytes));
-      }
+      debugPrint('feedback: Error creating logs zips: $e');
+      return [];
     }
   }
 
-  Future<bool> _isEmailAvailable() async {
-    try {
+  Future<void> _sendEmailsWithLogs(List<String> zipPaths) async {
+    if (zipPaths.isEmpty) {
+      debugPrint('feedback: No logs to send');
+      showInfoToast('No logs to send');
+      return;
+    }
+
+    debugPrint(
+        'feedback: Starting to send ${zipPaths.length} emails with logs...');
+    for (var i = 0; i < zipPaths.length; i++) {
+      debugPrint(
+          'feedback: Sending email part ${i + 1} of ${zipPaths.length}...');
       final Email email = Email(
-        body: 'Test',
-        subject: 'Test',
-        recipients: ['test@example.com'],
+        body: _contentController.text +
+            '\n\nLogs part ${i + 1} of ${zipPaths.length}',
+        subject:
+            '${_titleController.text.isEmpty ? "Empty" : _titleController.text} (Part ${i + 1}/${zipPaths.length})',
+        recipients: ['ejunyue@163.com'],
+        attachmentPaths: [zipPaths[i]],
         isHTML: false,
       );
-      await FlutterEmailSender.send(email);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 
-  Future<void> _showNoEmailClientDialog() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('No Email Client'),
-          content: const Text(
-              'No email client found. Would you like to install Gmail?'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Install'),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                final Uri url =
-                    Uri.parse('market://details?id=com.google.android.gm');
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  showInfoToast('Could not open Play Store');
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
+      try {
+        await FlutterEmailSender.send(email);
+        debugPrint('feedback: Successfully sent email part ${i + 1}');
+        if (i == zipPaths.length - 1) {
+          showInfoToast(Translations.feedback.thankYou);
+        }
+      } catch (e) {
+        debugPrint('feedback: Error sending email part ${i + 1}: $e');
+        showInfoToast('Failed to send email part ${i + 1}: $e');
+        break;
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(fontSize: 18.r, color: Colors.black);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Translations.drawer.feedback),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.r),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: Translations.feedback.title,
-                  border: const OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                style: textStyle,
-              ),
-              SizedBox(height: 15.r),
-              TextField(
-                controller: _contentController,
-                maxLines: 5,
-                decoration: InputDecoration(
-                  labelText: '${Translations.feedback.content} *',
-                  border: const OutlineInputBorder(),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                style: textStyle,
-                onChanged: (value) {
-                  buttonValidNotifier.value = value.isNotEmpty;
-                },
-              ),
-              SizedBox(height: 15.r),
-              Row(
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(Translations.drawer.feedback),
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: EdgeInsets.all(16.r),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Checkbox(
-                    value: _addLogs,
-                    onChanged: (value) {
-                      setState(() {
-                        _addLogs = value!;
-                      });
-                    },
-                  ),
-                  Text(
-                    Translations.feedback.addLogs,
+                  TextField(
+                    controller: _titleController,
+                    decoration: InputDecoration(
+                      labelText: Translations.feedback.title,
+                      border: const OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
                     style: textStyle,
                   ),
+                  SizedBox(height: 15.r),
+                  TextField(
+                    controller: _contentController,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      labelText: '${Translations.feedback.content} *',
+                      border: const OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
+                    style: textStyle,
+                    onChanged: (value) {
+                      buttonValidNotifier.value = value.isNotEmpty;
+                    },
+                  ),
+                  SizedBox(height: 15.r),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _addLogs,
+                        onChanged: (value) {
+                          setState(() {
+                            _addLogs = value!;
+                          });
+                        },
+                      ),
+                      Text(
+                        Translations.feedback.addLogs,
+                        style: textStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15.r),
+                  button(),
                 ],
               ),
-              SizedBox(height: 15.r),
-              button(),
-            ],
+            ),
           ),
         ),
-      ),
+        if (_isLoading)
+          Container(
+            color: Colors.black.withOpacity(0.3),
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+      ],
     );
   }
 
@@ -230,39 +321,47 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
       builder: (context, isValid, _) {
         return ElevatedButton(
           onPressed: () async {
-            if (!await _isEmailAvailable()) {
-              await _showNoEmailClientDialog();
-              return;
-            }
-
-            if (_addLogs) {
-              _logZipPath = await _getLogsZipPath();
-            }
-
-            final Email email = Email(
-              body: _contentController.text,
-              subject: _titleController.text.isEmpty
-                  ? 'Empty'
-                  : _titleController.text,
-              recipients: ['iamyoer@gmail.com'],
-              attachmentPaths: _logZipPath != null ? [_logZipPath!] : [],
-              isHTML: false,
-            );
-
+            setState(() {
+              _isLoading = true;
+            });
             try {
-              await FlutterEmailSender.send(email);
-              showInfoToast(Translations.feedback.thankYou);
-
-              // Clean up zip file
-              if (_logZipPath != null) {
-                final file = File(_logZipPath!);
-                if (await file.exists()) {
-                  await file.delete();
+              if (!_addLogs) {
+                // 用户没有选择添加日志，发送单封邮件
+                final Email email = Email(
+                  body: _contentController.text,
+                  subject: _titleController.text.isEmpty
+                      ? 'Empty'
+                      : _titleController.text,
+                  recipients: ['ejunyue@163.com'],
+                  isHTML: false,
+                );
+                try {
+                  await FlutterEmailSender.send(email);
+                  showInfoToast(Translations.feedback.thankYou);
+                } catch (e) {
+                  debugPrint('feedback: Error sending email: $e');
+                  showInfoToast('Failed to send email: $e');
+                }
+              } else {
+                // 用户选择了添加日志
+                List<String> zipPaths = await _getLogsZipPaths();
+                if (zipPaths.isNotEmpty) {
+                  await _sendEmailsWithLogs(zipPaths);
+                } else {
+                  showInfoToast('No logs found');
+                }
+                // 清理zip文件
+                for (final zipPath in zipPaths) {
+                  final file = File(zipPath);
+                  if (await file.exists()) {
+                    await file.delete();
+                  }
                 }
               }
-            } catch (e) {
-              debugPrint('Error sending email: $e');
-              showInfoToast('Failed to send email: $e');
+            } finally {
+              setState(() {
+                _isLoading = false;
+              });
             }
           },
           style: ElevatedButton.styleFrom(
