@@ -123,12 +123,8 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
               if (entity is File) {
                 totalFiles++;
 
-                final lowerCaseName = name.toLowerCase();
                 // 1. 文件打包
-                if ((lowerCaseName.startsWith('zego') ||
-                        lowerCaseName.startsWith('zef') ||
-                        lowerCaseName.startsWith('zconnection')) &&
-                    (name.endsWith('.txt') || name.endsWith('.zip'))) {
+                if (name.endsWith('.txt') || name.endsWith('.zip')) {
                   debugPrint('feedback: 匹配到 zego.*.txt/zip 文件: $relativePath');
                   matchedFiles++;
                   await addFileToArchive(entity, 'android_files/$relativePath');
@@ -184,9 +180,13 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
             debugPrint('feedback: Processing iOS Caches directory: $dirName');
             await for (final entity in dir.list(recursive: true)) {
               if (entity is File) {
-                final relativePath = entity.path.substring(dir.path.length + 1);
-                final archivePath = 'ios_caches/$dirName/$relativePath';
-                await addFileToArchive(entity, archivePath);
+                final name = entity.uri.pathSegments.last;
+                if (name.endsWith('.txt') || name.endsWith('.zip')) {
+                  final relativePath =
+                      entity.path.substring(dir.path.length + 1);
+                  final archivePath = 'ios_caches/$dirName/$relativePath';
+                  await addFileToArchive(entity, archivePath);
+                }
               }
             }
           }
@@ -321,6 +321,8 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
       builder: (context, isValid, _) {
         return ElevatedButton(
           onPressed: () async {
+            // 先收起键盘
+            FocusScope.of(context).unfocus();
             setState(() {
               _isLoading = true;
             });

@@ -1,9 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/settings.dart';
@@ -155,9 +158,61 @@ class _MoreDrawerState extends State<MoreDrawer> {
             await cacheDir.delete(recursive: true);
           }
         } catch (e) {}
+        if (Platform.isAndroid) {
+          final appDir = await getExternalStorageDirectory();
+          if (appDir != null) {
+            final filesDir = Directory(appDir.path);
+            if (await filesDir.exists()) {
+              try {
+                await filesDir.delete(recursive: true);
+              } catch (e) {}
+            }
+          }
+        } else if (Platform.isIOS) {
+          final appSupportDir = await getApplicationSupportDirectory();
+          final logsDir = Directory('${appSupportDir.path}/Logs');
+          if (await logsDir.exists()) {
+            try {
+              await logsDir.delete(recursive: true);
+            } catch (e) {}
+          }
+          final cachesDir = await getTemporaryDirectory();
+          final parentDir = cachesDir.parent;
+          final List<Directory> cacheDirs = [
+            Directory('${parentDir.path}/Caches/ZIMAudioLog'),
+            Directory('${parentDir.path}/Caches/ZIMCaches'),
+            Directory('${parentDir.path}/Caches/ZIMLogs'),
+            Directory('${parentDir.path}/Caches/ZefLogs'),
+            Directory('${parentDir.path}/Caches/ZegoLogs'),
+          ];
+          for (final dir in cacheDirs) {
+            if (await dir.exists()) {
+              try {
+                await dir.delete(recursive: true);
+              } catch (e) {}
+            }
+          }
+        }
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(Translations.tips.clearCacheSuccess)),
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: Text(Translations.tips.clearCacheSuccess),
+              content: const Text('需要重启App才能彻底清理缓存，点击确认后将自动退出App'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // 退出app
+                    Future.delayed(const Duration(milliseconds: 200), () {
+                      // 兼容iOS和Android
+                      SystemNavigator.pop();
+                    });
+                  },
+                  child: const Text('确认'),
+                ),
+              ],
+            ),
           );
         }
       },
