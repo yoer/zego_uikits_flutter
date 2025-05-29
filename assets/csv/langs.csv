@@ -9,6 +9,7 @@ tips.cancel,"Cancel",取消,"रद्द करें"
 tips.ok,"OK",好的,"ठीक है"
 tips.start,"Start",开始,"शुरू करें"
 tips.join,"Join",加入,"शामिल हों"
+tips.clear_cache_success,Cache cleared,缓存已清空,कैश साफ़ किया गया
 login.failed,"Login Failed",登录失败,"लॉगिन असफल"
 login.sign_in,"SIGN IN",登录,"साइन इन"
 login.sign_out,"SIGN Out",退出,"साइन आउट"
@@ -96,6 +97,7 @@ drawer.language,Language,语言,"भाषा"
 drawer.sign_out,Sign Out,退出,"साइन आउट"
 drawer.about,About,关于,बारे में
 drawer.feedback,Feedback,反馈,प्रतिक्रिया
+drawer.clear,Clear Cache,清空缓存,कैश साफ़ करें
 feedback.title,Feedback Title,反馈标题,"प्रतिक्रिया शीर्षक"
 feedback.content,Feedback Content,反馈内容,"प्रतिक्रिया सामग्री"
 feedback.contact,Contact Information,联系方式,"संपर्क जानकारी"

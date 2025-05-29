@@ -48,6 +48,7 @@ class TranslationsTips {
   String get ok => tr('${base}ok');
   String get start => tr('${base}start');
   String get join => tr('${base}join');
+  String get clearCacheSuccess => tr('${base}clear_cache_success');
 }
 
 class TranslationsGift {
@@ -172,6 +173,7 @@ class TranslationsDrawer {
   String get signOut => tr('${base}sign_out');
   String get about => tr('${base}about');
   String get feedback => tr('${base}feedback');
+  String get clear => tr('${base}clear');
 }
 
 class TranslationsFeedback {

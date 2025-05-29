@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/settings.dart';
@@ -46,6 +47,7 @@ class _MoreDrawerState extends State<MoreDrawer> {
             feedbackButton(),
             aboutButton(),
             const Expanded(child: SizedBox()),
+            clearButton(),
             logoutButton(),
             SizedBox(height: 80.r),
           ],
@@ -124,6 +126,40 @@ class _MoreDrawerState extends State<MoreDrawer> {
       ),
       onTap: () async {
         PageRouter.abouts.go(context);
+      },
+    );
+  }
+
+  Widget clearButton() {
+    return ListTile(
+      title: Text(
+        Translations.drawer.clear,
+        style: itemTextStyle,
+      ),
+      contentPadding: itemPadding,
+      leading: const Icon(
+        Icons.clear,
+        color: Colors.black,
+      ),
+      onTap: () async {
+        // 清空缓存逻辑
+        final tempDir = await getTemporaryDirectory();
+        final cacheDir = await getApplicationCacheDirectory();
+        try {
+          if (await tempDir.exists()) {
+            await tempDir.delete(recursive: true);
+          }
+        } catch (e) {}
+        try {
+          if (await cacheDir.exists()) {
+            await cacheDir.delete(recursive: true);
+          }
+        } catch (e) {}
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(Translations.tips.clearCacheSuccess)),
+          );
+        }
       },
     );
   }
