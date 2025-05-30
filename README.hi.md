@@ -1,6 +1,52 @@
 - [中文](README.zh.md)
 - [English](README.md)
 
+# कोड संरचना
+
+```
+lib/
+├── app.dart                 # एप्लिकेशन प्रवेश और वैश्विक कॉन्फ़िगरेशन
+├── main.dart               # मुख्य प्रोग्राम प्रवेश
+├── firebase_options.dart   # Firebase कॉन्फ़िगरेशन
+├── common/                 # सामान्य कंपोनेंट और उपयोगिताएँ
+├── data/                   # डेटा मॉडल और स्टेट प्रबंधन
+├── firestore/             # Firestore डेटाबेस ऑपरेशन
+├── kits/                  # ZEGO UI Kits एकीकरण
+│   ├── call/             # कॉल कार्यक्षमता
+│   │   ├── call_page.dart        # कॉल पेज
+│   │   ├── call_invitation.dart  # कॉल आमंत्रण
+│   │   └── call_settings.dart    # कॉल सेटिंग्स
+│   ├── live_streaming/   # लाइव स्ट्रीमिंग कार्यक्षमता
+│   │   ├── live_page.dart       # लाइव पेज
+│   │   ├── pk_page.dart         # PK कार्यक्षमता
+│   │   └── live_settings.dart   # लाइव सेटिंग्स
+│   ├── audio_room/       # ऑडियो चैट रूम
+│   │   ├── audio_room_page.dart    # ऑडियो रूम पेज
+│   │   └── audio_room_settings.dart # ऑडियो रूम सेटिंग्स
+│   ├── conference/       # वीडियो कॉन्फ्रेंस
+│   │   ├── conference_page.dart    # कॉन्फ्रेंस पेज
+│   │   └── conference_settings.dart # कॉन्फ्रेंस सेटिंग्स
+│   ├── chat/             # तत्काल संदेश
+│   │   ├── chat_page.dart      # चैट पेज
+│   │   └── chat_settings.dart  # चैट सेटिंग्स
+│   ├── cache.dart        # कैश प्रबंधन
+│   ├── room_list.dart    # रूम सूची प्रबंधन
+│   ├── express_event_handler.dart # इवेंट हैंडलिंग
+│   └── kits_page.dart    # Kits पेज प्रबंधन
+└── pages/                # पेज कंपोनेंट
+    ├── splash.dart       # स्प्लैश पेज
+    ├── loading.dart      # लोडिंग पेज
+    ├── login.dart        # लॉगिन पेज
+    ├── home.dart         # होम पेज
+    ├── settings.dart     # सेटिंग्स पेज
+    ├── about.dart        # अबाउट पेज
+    ├── contact.dart      # संपर्क पेज
+    ├── feedback.dart     # फीडबैक पेज
+    ├── more_drawer.dart  # अधिक ड्रॉअर मेनू
+    └── utils/            # पेज उपयोगिताएँ
+        └── ...          # पेज-संबंधित उपयोगिता फ़ंक्शन और कंपोनेंट
+```
+
 # परिचय
 
 zego-uikits का डेमो
@@ -101,7 +147,7 @@ zego-uikits का डेमो
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_2.png" alt="Call 2" style="width: 150px;">
-            <div>“#” कुंजी दबाकर कॉल करने वालों की संख्या बढ़ाई जा सकती है, समूह कॉल के लिए।</div>
+            <div>"#" कुंजी दबाकर कॉल करने वालों की संख्या बढ़ाई जा सकती है, समूह कॉल के लिए।</div>
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_3.png" alt="Call" style="width: 150px;">

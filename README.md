@@ -1,6 +1,52 @@
 - [中文](README.zh.md)
 - [हिन्दी](README.hi.md)
 
+# Code Structure
+
+```
+lib/
+├── app.dart                 # Application entry and global configuration
+├── main.dart               # Main program entry
+├── firebase_options.dart   # Firebase configuration
+├── common/                 # Common components and utilities
+├── data/                   # Data models and state management
+├── firestore/             # Firestore database operations
+├── kits/                  # ZEGO UI Kits integration
+│   ├── call/             # Call functionality
+│   │   ├── call_page.dart        # Call page
+│   │   ├── call_invitation.dart  # Call invitation
+│   │   └── call_settings.dart    # Call settings
+│   ├── live_streaming/   # Live streaming functionality
+│   │   ├── live_page.dart       # Live page
+│   │   ├── pk_page.dart         # PK functionality
+│   │   └── live_settings.dart   # Live settings
+│   ├── audio_room/       # Audio chat room
+│   │   ├── audio_room_page.dart    # Audio room page
+│   │   └── audio_room_settings.dart # Audio room settings
+│   ├── conference/       # Video conference
+│   │   ├── conference_page.dart    # Conference page
+│   │   └── conference_settings.dart # Conference settings
+│   ├── chat/             # Instant messaging
+│   │   ├── chat_page.dart      # Chat page
+│   │   └── chat_settings.dart  # Chat settings
+│   ├── cache.dart        # Cache management
+│   ├── room_list.dart    # Room list management
+│   ├── express_event_handler.dart # Event handling
+│   └── kits_page.dart    # Kits page management
+└── pages/                # Page components
+    ├── splash.dart       # Splash page
+    ├── loading.dart      # Loading page
+    ├── login.dart        # Login page
+    ├── home.dart         # Home page
+    ├── settings.dart     # Settings page
+    ├── about.dart        # About page
+    ├── contact.dart      # Contact page
+    ├── feedback.dart     # Feedback page
+    ├── more_drawer.dart  # More drawer menu
+    └── utils/            # Page utilities
+        └── ...          # Page-related utility functions and components
+```
+
 # Introduction
 
 demo of zego-uikits
@@ -101,7 +147,7 @@ Before using, you need to register Firestore and ZEGO AppID/AppSign.
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_2.png" alt="Call 2" style="width: 150px;">
-            <div>Press the “#” key to increase the number of callers for a group call.</div>
+            <div>Press the " # " key to increase the number of callers for a group call.</div>
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_3.png" alt="Call" style="width: 150px;">

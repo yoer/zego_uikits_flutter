@@ -1,6 +1,52 @@
 - [English](README.md)
 - [हिन्दी](README.hi.md)
 
+# 代码结构
+
+```
+lib/
+├── app.dart                 # 应用程序入口和全局配置
+├── main.dart               # 主程序入口
+├── firebase_options.dart   # Firebase 配置
+├── common/                 # 公共组件和工具
+├── data/                   # 数据模型和状态管理
+├── firestore/             # Firestore 数据库相关操作
+├── kits/                  # ZEGO UI Kits 集成
+│   ├── call/             # 通话功能
+│   │   ├── call_page.dart        # 通话页面
+│   │   ├── call_invitation.dart  # 通话邀请
+│   │   └── call_settings.dart    # 通话设置
+│   ├── live_streaming/   # 直播功能
+│   │   ├── live_page.dart       # 直播页面
+│   │   ├── pk_page.dart         # PK 功能
+│   │   └── live_settings.dart   # 直播设置
+│   ├── audio_room/       # 语音聊天室
+│   │   ├── audio_room_page.dart    # 语音聊天室页面
+│   │   └── audio_room_settings.dart # 语音聊天室设置
+│   ├── conference/       # 视频会议
+│   │   ├── conference_page.dart    # 视频会议页面
+│   │   └── conference_settings.dart # 视频会议设置
+│   ├── chat/             # 即时通讯
+│   │   ├── chat_page.dart      # 聊天页面
+│   │   └── chat_settings.dart  # 聊天设置
+│   ├── cache.dart        # 缓存管理
+│   ├── room_list.dart    # 房间列表管理
+│   ├── express_event_handler.dart # 事件处理
+│   └── kits_page.dart    # Kits 页面管理
+└── pages/                # 页面组件
+    ├── splash.dart       # 启动页
+    ├── loading.dart      # 加载页面
+    ├── login.dart        # 登录页面
+    ├── home.dart         # 主页
+    ├── settings.dart     # 设置页面
+    ├── about.dart        # 关于页面
+    ├── contact.dart      # 联系人页面
+    ├── feedback.dart     # 反馈页面
+    ├── more_drawer.dart  # 更多抽屉菜单
+    └── utils/            # 页面工具类
+        └── ...          # 页面相关的工具函数和组件
+```
+
 # 简介
 
 demo of zego-uikits
@@ -28,7 +74,7 @@ demo中介绍了五个kit的基本功能，通过firestore简单的将虚拟用�
      - 创建 Firebase 项目：
        访问 [Firebase 控制台](https://console.firebase.google.com/u/0/)，并创建一个新的项目。
      - 启用 Firestore：
-       在项目中，导航到“Firestore Database”部分，选择创建数据库，然后选择开始使用。
+       在项目中，导航到"Firestore Database"部分，选择创建数据库，然后选择开始使用。
        在规则页设置规则
        ```terminal
        rules_version = '2';
@@ -101,7 +147,7 @@ demo中介绍了五个kit的基本功能，通过firestore简单的将虚拟用�
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_2.png" alt="Call 2" style="width: 150px;">
-            <div>按“#”键，可以增加呼叫人数，进行多人呼叫</div>
+            <div>按"#"键，可以增加呼叫人数，进行多人呼叫</div>
         </div>
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/call_3.png" alt="Call" style="width: 150px;">
