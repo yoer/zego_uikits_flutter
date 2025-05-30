@@ -13,7 +13,7 @@ dependencies:
 
   zego_zim: ^2.20.0+1
 
-  zego_uikit: ^2.28.14
+  zego_uikit: ^2.28.18
   zego_uikit_signaling_plugin: ^2.8.10
   zego_uikit_beauty_plugin: ^1.7.6
   zego_plugin_adapter: ^2.13.9

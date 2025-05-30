@@ -1,15 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:io';
 
 // Project imports:
-import 'package:zego_uikits_demo/common/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'utils/router.dart';
@@ -148,16 +145,19 @@ class _MoreDrawerState extends State<MoreDrawer> {
         // 清空缓存逻辑
         final tempDir = await getTemporaryDirectory();
         final cacheDir = await getApplicationCacheDirectory();
+
         try {
           if (await tempDir.exists()) {
             await tempDir.delete(recursive: true);
           }
         } catch (e) {}
+
         try {
           if (await cacheDir.exists()) {
             await cacheDir.delete(recursive: true);
           }
         } catch (e) {}
+
         if (Platform.isAndroid) {
           final appDir = await getExternalStorageDirectory();
           if (appDir != null) {
@@ -170,12 +170,14 @@ class _MoreDrawerState extends State<MoreDrawer> {
           }
         } else if (Platform.isIOS) {
           final appSupportDir = await getApplicationSupportDirectory();
+
           final logsDir = Directory('${appSupportDir.path}/Logs');
           if (await logsDir.exists()) {
             try {
               await logsDir.delete(recursive: true);
             } catch (e) {}
           }
+
           final cachesDir = await getTemporaryDirectory();
           final parentDir = cachesDir.parent;
           final List<Directory> cacheDirs = [
@@ -185,6 +187,7 @@ class _MoreDrawerState extends State<MoreDrawer> {
             Directory('${parentDir.path}/Caches/ZefLogs'),
             Directory('${parentDir.path}/Caches/ZegoLogs'),
           ];
+
           for (final dir in cacheDirs) {
             if (await dir.exists()) {
               try {
@@ -193,6 +196,7 @@ class _MoreDrawerState extends State<MoreDrawer> {
             }
           }
         }
+
         if (mounted) {
           showDialog(
             context: context,
@@ -203,10 +207,8 @@ class _MoreDrawerState extends State<MoreDrawer> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    // 退出app
                     Future.delayed(const Duration(milliseconds: 200), () {
-                      // 兼容iOS和Android
-                      SystemNavigator.pop();
+                      exit(0);
                     });
                   },
                   child: const Text('确认'),
