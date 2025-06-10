@@ -132,7 +132,16 @@ class UserTable {
       /// Perform partial update
       if (updates.isNotEmpty) {
         try {
-          await _firestore.collection('users').doc(user.id).update(updates);
+          await _firestore
+              .collection('users')
+              .doc(user.id)
+              .update(updates)
+              .timeout(
+            const Duration(seconds: 2),
+            onTimeout: () {
+              throw TimeoutException('Update user info timeout');
+            },
+          );
 
           /// Update cache
           cacheNotifier.value[user.id] = user;
@@ -174,7 +183,16 @@ class UserTable {
 
     if (updates.isNotEmpty) {
       try {
-        await _firestore.collection('users').doc(userID).update(updates);
+        await _firestore
+            .collection('users')
+            .doc(userID)
+            .update(updates)
+            .timeout(
+          const Duration(seconds: 2),
+          onTimeout: () {
+            throw TimeoutException('Update user login status timeout');
+          },
+        );
 
         /// Update cache
         cacheNotifier.value[userID]?.isLogin = targetValue;
@@ -215,7 +233,16 @@ class UserTable {
 
     if (updates.isNotEmpty) {
       try {
-        await _firestore.collection('users').doc(userID).update(updates);
+        await _firestore
+            .collection('users')
+            .doc(userID)
+            .update(updates)
+            .timeout(
+          const Duration(seconds: 2),
+          onTimeout: () {
+            throw TimeoutException('Update user room info timeout');
+          },
+        );
 
         /// Update cache
         cacheNotifier.value[userID]?.roomID = roomID;
@@ -251,7 +278,16 @@ class UserTable {
 
     if (updates.isNotEmpty) {
       try {
-        await _firestore.collection('users').doc(userID).update(updates);
+        await _firestore
+            .collection('users')
+            .doc(userID)
+            .update(updates)
+            .timeout(
+          const Duration(seconds: 2),
+          onTimeout: () {
+            throw TimeoutException('Update user room host status timeout');
+          },
+        );
 
         /// Update cache
         cacheNotifier.value[userID]?.isHost = isHost;
@@ -285,7 +321,16 @@ class UserTable {
 
     if (updates.isNotEmpty) {
       try {
-        await _firestore.collection('users').doc(userID).update(updates);
+        await _firestore
+            .collection('users')
+            .doc(userID)
+            .update(updates)
+            .timeout(
+          const Duration(seconds: 2),
+          onTimeout: () {
+            throw TimeoutException('Update user PK state timeout');
+          },
+        );
 
         /// Update cache
         cacheNotifier.value[userID]?.pkState = pkState;
