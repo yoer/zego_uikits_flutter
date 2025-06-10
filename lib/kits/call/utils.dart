@@ -47,6 +47,13 @@ Future<bool> initCallInvitation() async {
             : []),
       ],
       config: ZegoCallInvitationConfig(
+        permissions: const [
+          ZegoCallInvitationPermission.camera,
+          ZegoCallInvitationPermission.microphone,
+          ZegoCallInvitationPermission.systemAlertWindow,
+          ZegoCallInvitationPermission.manuallyByUser,
+        ],
+
         /// beta config
         pip: ZegoCallInvitationPIPConfig(
           iOS: ZegoCallInvitationPIPIOSConfig(
