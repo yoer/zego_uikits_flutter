@@ -36,6 +36,8 @@
 	<string>We require microphone access to connect to a call</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photo usage</string>
+	<key>NSUserNotificationUsageDescription</key>
+    <string>Notification permission is required to display message reminders</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
