@@ -32,7 +32,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/3rdparty/
 
 # Symbolication related
 app.*.symbols
@@ -44,8 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+**/.gradle/
 google-services.json
 GoogleService-Info.plist
 firebase.json
 firebase_options.dart
 pubspec.lock
+pubspec_overrides.yaml
+
+# iOS CocoaPods
+**/Pods/
+**/.symlinks/
+**/xcuserdata/
