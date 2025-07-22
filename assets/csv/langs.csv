@@ -63,6 +63,7 @@ settings.missed_notification,"Missed Notification",超时通知,"छूटे �
 settings.missed_notification_redial,"Missed Notification ReDial",超时通知回拨,"छूटे हुए नोटिफिकेशन री-डायल"
 settings.call_in_calling,"Invite during a call",呼叫中邀请,"कॉल में कॉलिंग"
 settings.only_invitor_can_invite_in_calling,"Only the inviter can invite others during the call",只有发起者才能在呼叫中邀请他人,"सिर्फ आमंत्रक ही कॉलिंग में आमंत्रित कर सकता है"
+settings.safe_area,"Limit content display within the safe area",将内容限制显示安全区域内,"सामग्री को सुरक्षित क्षेत्र के भीतर प्रदर्शित करने तक सीमित करेंै"
 settings.seat,Seat,坐席,"सीट"
 settings.layout_mode,"Layout Mode",布局模式,"लेआउट मोड"
 settings.show_background,"Show Background",显示背景,"पृष्ठभूमि दिखाएँ"

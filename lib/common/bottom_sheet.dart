@@ -30,33 +30,35 @@ Future<void> openBottomSheet({
         child: AnimatedPadding(
           padding: MediaQuery.of(context).viewInsets,
           duration: const Duration(milliseconds: 50),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (title.isNotEmpty) ...[
-                    SizedBox(
-                      height: 60.r,
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 40.r,
-                          fontWeight: FontWeight.bold,
+          child: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (title.isNotEmpty) ...[
+                      SizedBox(
+                        height: 60.r,
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 40.r,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
+                      SizedBox(height: 16.r),
+                    ],
+                    SizedBox(
+                      height: title.isNotEmpty
+                          ? (constraints.maxHeight - 100.r - 16.r)
+                          : constraints.maxHeight,
+                      child: child,
                     ),
-                    SizedBox(height: 16.r),
                   ],
-                  SizedBox(
-                    height: title.isNotEmpty
-                        ? (constraints.maxHeight - 100.r - 16.r)
-                        : constraints.maxHeight,
-                    child: child,
-                  ),
-                ],
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       );

@@ -215,17 +215,19 @@ Future<dynamic> showDefaultGroupMemberListDialog(
   return showModalBottomSheet(
     context: context,
     builder: (context) {
-      return Container(
-        color: Colors.white,
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        padding: const EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            title,
-            memberList,
-          ],
+      return SafeArea(
+        child: Container(
+          color: Colors.white,
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              title,
+              memberList,
+            ],
+          ),
         ),
       );
     },

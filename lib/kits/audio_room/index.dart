@@ -1,8 +1,11 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Project imports:
@@ -11,7 +14,6 @@ import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/kits/audio_room/normal.dart';
 import 'package:zego_uikits_demo/kits/kits_page.dart';
 import 'package:zego_uikits_demo/pages/utils/router.dart';
-
 import 'media.dart';
 
 class AudioRoomPage extends StatefulWidget {

@@ -3,18 +3,16 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-
-// Package imports:
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
-import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
-import 'package:zego_uikits_demo/common/countdown.dart';
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/common/constant.dart';
+import 'package:zego_uikits_demo/common/countdown.dart';
 import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
@@ -22,8 +20,8 @@ import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
-import 'package:zego_uikits_demo/kits/call/language.dart';
 import 'package:zego_uikits_demo/kits/call/invitation/history.dart';
+import 'package:zego_uikits_demo/kits/call/language.dart';
 
 Future<bool> initCallInvitation() async {
   if (!SettingsCache().isAppKeyValid) {
@@ -74,6 +72,12 @@ Future<bool> initCallInvitation() async {
           timeoutSeconds: CallCache().invitation.timeoutSecond,
           enableDialBack:
               CallCache().invitation.supportMissedNotificationReDial,
+        ),
+      ),
+      uiConfig: ZegoCallInvitationUIConfig(
+        withSafeArea: CallCache().invitation.safeArea,
+        inviter: ZegoCallInvitationInviterUIConfig(
+          useVideoViewAspectFill: CallCache().videoAspectFill,
         ),
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(

@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zego_uikits_demo/data/zego.dart';
-import 'package:zego_uikits_demo/firestore/kits_service.dart';
-import 'package:zego_uikits_demo/firestore/user_doc.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 // Project imports:
+import 'package:zego_uikits_demo/data/zego.dart';
+import 'package:zego_uikits_demo/firestore/kits_service.dart';
+import 'package:zego_uikits_demo/firestore/user_doc.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
 
 class UserInfo {

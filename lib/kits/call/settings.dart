@@ -47,7 +47,7 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               Translations.settings.audioVideo,
               [
                 settingsCheckBox(
-                  title: Translations.settings.videoAspectFill,
+                  title: '${Translations.settings.videoAspectFill}(*)',
                   value: CallCache().videoAspectFill,
                   onChanged: (value) {
                     setState(() {
@@ -188,6 +188,15 @@ class _CallPageSettingsState extends State<CallPageSettings> {
             setState(() {
               CallCache().invitation.onlyInitiatorCanInviteInCalling =
                   value ?? false;
+            });
+          },
+        ),
+        settingsCheckBox(
+          title: '${Translations.settings.safeArea}(*)',
+          value: CallCache().invitation.safeArea,
+          onChanged: (value) {
+            setState(() {
+              CallCache().invitation.safeArea = value ?? false;
             });
           },
         ),

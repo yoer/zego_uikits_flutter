@@ -1,14 +1,17 @@
+// Dart imports:
 import 'dart:async';
 
+// Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
+// Project imports:
 import 'package:zego_uikits_demo/data/user.dart';
+import 'package:zego_uikits_demo/firebase_options.dart';
 import 'package:zego_uikits_demo/firestore/defines.dart';
 import 'package:zego_uikits_demo/firestore/user_doc.dart';
 import 'package:zego_uikits_demo/firestore/user_table.dart';
-import 'package:zego_uikits_demo/firebase_options.dart';
 
 class KitsFirebaseService {
   bool _init = false;

@@ -14,8 +14,8 @@ import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
-import 'package:zego_uikits_demo/kits/call/utils.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
+import 'package:zego_uikits_demo/kits/call/utils.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

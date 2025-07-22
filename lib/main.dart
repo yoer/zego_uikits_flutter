@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+// Project imports:
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/firestore/kits_service.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
-
-// Project imports:
 import 'app.dart';
 import 'data/translations.dart';
 import 'data/user.dart';

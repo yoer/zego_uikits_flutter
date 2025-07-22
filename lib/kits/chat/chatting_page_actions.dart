@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit/zego_uikit.dart';
-import 'package:zego_zimkit/zego_zimkit.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_zim/zego_zim.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';

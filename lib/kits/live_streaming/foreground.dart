@@ -1,7 +1,11 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
-import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
-import 'package:zego_uikits_demo/kits/live_streaming/pk/foreground.dart';
 
+// Package imports:
+import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
+
+// Project imports:
+import 'package:zego_uikits_demo/kits/live_streaming/pk/foreground.dart';
 import 'gifts/player.dart';
 
 class LiveStreamingForeground extends StatefulWidget {

@@ -1,10 +1,11 @@
-import 'package:circular_countdown/circular_countdown.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:circular_countdown/circular_countdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// Project imports:
 import '../data/translations.dart';
 
 class CountdownTimer extends StatefulWidget {

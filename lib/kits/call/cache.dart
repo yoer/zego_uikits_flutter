@@ -22,6 +22,8 @@ class CallInvitationCache {
   bool _canInvitingInCalling = false;
   bool _onlyInitiatorCanInviteInCalling = false;
 
+  bool _safeArea = false;
+
   CallRecord? queryHistory(String callID) {
     final index = historyNotifier.value.indexWhere((e) => e.callID == callID);
     return -1 != index ? historyNotifier.value[index] : null;
@@ -105,6 +107,15 @@ class CallInvitationCache {
     });
   }
 
+  bool get safeArea => _safeArea;
+  set safeArea(bool value) {
+    _safeArea = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_safeAreaKey, value);
+    });
+  }
+
   int get timeoutSecond => _timeoutSecond;
   set timeoutSecond(int value) {
     _timeoutSecond = value;
@@ -136,6 +147,9 @@ class CallInvitationCache {
         (prefs.getBool(_cacheSupportInvitingInCallingKey) ?? false);
     _onlyInitiatorCanInviteInCalling =
         (prefs.getBool(_cacheOnlyInitiatorCanInviteInCallingKey) ?? false);
+
+    _safeArea = (prefs.getBool(_safeAreaKey) ?? false);
+
     historyNotifier.value = (prefs.getStringList(_cacheHistoryKey) ?? [])
         .map((e) => CallRecord.fromJson(e))
         .toList();
@@ -148,12 +162,14 @@ class CallInvitationCache {
     _supportMissedNotificationReDial = true;
     _canInvitingInCalling = false;
     _onlyInitiatorCanInviteInCalling = false;
+    _safeArea = false;
 
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheSupportMissNotificationKey);
     prefs.remove(_cacheSupportMissNotificationReDialKey);
     prefs.remove(_cacheSupportInvitingInCallingKey);
     prefs.remove(_cacheOnlyInitiatorCanInviteInCallingKey);
+    prefs.remove(_safeAreaKey);
     prefs.remove(_cacheTimeoutSecondKey);
     prefs.remove(_cacheResourceIDKey);
     prefs.remove(_cacheHistoryKey);
@@ -166,6 +182,8 @@ class CallInvitationCache {
   final String _cacheSupportInvitingInCallingKey = 'cache_call_i_s_calling_can';
   final String _cacheOnlyInitiatorCanInviteInCallingKey =
       'cache_call_i_s_calling_can_only_invitor_can_invite';
+
+  final String _safeAreaKey = 'cache_call_i_s_safe_area';
 
   final String _cacheTimeoutSecondKey = 'cache_call_i_timeout';
   final String _cacheResourceIDKey = 'cache_call_i_resource_id';

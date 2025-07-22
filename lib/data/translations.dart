@@ -139,6 +139,7 @@ class TranslationsSettings {
   String get callInCalling => tr('${base}call_in_calling');
   String get onlyInvitorCanInviteInCalling =>
       tr('${base}only_invitor_can_invite_in_calling');
+  String get safeArea => tr('${base}safe_area');
 
   String get liveListId => tr('${base}live_list_id');
   String get liveListIdTips => tr('${base}live_list_id.tips');

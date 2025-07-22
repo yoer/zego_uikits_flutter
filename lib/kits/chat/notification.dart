@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-import 'package:zego_zimkit/zego_zimkit.dart';
 import 'package:zego_zim/zego_zim.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/constant.dart';

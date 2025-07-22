@@ -1192,14 +1192,15 @@ PODS:
     - Flutter
   - audioplayers_darwin (0.0.1):
     - Flutter
+    - FlutterMacOS
   - BoringSSL-GRPC (0.0.37):
     - BoringSSL-GRPC/Implementation (= 0.0.37)
     - BoringSSL-GRPC/Interface (= 0.0.37)
   - BoringSSL-GRPC/Implementation (0.0.37):
     - BoringSSL-GRPC/Interface (= 0.0.37)
   - BoringSSL-GRPC/Interface (0.0.37)
-  - cloud_firestore (5.6.8):
-    - Firebase/Firestore (= 11.10.0)
+  - cloud_firestore (5.6.11):
+    - Firebase/Firestore (= 11.15.0)
     - firebase_core
     - Flutter
   - connectivity_plus (0.0.1):
@@ -1241,46 +1242,46 @@ PODS:
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
-  - Firebase/Auth (11.10.0):
+  - Firebase/Auth (11.15.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 11.10.0)
-  - Firebase/CoreOnly (11.10.0):
-    - FirebaseCore (~> 11.10.0)
-  - Firebase/Firestore (11.10.0):
+    - FirebaseAuth (~> 11.15.0)
+  - Firebase/CoreOnly (11.15.0):
+    - FirebaseCore (~> 11.15.0)
+  - Firebase/Firestore (11.15.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 11.10.0)
-  - firebase_auth (5.5.4):
-    - Firebase/Auth (= 11.10.0)
+    - FirebaseFirestore (~> 11.15.0)
+  - firebase_auth (5.6.2):
+    - Firebase/Auth (= 11.15.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.13.1):
-    - Firebase/CoreOnly (= 11.10.0)
+  - firebase_core (3.15.1):
+    - Firebase/CoreOnly (= 11.15.0)
     - Flutter
   - FirebaseAppCheckInterop (11.15.0)
-  - FirebaseAuth (11.10.0):
+  - FirebaseAuth (11.15.0):
     - FirebaseAppCheckInterop (~> 11.0)
     - FirebaseAuthInterop (~> 11.0)
-    - FirebaseCore (~> 11.10.0)
-    - FirebaseCoreExtension (~> 11.10.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
-    - GoogleUtilities/Environment (~> 8.0)
+    - FirebaseCore (~> 11.15.0)
+    - FirebaseCoreExtension (~> 11.15.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 8.1)
+    - GoogleUtilities/Environment (~> 8.1)
     - GTMSessionFetcher/Core (< 5.0, >= 3.4)
     - RecaptchaInterop (~> 101.0)
   - FirebaseAuthInterop (11.15.0)
-  - FirebaseCore (11.10.0):
-    - FirebaseCoreInternal (~> 11.10.0)
-    - GoogleUtilities/Environment (~> 8.0)
-    - GoogleUtilities/Logger (~> 8.0)
-  - FirebaseCoreExtension (11.10.0):
-    - FirebaseCore (~> 11.10.0)
-  - FirebaseCoreInternal (11.10.0):
-    - "GoogleUtilities/NSData+zlib (~> 8.0)"
-  - FirebaseFirestore (11.10.0):
-    - FirebaseCore (~> 11.10.0)
-    - FirebaseCoreExtension (~> 11.10.0)
-    - FirebaseFirestoreInternal (= 11.10.0)
+  - FirebaseCore (11.15.0):
+    - FirebaseCoreInternal (~> 11.15.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Logger (~> 8.1)
+  - FirebaseCoreExtension (11.15.0):
+    - FirebaseCore (~> 11.15.0)
+  - FirebaseCoreInternal (11.15.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.1)"
+  - FirebaseFirestore (11.15.0):
+    - FirebaseCore (~> 11.15.0)
+    - FirebaseCoreExtension (~> 11.15.0)
+    - FirebaseFirestoreInternal (= 11.15.0)
     - FirebaseSharedSwift (~> 11.0)
-  - FirebaseFirestoreInternal (11.10.0):
+  - FirebaseFirestoreInternal (11.15.0):
     - abseil/algorithm (~> 1.20240722.0)
     - abseil/base (~> 1.20240722.0)
     - abseil/container/flat_hash_map (~> 1.20240722.0)
@@ -1290,7 +1291,7 @@ PODS:
     - abseil/time (~> 1.20240722.0)
     - abseil/types (~> 1.20240722.0)
     - FirebaseAppCheckInterop (~> 11.0)
-    - FirebaseCore (~> 11.10.0)
+    - FirebaseCore (~> 11.15.0)
     - "gRPC-C++ (~> 1.69.0)"
     - gRPC-Core (~> 1.69.0)
     - leveldb-library (~> 1.22)
@@ -1475,7 +1476,7 @@ PODS:
   - zego_effects_plugin (0.0.1):
     - Flutter
     - ZegoEffects (< 2.1, >= 2.0)
-  - zego_express_engine (3.20.5):
+  - zego_express_engine (3.21.0):
     - Flutter
   - zego_uikit (0.0.1):
     - Flutter
@@ -1490,12 +1491,12 @@ PODS:
     - Flutter
   - zego_uikit_signaling_plugin (0.0.1):
     - Flutter
-  - zego_zim (2.20.0):
+  - zego_zim (2.21.0):
     - Flutter
-    - ZIM-Private (= 2.20.6.3312)
-  - zego_zim_audio (1.0.2):
+    - ZIM (= 2.21.1)
+  - zego_zim_audio (1.0.5):
     - Flutter
-    - ZIMAudio (= 1.0.2)
+    - ZIMAudio (= 1.0.5)
   - zego_zimkit (0.0.1):
     - Flutter
   - zego_zpns (2.6.0):
@@ -1503,14 +1504,14 @@ PODS:
     - ZPNs (= 2.6.0)
   - ZegoEffects (2.0.3.1478)
   - ZegoUIKitReport (0.2.10)
-  - ZIM-Private (2.20.6.3312)
-  - ZIMAudio (1.0.2)
+  - ZIM (2.21.1)
+  - ZIMAudio (1.0.5)
   - ZIPFoundation (0.9.19)
   - ZPNs (2.6.0)
 
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
-  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/darwin`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
@@ -1579,7 +1580,7 @@ SPEC REPOS:
     - SwiftyGif
     - ZegoEffects
     - ZegoUIKitReport
-    - ZIM-Private
+    - ZIM
     - ZIMAudio
     - ZIPFoundation
     - ZPNs
@@ -1588,7 +1589,7 @@ EXTERNAL SOURCES:
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audioplayers_darwin:
-    :path: ".symlinks/plugins/audioplayers_darwin/ios"
+    :path: ".symlinks/plugins/audioplayers_darwin/darwin"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   connectivity_plus:
@@ -1669,26 +1670,26 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: a05cc83bf02079535e17169a73c5be5ba47f714b
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
-  audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
+  audioplayers_darwin: 4f9ca89d92d3d21cec7ec580e78ca888e5fb68bd
   BoringSSL-GRPC: dded2a44897e45f28f08ae87a55ee4bcd19bc508
-  cloud_firestore: 18eb885c872cd34af2a59c2a7cdc7aa576d8c315
+  cloud_firestore: 8b8ad857da9a98527dab9c7ae520d0eba975bef9
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
-  Firebase: 1fe1c0a7d9aaea32efe01fbea5f0ebd8d70e53a2
-  firebase_auth: 4d9603c196d22f71e80cf518b71939c4f2117088
-  firebase_core: ba71b44041571da878cb624ce0d80250bcbe58ad
+  Firebase: d99ac19b909cd2c548339c2241ecd0d1599ab02e
+  firebase_auth: dad1f2f9c317dba1b300933a3f7622fa30eb721c
+  firebase_core: ece862f94b2bc72ee0edbeec7ab5c7cb09fe1ab5
   FirebaseAppCheckInterop: 06fe5a3799278ae4667e6c432edd86b1030fa3df
-  FirebaseAuth: c4146bdfdc87329f9962babd24dae89373f49a32
+  FirebaseAuth: a6575e5fbf46b046c58dc211a28a5fbdd8d4c83b
   FirebaseAuthInterop: 7087d7a4ee4bc4de019b2d0c240974ed5d89e2fd
-  FirebaseCore: 8344daef5e2661eb004b177488d6f9f0f24251b7
-  FirebaseCoreExtension: 6f357679327f3614e995dc7cf3f2d600bdc774ac
-  FirebaseCoreInternal: ef4505d2afb1d0ebbc33162cb3795382904b5679
-  FirebaseFirestore: 3f1488ff7739cb3c5d10e572bc4e9fcd8e8cb4ac
-  FirebaseFirestoreInternal: 97a2bb5f16951c77753c860d3519379702ab6f8a
+  FirebaseCore: efb3893e5b94f32b86e331e3bd6dadf18b66568e
+  FirebaseCoreExtension: edbd30474b5ccf04e5f001470bdf6ea616af2435
+  FirebaseCoreInternal: 9afa45b1159304c963da48addb78275ef701c6b4
+  FirebaseFirestore: 1e5fafdac2b2ef1ffc24034460b7b4821a15be96
+  FirebaseFirestoreInternal: df9ab608a59a4e8eefd0796ed7652f3c1a88473a
   FirebaseSharedSwift: e17c654ef1f1a616b0b33054e663ad1035c8fd40
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_callkit_incoming: cb8138af67cda6dd981f7101a5d709003af21502
@@ -1723,19 +1724,19 @@ SPEC CHECKSUMS:
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_effects_plugin: 6371f4b32ec481da84d12caac155aac37d42f28b
-  zego_express_engine: 41c2e925fe071077e0554bdd12b925a73d7b8007
+  zego_express_engine: 1164f43c703759f55e0751377425f660d15b2904
   zego_uikit: 0843069d9d4d0e4845abf0ea9b24efa95c1760fa
   zego_uikit_beauty_plugin: e1ed4d8f56beffc744b167b95b0b8ef1a1a56d4a
   zego_uikit_prebuilt_call: 7fe09774f68ec5344fd16378ff2d3bc2de36c6f8
   zego_uikit_signaling_plugin: 89c53a021d449903c6e6a0642383bb7e5791e46e
-  zego_zim: 54ca1d71cbd91c83bb56d63126016bd4a81f2777
-  zego_zim_audio: 93e7b1359ab565cbdf8bc01ef33fb8f2492095cd
+  zego_zim: 5cd4b8e8835adb4260473b4fe6864c4d142dae3c
+  zego_zim_audio: 0730f5679085c9587c6bff6d09a8c4fb7a6df10a
   zego_zimkit: eb898bea1f8b43a1cb814eaab39617ef679b6917
   zego_zpns: e2ef9b972e9b6be00b78b32b71c550c426584752
   ZegoEffects: ef124bfc9f68263d5488c308d8108272e6c51374
   ZegoUIKitReport: a993f7ccc5d243998a7e601a60e16fcd6c084417
-  ZIM-Private: 70c76400eb99981920e6e1edc7c7ebe09aba7bfe
-  ZIMAudio: 8e50c9cffb9a6828294c27828db896f8ef388082
+  ZIM: cf0cb6a5b7c40803056c421e289b58440ac98292
+  ZIMAudio: a5bca7fcbcbefeb71af992ef2336c6c98e0398ec
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 

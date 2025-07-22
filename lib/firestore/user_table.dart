@@ -1,10 +1,15 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Project imports:
 import 'package:zego_uikits_demo/firestore/defines.dart';
 import 'package:zego_uikits_demo/firestore/user_doc.dart';
-
 import '../data/user.dart';
 
 class UserTable {

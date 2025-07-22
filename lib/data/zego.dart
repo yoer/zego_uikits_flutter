@@ -2,10 +2,10 @@
 import 'package:flutter/cupertino.dart';
 
 // Package imports:
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
-import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
@@ -57,7 +57,7 @@ class ZegoSDKer {
       ///  [FBI WARING]
       ///  useSystemCallingUI Must be called AFTER zimkit.init!!!
       ///  otherwise the offline handler will be caught by zimkit, resulting in callkit unable to receive the offline handler
-      ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
+      await ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
         [ZegoUIKitSignalingPlugin()],
       );
       await initCallInvitation();
