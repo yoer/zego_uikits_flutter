@@ -147,7 +147,7 @@ class _GiftsPageState extends State<GiftsSheet> {
               ? BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withValues(alpha: 0.3),
                 )
               : null,
           child: isSelected

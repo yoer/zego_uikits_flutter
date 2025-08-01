@@ -1,8 +1,11 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
+
 
 class SettingsCache {
   bool _isLoaded = false;
@@ -47,6 +50,13 @@ class SettingsCache {
     appID = prefs.get(_cacheAppIDKey) as String? ?? '';
     appSign = prefs.get(_cacheAppSignKey) as String? ?? '';
     appToken = prefs.get(_cacheAppTokenKey) as String? ?? '';
+
+    if (kDebugMode) {
+      if (appID.isEmpty && appSign.isEmpty) {
+        appID = Platform.environment['ZEGO_APP_ID'] ?? '';
+        appSign = Platform.environment['ZEGO_APP_SIGN'] ?? '';
+      }
+    }
 
     _showSplash = prefs.get(_cacheShowSplashKey) as bool? ?? true;
     _useFirestore = prefs.get(_cacheUseFirestoreKey) as bool? ?? true;

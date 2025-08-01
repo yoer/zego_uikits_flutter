@@ -1199,7 +1199,7 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.37):
     - BoringSSL-GRPC/Interface (= 0.0.37)
   - BoringSSL-GRPC/Interface (0.0.37)
-  - cloud_firestore (5.6.11):
+  - cloud_firestore (5.6.12):
     - Firebase/Firestore (= 11.15.0)
     - firebase_core
     - Flutter
@@ -1250,11 +1250,11 @@ PODS:
   - Firebase/Firestore (11.15.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 11.15.0)
-  - firebase_auth (5.6.2):
+  - firebase_auth (5.7.0):
     - Firebase/Auth (= 11.15.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.15.1):
+  - firebase_core (3.15.2):
     - Firebase/CoreOnly (= 11.15.0)
     - Flutter
   - FirebaseAppCheckInterop (11.15.0)
@@ -1672,7 +1672,7 @@ SPEC CHECKSUMS:
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
   audioplayers_darwin: 4f9ca89d92d3d21cec7ec580e78ca888e5fb68bd
   BoringSSL-GRPC: dded2a44897e45f28f08ae87a55ee4bcd19bc508
-  cloud_firestore: 8b8ad857da9a98527dab9c7ae520d0eba975bef9
+  cloud_firestore: fdcc87898326e396d6ef6df543acf9b5c2034b95
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
@@ -1680,8 +1680,8 @@ SPEC CHECKSUMS:
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   Firebase: d99ac19b909cd2c548339c2241ecd0d1599ab02e
-  firebase_auth: dad1f2f9c317dba1b300933a3f7622fa30eb721c
-  firebase_core: ece862f94b2bc72ee0edbeec7ab5c7cb09fe1ab5
+  firebase_auth: 50af8366c87bb88c80ebeae62eb60189c7246b9b
+  firebase_core: 995454a784ff288be5689b796deb9e9fa3601818
   FirebaseAppCheckInterop: 06fe5a3799278ae4667e6c432edd86b1030fa3df
   FirebaseAuth: a6575e5fbf46b046c58dc211a28a5fbdd8d4c83b
   FirebaseAuthInterop: 7087d7a4ee4bc4de019b2d0c240974ed5d89e2fd

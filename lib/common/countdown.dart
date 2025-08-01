@@ -47,7 +47,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+        color: Colors.black.withValues(alpha: 0.2),
       ),
       padding: EdgeInsets.all(20.r),
       child: Column(

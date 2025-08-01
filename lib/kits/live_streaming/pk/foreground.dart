@@ -61,7 +61,7 @@ class _LiveStreamingPKForegroundState extends State<LiveStreamingPKForeground> {
             stateNotifier: widget.stateNotifier,
           ),
           heightFactor: 0.8,
-          backgroundColor: Colors.white.withOpacity(0.9),
+          backgroundColor: Colors.white.withValues(alpha: 0.9),
         );
       },
       child: Image.asset(

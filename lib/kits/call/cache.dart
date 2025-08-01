@@ -203,6 +203,8 @@ class CallCache {
   bool _turnOnMicrophoneWhenJoining = true;
   bool _useSpeakerWhenJoining = true;
 
+  bool _supportChat = false;
+
   bool _durationVisible = true;
   bool _durationAutoHangUp = false;
   int _durationAutoHangUpSeconds = -1;
@@ -270,6 +272,15 @@ class CallCache {
     });
   }
 
+  bool get supportChat => _supportChat;
+  set supportChat(bool value) {
+    _supportChat = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_supportChatKey, value);
+    });
+  }
+
   void addRoomID(String roomID) {
     roomIDList.value = [
       ...roomIDList.value,
@@ -306,6 +317,7 @@ class CallCache {
     prefs.remove(_turnOnCameraWhenJoiningKey);
     prefs.remove(_turnOnMicrophoneWhenJoiningKey);
     prefs.remove(_useSpeakerWhenJoiningKey);
+    prefs.remove(_supportChatKey);
 
     invitation.clear();
   }
@@ -337,6 +349,8 @@ class CallCache {
     _useSpeakerWhenJoining =
         prefs.get(_useSpeakerWhenJoiningKey) as bool? ?? true;
 
+    _supportChat = prefs.get(_supportChatKey) as bool? ?? true;
+
     _durationVisible = prefs.get(_supportDurationVisibleKey) as bool? ?? true;
     _durationAutoHangUp =
         prefs.get(_supportDurationAutoHangUpKey) as bool? ?? false;
@@ -356,6 +370,7 @@ class CallCache {
       'cache_call_turn_on_mic_when_joining';
   final String _useSpeakerWhenJoiningKey =
       'cache_call_use_speaker_when_joining';
+  final String _supportChatKey = 'cache_call_support_chat';
   final String _supportDurationVisibleKey = 'cache_call_duration_visible';
   final String _supportDurationAutoHangUpKey =
       'cache_call_duration_auto_hangup';

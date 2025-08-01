@@ -220,7 +220,7 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
                       width: 20.r,
                       height: 20.r,
                       child: CircleAvatar(
-                        backgroundColor: Colors.black.withOpacity(0.5),
+                        backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: Icon(
                           user.camera.value
                               ? Icons.videocam
@@ -240,7 +240,7 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
                       width: 20.r,
                       height: 20.r,
                       child: CircleAvatar(
-                        backgroundColor: Colors.black.withOpacity(0.5),
+                        backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: Icon(
                           user.microphone.value ? Icons.mic : Icons.mic_off,
                           color: Colors.white,
@@ -259,7 +259,7 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
                       padding: EdgeInsets.all(5.r),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                       ),
                       child: Text(
                         user.name,

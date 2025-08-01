@@ -262,7 +262,7 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
             return Container(
               height: 50.r,
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(20.0.r),
               ),
               alignment: Alignment.center,
@@ -416,7 +416,7 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.blue[900]!.withOpacity(0.9),
+          backgroundColor: Colors.blue[900]!.withValues(alpha: 0.9),
           title: Text(
               "You have a request to turn on your ${isCameraOrMicrophone ? "camera" : "microphone"}",
               style: textStyle),

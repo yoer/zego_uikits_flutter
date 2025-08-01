@@ -13,16 +13,16 @@ dependencies:
 
   zego_zim: ^2.21.1+1
 
-  zego_uikit: ^2.28.22
-  zego_uikit_signaling_plugin: ^2.8.13
-  zego_uikit_beauty_plugin: ^1.7.6
+  zego_uikit: ^2.28.23
+  zego_uikit_signaling_plugin: ^2.8.15
+  zego_uikit_beauty_plugin: ^1.7.9
   zego_plugin_adapter: ^2.13.9
 
-  zego_uikit_prebuilt_video_conference: ^2.10.0
-  zego_uikit_prebuilt_call: ^4.17.1
-  zego_uikit_prebuilt_live_audio_room: ^3.16.2
-  zego_uikit_prebuilt_live_streaming: ^3.14.1
-  zego_zimkit: ^1.19.0
+  zego_uikit_prebuilt_video_conference: ^2.10.1
+  zego_uikit_prebuilt_call: ^4.17.10
+  zego_uikit_prebuilt_live_audio_room: ^3.16.3
+  zego_uikit_prebuilt_live_streaming: ^3.14.2
+  zego_zimkit: ^1.19.2
 
   cupertino_icons: ^1.0.8
   go_router: ^14.6.2
@@ -31,7 +31,7 @@ dependencies:
   device_info_plus: any
   shared_preferences: ^2.2.3
   fluttertoast: ^8.2.6
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.4.1
   connectivity_plus: ^6.1.0
   introduction_screen: ^3.1.14
   easy_localization: ^3.0.7

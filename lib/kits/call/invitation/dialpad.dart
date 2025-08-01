@@ -98,7 +98,7 @@ class CallInvitationDialPadState extends State<CallInvitationDialPad> {
     return DialPad(
       enableDtmf: true,
       outputMask: "000000000",
-      buttonColor: Colors.grey.withOpacity(0.5),
+      buttonColor: Colors.grey.withValues(alpha: 0.5),
       backspaceButtonIconColor: Colors.red,
       valueUpdated: (String value) {
         callNumber = value;
@@ -243,7 +243,7 @@ class CallInvitationDialPadState extends State<CallInvitationDialPad> {
                         width: closeIconSize,
                         height: closeIconSize,
                         decoration: BoxDecoration(
-                          color: Colors.green.withOpacity(0.3),
+                          color: Colors.green.withValues(alpha: 0.3),
                           borderRadius:
                               BorderRadius.circular(closeIconSize / 2.0),
                         ),

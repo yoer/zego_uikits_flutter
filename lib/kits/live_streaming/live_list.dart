@@ -51,7 +51,7 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
   Widget liveListEmptyTips() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
       ),
       child: Center(
         child: Column(
@@ -153,7 +153,7 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.black,
-              backgroundColor: Colors.white.withOpacity(0.2),
+              backgroundColor: Colors.white.withValues(alpha: 0.2),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r),
               ),

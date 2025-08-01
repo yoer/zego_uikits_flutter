@@ -15,6 +15,8 @@ import 'package:zego_uikits_demo/data/user.dart';
 import 'package:zego_uikits_demo/kits/call/cache.dart';
 import 'package:zego_uikits_demo/kits/call/utils.dart';
 
+import '../kits/chat/cache.dart';
+
 class ZegoSDKer {
   bool isInit = false;
 
@@ -38,7 +40,7 @@ class ZegoSDKer {
         appID: int.parse(SettingsCache().appID),
         appSign: SettingsCache().appSign,
         notificationConfig: ZegoZIMKitNotificationConfig(
-          resourceID: CallCache().invitation.resourceID,
+          resourceID: ChatCache().resourceID,
           androidNotificationConfig: ZegoZIMKitAndroidNotificationConfig(
             channelName: 'Chat Message',
             sound: 'message',

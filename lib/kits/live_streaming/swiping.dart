@@ -135,7 +135,7 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
   Widget emptyTips() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
       ),
       child: Center(
         child: Column(

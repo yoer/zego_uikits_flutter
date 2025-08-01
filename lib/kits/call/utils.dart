@@ -292,6 +292,12 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     );
   }
 
+  if (CallCache().supportChat) {
+    config.bottomMenuBar.buttons.add(
+      ZegoCallMenuBarButtonName.chatButton,
+    );
+  }
+
   if (KitCommonCache().supportScreenSharing) {
     config.layout = ZegoLayout.gallery(
       showScreenSharingFullscreenModeToggleButtonRules:

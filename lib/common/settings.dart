@@ -33,7 +33,7 @@ Widget settingsGroup(String groupName, List<Widget> children) {
 
 Widget settingsLine() {
   return Container(
-    color: Colors.black.withOpacity(0.2),
+    color: Colors.black.withValues(alpha: 0.2),
     height: 1,
     margin: EdgeInsets.all(20.r),
   );

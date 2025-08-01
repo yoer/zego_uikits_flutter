@@ -95,7 +95,7 @@ class _ContactState extends State<Contact> with SingleTickerProviderStateMixin {
     return Container(
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Colors.black.withOpacity(0.1), width: 2.r),
+          bottom: BorderSide(color: Colors.black.withValues(alpha: 0.1), width: 2.r),
         ),
       ),
       child: Row(
