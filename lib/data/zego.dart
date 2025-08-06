@@ -42,9 +42,11 @@ class ZegoSDKer {
         notificationConfig: ZegoZIMKitNotificationConfig(
           resourceID: ChatCache().resourceID,
           androidNotificationConfig: ZegoZIMKitAndroidNotificationConfig(
+            channelID: "zimkit_message",
             channelName: 'Chat Message',
             sound: 'message',
             icon: 'message',
+            enable: false,
           ),
         ),
       );
