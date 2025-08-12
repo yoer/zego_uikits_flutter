@@ -22,7 +22,7 @@ class NetworkStatus {
     late List<ConnectivityResult> result;
     try {
       result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
+    } on PlatformException catch (_) {
       return;
     }
 

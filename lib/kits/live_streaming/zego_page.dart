@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zego_plugin_adapter/zego_plugin_adapter.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
@@ -131,14 +130,13 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
         },
       ),
     );
+    final hostEvents = ZegoUIKitPrebuiltLiveStreamingEvents(
+      onError: (ZegoUIKitError error) {
+        debugPrint('onError:$error');
+      },
+    );
 
-    final events = widget.isHost
-        ? ZegoUIKitPrebuiltLiveStreamingEvents(
-            onError: (ZegoUIKitError error) {
-              debugPrint('onError:$error');
-            },
-          )
-        : audienceEvents;
+    final events = widget.isHost ? hostEvents : audienceEvents;
 
     events.onStateUpdated = (state) {
       liveStateNotifier.value = state;

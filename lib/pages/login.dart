@@ -10,11 +10,9 @@ import 'package:zego_uikits_demo/common/connect_status.dart';
 import 'package:zego_uikits_demo/common/logo.dart';
 import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/common/user_id.dart';
-import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
-import 'package:zego_uikits_demo/data/zego.dart';
 import 'package:zego_uikits_demo/pages/utils/router.dart';
 
 class LoginPage extends StatefulWidget {

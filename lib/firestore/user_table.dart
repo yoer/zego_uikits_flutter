@@ -10,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // Project imports:
 import 'package:zego_uikits_demo/firestore/defines.dart';
 import 'package:zego_uikits_demo/firestore/user_doc.dart';
-import '../data/user.dart';
 
 class UserTable {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

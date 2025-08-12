@@ -1,11 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/data/settings.dart';
@@ -51,7 +49,7 @@ void main() async {
       ),
     );
   } catch (e, stack) {
-    print('Error during initialization: $e');
-    print('Stack trace: $stack');
+    debugPrint('Error during initialization: $e');
+    debugPrint('Stack trace: $stack');
   }
 }

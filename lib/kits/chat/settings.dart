@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/data/translations.dart';
-
 import '../../common/settings.dart';
 import 'cache.dart';
 

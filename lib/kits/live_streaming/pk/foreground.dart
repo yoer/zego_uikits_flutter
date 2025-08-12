@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,12 +7,8 @@ import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_stre
 
 // Project imports:
 import 'package:zego_uikits_demo/common/bottom_sheet.dart';
-import '../../../common/avatar.dart';
 import '../../../data/assets.dart';
 import '../../../data/translations.dart';
-import '../../../data/user.dart';
-import '../../../firestore/kits_service.dart';
-import '../../../firestore/user_doc.dart';
 import 'host_list.dart';
 
 class LiveStreamingPKForeground extends StatefulWidget {

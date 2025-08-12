@@ -113,7 +113,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           onTap: () async {
-                            Clipboard.setData(ClipboardData(text: consoleURL))
+                            Clipboard.setData(
+                                    const ClipboardData(text: consoleURL))
                                 .then((_) {
                               showInfoToast(Translations.settings.copied);
                             });

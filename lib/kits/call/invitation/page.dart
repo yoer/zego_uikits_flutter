@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Project imports:
-import '../../../pages/contact.dart';
 import 'dialpad.dart';
 import 'history.dart';
 

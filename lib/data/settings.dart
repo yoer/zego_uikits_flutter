@@ -1,11 +1,8 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:io';
-
 
 class SettingsCache {
   bool _isLoaded = false;

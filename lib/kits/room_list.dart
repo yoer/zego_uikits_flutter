@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/data/translations.dart';
@@ -100,7 +99,8 @@ class _RoomListState extends State<RoomList> {
                                 Positioned.fill(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.black.withValues(alpha: 0.2),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.2),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
@@ -115,7 +115,8 @@ class _RoomListState extends State<RoomList> {
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(2),
-                                      color: Colors.black.withValues(alpha: 0.5),
+                                      color:
+                                          Colors.black.withValues(alpha: 0.5),
                                     ),
                                     child: Text(
                                       roomID,

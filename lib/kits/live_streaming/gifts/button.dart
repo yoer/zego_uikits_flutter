@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -9,7 +8,6 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikits_demo/common/bottom_sheet.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/gifts/service.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/gifts/sheet.dart';
-import 'defines.dart';
 
 class GiftButton extends StatefulWidget {
   const GiftButton({
@@ -38,7 +36,7 @@ class _GiftButtonState extends State<GiftButton> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return GiftsSheet(
-                  gifts: snapshot.data as List<GiftModel>? ?? [],
+                  gifts: snapshot.data ?? [],
                   onSend: null == widget.targetReceiver
                       ? null
                       : (model) {

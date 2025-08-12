@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
-import 'package:zego_uikits_demo/data/user.dart';
 import 'defines.dart';
 
 class GiftService {
