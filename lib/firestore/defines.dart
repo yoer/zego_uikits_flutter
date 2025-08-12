@@ -9,6 +9,8 @@ enum RoomType {
   unknown,
 }
 
+const String firebaseProjectName = "uikits_demo";
+
 extension RoomTypeExtension on RoomType {
   static RoomType fromRoomID(String roomID) {
     if (roomID.isEmpty) {

@@ -36,7 +36,7 @@ class KitsFirebaseService {
     _init = true;
 
     await Firebase.initializeApp(
-      name: 'uikits_demo',
+      name: firebaseProjectName,
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
