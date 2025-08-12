@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/data/translations.dart';
@@ -144,6 +145,8 @@ class _MoreDrawerState extends State<MoreDrawer> {
         color: Colors.black,
       ),
       onTap: () async {
+        await ZegoUIKit().clearLogs();
+
         // 清空缓存逻辑
         final tempDir = await getTemporaryDirectory();
         final cacheDir = await getApplicationCacheDirectory();
