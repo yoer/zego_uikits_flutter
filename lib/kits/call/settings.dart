@@ -44,10 +44,10 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               ],
             ),
             settingsGroup(
-              Translations.settings.calling,
+              '${Translations.settings.calling}(${Translations.settings.starTips})',
               [
                 settingsCheckBox(
-                  title: Translations.settings.showVideoOnInviteeCall,
+                  title: '${Translations.settings.showVideoOnInviteeCall}(*)',
                   value: CallCache().showVideoOnInviteeCall,
                   onChanged: (value) {
                     setState(() {
@@ -56,7 +56,7 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIShowAvatar,
+                  title: '${Translations.settings.inviteeUIShowAvatar}(*)',
                   value: CallCache().inviteeUIShowAvatar,
                   onChanged: (value) {
                     setState(() {
@@ -65,7 +65,7 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIShowCentralName,
+                  title: '${Translations.settings.inviteeUIShowCentralName}(*)',
                   value: CallCache().inviteeUIShowCentralName,
                   onChanged: (value) {
                     setState(() {
@@ -74,7 +74,7 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIShowCallingText,
+                  title: '${Translations.settings.inviteeUIShowCallingText}(*)',
                   value: CallCache().inviteeUIShowCallingText,
                   onChanged: (value) {
                     setState(() {
@@ -83,7 +83,8 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIUseVideoViewAspectFill,
+                  title:
+                      '${Translations.settings.inviteeUIUseVideoViewAspectFill}(*)',
                   value: CallCache().inviteeUIUseVideoViewAspectFill,
                   onChanged: (value) {
                     setState(() {
@@ -93,7 +94,8 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIDefaultMicrophoneOn,
+                  title:
+                      '${Translations.settings.inviteeUIDefaultMicrophoneOn}(*)',
                   value: CallCache().inviteeUIDefaultMicrophoneOn,
                   onChanged: (value) {
                     setState(() {
@@ -102,7 +104,7 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIDefaultCameraOn,
+                  title: '${Translations.settings.inviteeUIDefaultCameraOn}(*)',
                   value: CallCache().inviteeUIDefaultCameraOn,
                   onChanged: (value) {
                     setState(() {
@@ -111,7 +113,8 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIShowMainButtonsText,
+                  title:
+                      '${Translations.settings.inviteeUIShowMainButtonsText}(*)',
                   value: CallCache().inviteeUIShowMainButtonsText,
                   onChanged: (value) {
                     setState(() {
@@ -120,7 +123,8 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
-                  title: Translations.settings.inviteeUIShowSubButtonsText,
+                  title:
+                      '${Translations.settings.inviteeUIShowSubButtonsText}(*)',
                   value: CallCache().inviteeUIShowSubButtonsText,
                   onChanged: (value) {
                     setState(() {

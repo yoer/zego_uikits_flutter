@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Dart imports:
+import 'dart:async';
+
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
@@ -33,7 +36,14 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     await KitsFirebaseService().init();
-    await FcmService.initialize();
+
+    // FCM service initialization, failure should not affect app startup
+    try {
+      await FcmService.initialize();
+    } catch (e) {
+      // FCM service initialization failure should not prevent app startup
+      debugPrint('FCM service initialization failed: $e');
+    }
 
     await EasyLocalization.ensureInitialized();
 
@@ -62,5 +72,88 @@ void main() async {
   } catch (e, stack) {
     debugPrint('Error during initialization: $e');
     debugPrint('Stack trace: $stack');
+
+    // Even if initialization fails, try to start the app
+    try {
+      runApp(
+        MaterialApp(
+          title: 'Zego UIKits Demo',
+          home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Zego UIKits Demo - Error State'),
+              backgroundColor: Colors.red,
+            ),
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error, size: 64, color: Colors.red),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'App Initialization Failed',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Some services could not start properly, but the app can still run',
+                      style: TextStyle(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Error Details:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            e.toString(),
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    } catch (fallbackError) {
+      // Final fallback: display a very simple page
+      try {
+        runApp(
+          MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('App Startup Failed',
+                        style: TextStyle(fontSize: 24)),
+                    const SizedBox(height: 16),
+                    Text('Error: $fallbackError'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      } catch (finalError) {
+        debugPrint('Final fallback also failed: $finalError');
+      }
+    }
   }
 }

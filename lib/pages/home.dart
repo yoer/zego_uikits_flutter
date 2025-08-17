@@ -75,6 +75,8 @@ class HomePageState extends State<HomePage> {
             });
           }
         });
+      }).catchError((error) {
+        debugPrint('ZegoSDK initialization failed: $error');
       });
     });
   }

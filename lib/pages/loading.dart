@@ -17,11 +17,11 @@ class LoadingPage extends StatefulWidget {
 class LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
+    final shouldGoToHome = UserService().isLogin && SettingsCache().isAppKeyValid;
+    
     return PopScope(
       canPop: false,
-      child: UserService().isLogin && SettingsCache().isAppKeyValid
-          ? const HomePage()
-          : const LoginPage(),
+      child: shouldGoToHome ? const HomePage() : const LoginPage(),
     );
   }
 }

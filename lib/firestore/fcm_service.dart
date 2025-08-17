@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:io';
 
 // Package imports:
@@ -49,8 +50,20 @@ class FcmService {
     }
 
     // Retrieve and print the token (you can upload it to your server/Firestore here)
-    final token = await _messaging.getToken();
-    debugPrint('FCM token: $token');
+    try {
+      // Add timeout mechanism to avoid infinite waiting
+      final token = await _messaging.getToken().timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          throw TimeoutException(
+              'FCM token request timeout', const Duration(seconds: 10));
+        },
+      );
+      debugPrint('FCM token: $token');
+    } catch (e) {
+      // Token fetch failure should not prevent the entire service initialization
+      debugPrint('FCM token fetch failed: $e');
+    }
 
     // Listen for token refresh
     _messaging.onTokenRefresh.listen((newToken) {

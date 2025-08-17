@@ -138,8 +138,8 @@ call.one_on_one.title,"One on One",一对一通话,"एक-से-एक"
 call.group.title,"Group",多人通话,"समूह"
 call.contacts.title,"Contacts",联系人,संपर्क
 call.contacts.empty_tips,"Contacts are empty, invite more people to use it.","联系人为空，去邀请更多的人使用吧","संपर्क खाली हैं, अधिक लोगों को उपयोग के लिए आमंत्रित करें।"
-call.calling,Calling,呼叫中,कॉल कर रहा है
-call.in_call,In Call,通话中,कॉल में
+settings.calling,Calling,呼叫中,कॉल कर रहा है
+settings.in_call,In Call,通话中,कॉल में
 chat.title,"Chat",聊天,"चैट"
 chat.add_member,"Add Member",添加成员,"सदस्य जोड़ें"
 chat.remove_member,"Remove Member",移除成员,"सदस्य हटाएँ"
