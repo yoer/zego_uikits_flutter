@@ -159,10 +159,8 @@ class TranslationsSettings {
   String get duration => tr('${base}duration');
   String get autoHangUp => tr('${base}duration.auto_hang_up');
   String get durationEndTips => tr('${base}duration.end_tips');
-  String durationSecondTips(int seconds) => tr(
-        '${base}duration.seconds_tips',
-        args: [seconds.toString()],
-      );
+  String durationSecondTips(int seconds) =>
+      tr('${base}duration.seconds_tips', args: [seconds.toString()]);
 
   String get conferenceListId => tr('${base}conference_list_id');
 }

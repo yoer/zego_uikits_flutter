@@ -63,6 +63,16 @@ class CallInvitationInnerText {
     innerText.permissionConfirmDialogAllowButton = "Allow";
     innerText.permissionConfirmDialogDenyButton = "Deny";
 
+    // Missing permission and system dialog texts
+    innerText.permissionConfirmDialogCancelButton = "Cancel";
+    innerText.permissionConfirmDialogOKButton = "OK";
+    innerText.systemAlertWindowConfirmDialogSubTitle =
+        "Display over other apps";
+    innerText.permissionManuallyConfirmDialogTitle =
+        "Please turn on the following permissions to receive call invitations";
+    innerText.permissionManuallyConfirmDialogSubTitle =
+        "• Allow auto launch\n• Allow notification on Banner and Lock screen\n• Allow display over other apps\n• Show on lock screen\n• Show floating window\n• Pop up interface in background\n";
+
     return innerText;
   }
 
@@ -104,6 +114,14 @@ class CallInvitationInnerText {
     innerText.permissionConfirmDialogTitle = '允许 $param_1 进行';
     innerText.permissionConfirmDialogAllowButton = "允许";
     innerText.permissionConfirmDialogDenyButton = "拒绝";
+
+    // Missing permission and system dialog texts
+    innerText.permissionConfirmDialogCancelButton = "取消";
+    innerText.permissionConfirmDialogOKButton = "确定";
+    innerText.systemAlertWindowConfirmDialogSubTitle = "在其他应用上显示";
+    innerText.permissionManuallyConfirmDialogTitle = "请手动开启以下权限以接收通话邀请";
+    innerText.permissionManuallyConfirmDialogSubTitle =
+        "• 允许自动启动\n• 允许在横幅和锁屏上显示通知\n• 允许在其他应用上显示\n• 在锁屏上显示\n• 显示悬浮窗\n• 在后台弹出界面\n";
 
     return innerText;
   }
@@ -147,6 +165,16 @@ class CallInvitationInnerText {
     innerText.permissionConfirmDialogTitle = 'अनुमति दें $param_1 को';
     innerText.permissionConfirmDialogAllowButton = "अनुमति दें";
     innerText.permissionConfirmDialogDenyButton = "अस्वीकृत करें";
+
+    // Missing permission and system dialog texts
+    innerText.permissionConfirmDialogCancelButton = "रद्द करें";
+    innerText.permissionConfirmDialogOKButton = "ठीक है";
+    innerText.systemAlertWindowConfirmDialogSubTitle =
+        "अन्य ऐप्स के ऊपर प्रदर्शित करें";
+    innerText.permissionManuallyConfirmDialogTitle =
+        "कॉल आमंत्रण प्राप्त करने के लिए कृपया निम्नलिखित अनुमतियां मैन्युअल रूप से चालू करें";
+    innerText.permissionManuallyConfirmDialogSubTitle =
+        "• ऑटो लॉन्च की अनुमति दें\n• बैनर और लॉक स्क्रीन पर नोटिफिकेशन की अनुमति दें\n• अन्य ऐप्स के ऊपर प्रदर्शित करने की अनुमति दें\n• लॉक स्क्रीन पर दिखाएं\n• फ्लोटिंग विंडो दिखाएं\n• बैकग्राउंड में इंटरफेस पॉप अप करें\n";
 
     return innerText;
   }
@@ -197,6 +225,10 @@ class CallInnerText {
     innerText.reverbTypePopularTitle = "Pop";
     innerText.reverbTypeGramophoneTitle = "Gramophone";
 
+    // Screen sharing related texts
+    innerText.screenSharingTipText = "You are sharing screen";
+    innerText.stopScreenSharingButtonText = "Stop sharing";
+
     return innerText;
   }
 
@@ -232,6 +264,10 @@ class CallInnerText {
     innerText.reverbTypePopularTitle = "流行";
     innerText.reverbTypeGramophoneTitle = "留声机";
 
+    // Screen sharing related texts
+    innerText.screenSharingTipText = "您正在共享屏幕";
+    innerText.stopScreenSharingButtonText = "停止共享";
+
     return innerText;
   }
 
@@ -266,6 +302,10 @@ class CallInnerText {
     innerText.reverbTypeBasementTitle = "बेसमेंट";
     innerText.reverbTypePopularTitle = "पॉप";
     innerText.reverbTypeGramophoneTitle = "ग्रामोफोन";
+
+    // Screen sharing related texts
+    innerText.screenSharingTipText = "आप स्क्रीन शेयर कर रहे हैं";
+    innerText.stopScreenSharingButtonText = "शेयरिंग बंद करें";
 
     return innerText;
   }
