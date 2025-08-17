@@ -73,6 +73,14 @@ class CallInvitationInnerText {
     innerText.permissionManuallyConfirmDialogSubTitle =
         "• Allow auto launch\n• Allow notification on Banner and Lock screen\n• Allow display over other apps\n• Show on lock screen\n• Show floating window\n• Pop up interface in background\n";
 
+    // // Button status text for calling toolbar
+    // innerText.callingToolbarMicrophoneOnButtonText = "Microphone ON";
+    // innerText.callingToolbarMicrophoneOffButtonText = "Microphone OFF";
+    // innerText.callingToolbarSpeakerOnButtonText = "Speaker ON";
+    // innerText.callingToolbarSpeakerOffButtonText = "Speaker OFF";
+    // innerText.callingToolbarCameraOnButtonText = "Camera ON";
+    // innerText.callingToolbarCameraOffButtonText = "Camera OFF";
+
     return innerText;
   }
 
@@ -122,6 +130,14 @@ class CallInvitationInnerText {
     innerText.permissionManuallyConfirmDialogTitle = "请手动开启以下权限以接收通话邀请";
     innerText.permissionManuallyConfirmDialogSubTitle =
         "• 允许自动启动\n• 允许在横幅和锁屏上显示通知\n• 允许在其他应用上显示\n• 在锁屏上显示\n• 显示悬浮窗\n• 在后台弹出界面\n";
+
+    // // Button status text for calling toolbar
+    // innerText.callingToolbarMicrophoneOnButtonText = "麦克风开启";
+    // innerText.callingToolbarMicrophoneOffButtonText = "麦克风关闭";
+    // innerText.callingToolbarSpeakerOnButtonText = "扬声器开启";
+    // innerText.callingToolbarSpeakerOffButtonText = "扬声器关闭";
+    // innerText.callingToolbarCameraOnButtonText = "摄像头开启";
+    // innerText.callingToolbarCameraOffButtonText = "摄像头关闭";
 
     return innerText;
   }
@@ -175,6 +191,14 @@ class CallInvitationInnerText {
         "कॉल आमंत्रण प्राप्त करने के लिए कृपया निम्नलिखित अनुमतियां मैन्युअल रूप से चालू करें";
     innerText.permissionManuallyConfirmDialogSubTitle =
         "• ऑटो लॉन्च की अनुमति दें\n• बैनर और लॉक स्क्रीन पर नोटिफिकेशन की अनुमति दें\n• अन्य ऐप्स के ऊपर प्रदर्शित करने की अनुमति दें\n• लॉक स्क्रीन पर दिखाएं\n• फ्लोटिंग विंडो दिखाएं\n• बैकग्राउंड में इंटरफेस पॉप अप करें\n";
+
+    // // Button status text for calling toolbar
+    // innerText.callingToolbarMicrophoneOnButtonText = "माइक्रोफोन चालू";
+    // innerText.callingToolbarMicrophoneOffButtonText = "माइक्रोफोन बंद";
+    // innerText.callingToolbarSpeakerOnButtonText = "स्पीकर चालू";
+    // innerText.callingToolbarSpeakerOffButtonText = "स्पीकर बंद";
+    // innerText.callingToolbarCameraOnButtonText = "कैमरा चालू";
+    // innerText.callingToolbarCameraOffButtonText = "कैमरा बंद";
 
     return innerText;
   }

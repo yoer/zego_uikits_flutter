@@ -79,6 +79,17 @@ Future<bool> initCallInvitation() async {
         inviter: ZegoCallInvitationInviterUIConfig(
           useVideoViewAspectFill: CallCache().videoAspectFill,
         ),
+        invitee: ZegoCallInvitationInviteeUIConfig(
+          showAvatar: CallCache().inviteeUIShowAvatar,
+          showCentralName: CallCache().inviteeUIShowCentralName,
+          showCallingText: CallCache().inviteeUIShowCallingText,
+          useVideoViewAspectFill: CallCache().inviteeUIUseVideoViewAspectFill,
+          showVideoOnCalling: CallCache().showVideoOnInviteeCall,
+          defaultMicrophoneOn: CallCache().inviteeUIDefaultMicrophoneOn,
+          defaultCameraOn: CallCache().inviteeUIDefaultCameraOn,
+          showMainButtonsText: CallCache().inviteeUIShowMainButtonsText,
+          showSubButtonsText: CallCache().inviteeUIShowSubButtonsText,
+        ),
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(
         androidNotificationConfig: ZegoCallAndroidNotificationConfig(

@@ -116,6 +116,8 @@ class TranslationsSettings {
   String get idTips => tr('${base}id_tips');
   String get starTips => tr('${base}star_tips');
   String get screenSharing => tr('${base}screen_sharing');
+  String get calling => tr('${base}calling');
+  String get inCall => tr('${base}in_call');
   String get mediaSharing => tr('${base}media_sharing');
   String get pip => tr('${base}pip');
   String get advanceBeauty => tr('${base}advance_beauty');
@@ -123,6 +125,22 @@ class TranslationsSettings {
   String get audioVideo => tr('${base}audio_video');
   String get showMicState => tr('${base}show_mic_state');
   String get showUserName => tr('${base}show_user_name');
+  String get showVideoOnInviteeCall => tr('${base}show_video_on_invitee_call');
+  String get inviteeUIShowAvatar => tr('${base}invitee_ui_show_avatar');
+  String get inviteeUIShowCentralName =>
+      tr('${base}invitee_ui_show_central_name');
+  String get inviteeUIShowCallingText =>
+      tr('${base}invitee_ui_show_calling_text');
+  String get inviteeUIUseVideoViewAspectFill =>
+      tr('${base}invitee_ui_use_video_view_aspect_fill');
+  String get inviteeUIDefaultMicrophoneOn =>
+      tr('${base}invitee_ui_default_microphone_on');
+  String get inviteeUIDefaultCameraOn =>
+      tr('${base}invitee_ui_default_camera_on');
+  String get inviteeUIShowMainButtonsText =>
+      tr('${base}invitee_ui_show_main_buttons_text');
+  String get inviteeUIShowSubButtonsText =>
+      tr('${base}invitee_ui_show_sub_buttons_text');
   String get turnOnCameraWhenJoining =>
       tr('${base}turn_on_camera_when_joining');
   String get turnOnMicrophoneWhenJoining =>

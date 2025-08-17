@@ -202,6 +202,17 @@ class CallCache {
   bool _turnOnCameraWhenJoining = true;
   bool _turnOnMicrophoneWhenJoining = true;
   bool _useSpeakerWhenJoining = true;
+  bool _showVideoOnInviteeCall = true;
+
+  // Invitee UI configuration properties
+  bool _inviteeUIShowAvatar = true;
+  bool _inviteeUIShowCentralName = true;
+  bool _inviteeUIShowCallingText = true;
+  bool _inviteeUIUseVideoViewAspectFill = false;
+  bool _inviteeUIDefaultMicrophoneOn = true;
+  bool _inviteeUIDefaultCameraOn = true;
+  bool _inviteeUIShowMainButtonsText = false;
+  bool _inviteeUIShowSubButtonsText = true;
 
   bool _supportChat = false;
 
@@ -272,6 +283,80 @@ class CallCache {
     });
   }
 
+  bool get showVideoOnInviteeCall => _showVideoOnInviteeCall;
+  set showVideoOnInviteeCall(bool value) {
+    _showVideoOnInviteeCall = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showVideoOnInviteeCallKey, value);
+    });
+  }
+
+  // Invitee UI configuration getters and setters
+  bool get inviteeUIShowAvatar => _inviteeUIShowAvatar;
+  set inviteeUIShowAvatar(bool value) {
+    _inviteeUIShowAvatar = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIShowAvatarKey, value);
+    });
+  }
+
+  bool get inviteeUIShowCentralName => _inviteeUIShowCentralName;
+  set inviteeUIShowCentralName(bool value) {
+    _inviteeUIShowCentralName = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIShowCentralNameKey, value);
+    });
+  }
+
+  bool get inviteeUIShowCallingText => _inviteeUIShowCallingText;
+  set inviteeUIShowCallingText(bool value) {
+    _inviteeUIShowCallingText = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIShowCallingTextKey, value);
+    });
+  }
+
+  bool get inviteeUIUseVideoViewAspectFill => _inviteeUIUseVideoViewAspectFill;
+  set inviteeUIUseVideoViewAspectFill(bool value) {
+    _inviteeUIUseVideoViewAspectFill = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIUseVideoViewAspectFillKey, value);
+    });
+  }
+
+  bool get inviteeUIDefaultMicrophoneOn => _inviteeUIDefaultMicrophoneOn;
+  set inviteeUIDefaultMicrophoneOn(bool value) {
+    _inviteeUIDefaultMicrophoneOn = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIDefaultMicrophoneOnKey, value);
+    });
+  }
+
+  bool get inviteeUIDefaultCameraOn => _inviteeUIDefaultCameraOn;
+  set inviteeUIDefaultCameraOn(bool value) {
+    _inviteeUIDefaultCameraOn = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIDefaultCameraOnKey, value);
+    });
+  }
+
+  bool get inviteeUIShowMainButtonsText => _inviteeUIShowMainButtonsText;
+  set inviteeUIShowMainButtonsText(bool value) {
+    _inviteeUIShowMainButtonsText = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIShowMainButtonsTextKey, value);
+    });
+  }
+
+  bool get inviteeUIShowSubButtonsText => _inviteeUIShowSubButtonsText;
+  set inviteeUIShowSubButtonsText(bool value) {
+    _inviteeUIShowSubButtonsText = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_inviteeUIShowSubButtonsTextKey, value);
+    });
+  }
+
   bool get supportChat => _supportChat;
   set supportChat(bool value) {
     _supportChat = value;
@@ -311,6 +396,16 @@ class CallCache {
     _turnOnMicrophoneWhenJoining = true;
     _useSpeakerWhenJoining = true;
 
+    // Reset invitee UI configuration properties
+    _inviteeUIShowAvatar = true;
+    _inviteeUIShowCentralName = true;
+    _inviteeUIShowCallingText = true;
+    _inviteeUIUseVideoViewAspectFill = false;
+    _inviteeUIDefaultMicrophoneOn = true;
+    _inviteeUIDefaultCameraOn = true;
+    _inviteeUIShowMainButtonsText = false;
+    _inviteeUIShowSubButtonsText = true;
+
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheRoomIDListKey);
     prefs.remove(_supportVideoModeKey);
@@ -318,6 +413,16 @@ class CallCache {
     prefs.remove(_turnOnMicrophoneWhenJoiningKey);
     prefs.remove(_useSpeakerWhenJoiningKey);
     prefs.remove(_supportChatKey);
+
+    // Remove invitee UI configuration keys
+    prefs.remove(_inviteeUIShowAvatarKey);
+    prefs.remove(_inviteeUIShowCentralNameKey);
+    prefs.remove(_inviteeUIShowCallingTextKey);
+    prefs.remove(_inviteeUIUseVideoViewAspectFillKey);
+    prefs.remove(_inviteeUIDefaultMicrophoneOnKey);
+    prefs.remove(_inviteeUIDefaultCameraOnKey);
+    prefs.remove(_inviteeUIShowMainButtonsTextKey);
+    prefs.remove(_inviteeUIShowSubButtonsTextKey);
 
     invitation.clear();
   }
@@ -351,6 +456,23 @@ class CallCache {
 
     _supportChat = prefs.get(_supportChatKey) as bool? ?? true;
 
+    // Load invitee UI configuration properties
+    _inviteeUIShowAvatar = prefs.get(_inviteeUIShowAvatarKey) as bool? ?? true;
+    _inviteeUIShowCentralName =
+        prefs.get(_inviteeUIShowCentralNameKey) as bool? ?? true;
+    _inviteeUIShowCallingText =
+        prefs.get(_inviteeUIShowCallingTextKey) as bool? ?? true;
+    _inviteeUIUseVideoViewAspectFill =
+        prefs.get(_inviteeUIUseVideoViewAspectFillKey) as bool? ?? false;
+    _inviteeUIDefaultMicrophoneOn =
+        prefs.get(_inviteeUIDefaultMicrophoneOnKey) as bool? ?? true;
+    _inviteeUIDefaultCameraOn =
+        prefs.get(_inviteeUIDefaultCameraOnKey) as bool? ?? true;
+    _inviteeUIShowMainButtonsText =
+        prefs.get(_inviteeUIShowMainButtonsTextKey) as bool? ?? false;
+    _inviteeUIShowSubButtonsText =
+        prefs.get(_inviteeUIShowSubButtonsTextKey) as bool? ?? true;
+
     _durationVisible = prefs.get(_supportDurationVisibleKey) as bool? ?? true;
     _durationAutoHangUp =
         prefs.get(_supportDurationAutoHangUpKey) as bool? ?? false;
@@ -370,6 +492,26 @@ class CallCache {
       'cache_call_turn_on_mic_when_joining';
   final String _useSpeakerWhenJoiningKey =
       'cache_call_use_speaker_when_joining';
+  final String _showVideoOnInviteeCallKey =
+      'cache_call_show_video_on_invitee_call';
+
+  // Invitee UI configuration keys
+  final String _inviteeUIShowAvatarKey = 'cache_call_invitee_ui_show_avatar';
+  final String _inviteeUIShowCentralNameKey =
+      'cache_call_invitee_ui_show_central_name';
+  final String _inviteeUIShowCallingTextKey =
+      'cache_call_invitee_ui_show_calling_text';
+  final String _inviteeUIUseVideoViewAspectFillKey =
+      'cache_call_invitee_ui_use_video_view_aspect_fill';
+  final String _inviteeUIDefaultMicrophoneOnKey =
+      'cache_call_invitee_ui_default_microphone_on';
+  final String _inviteeUIDefaultCameraOnKey =
+      'cache_call_invitee_ui_default_camera_on';
+  final String _inviteeUIShowMainButtonsTextKey =
+      'cache_call_invitee_ui_show_main_buttons_text';
+  final String _inviteeUIShowSubButtonsTextKey =
+      'cache_call_invitee_ui_show_sub_buttons_text';
+
   final String _supportChatKey = 'cache_call_support_chat';
   final String _supportDurationVisibleKey = 'cache_call_duration_visible';
   final String _supportDurationAutoHangUpKey =

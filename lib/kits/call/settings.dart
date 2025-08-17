@@ -44,6 +44,93 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               ],
             ),
             settingsGroup(
+              Translations.settings.calling,
+              [
+                settingsCheckBox(
+                  title: Translations.settings.showVideoOnInviteeCall,
+                  value: CallCache().showVideoOnInviteeCall,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showVideoOnInviteeCall = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIShowAvatar,
+                  value: CallCache().inviteeUIShowAvatar,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIShowAvatar = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIShowCentralName,
+                  value: CallCache().inviteeUIShowCentralName,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIShowCentralName = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIShowCallingText,
+                  value: CallCache().inviteeUIShowCallingText,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIShowCallingText = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIUseVideoViewAspectFill,
+                  value: CallCache().inviteeUIUseVideoViewAspectFill,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIUseVideoViewAspectFill =
+                          value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIDefaultMicrophoneOn,
+                  value: CallCache().inviteeUIDefaultMicrophoneOn,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIDefaultMicrophoneOn = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIDefaultCameraOn,
+                  value: CallCache().inviteeUIDefaultCameraOn,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIDefaultCameraOn = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIShowMainButtonsText,
+                  value: CallCache().inviteeUIShowMainButtonsText,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIShowMainButtonsText = value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.inviteeUIShowSubButtonsText,
+                  value: CallCache().inviteeUIShowSubButtonsText,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().inviteeUIShowSubButtonsText = value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
               Translations.settings.audioVideo,
               [
                 settingsCheckBox(
