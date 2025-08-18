@@ -48,13 +48,6 @@ class SettingsCache {
     appSign = prefs.get(_cacheAppSignKey) as String? ?? '';
     appToken = prefs.get(_cacheAppTokenKey) as String? ?? '';
 
-    if (kDebugMode) {
-      if (appID.isEmpty && appSign.isEmpty) {
-        appID = Platform.environment['ZEGO_APP_ID'] ?? '';
-        appSign = Platform.environment['ZEGO_APP_SIGN'] ?? '';
-      }
-    }
-
     _showSplash = prefs.get(_cacheShowSplashKey) as bool? ?? true;
     _useFirestore = prefs.get(_cacheUseFirestoreKey) as bool? ?? true;
   }
