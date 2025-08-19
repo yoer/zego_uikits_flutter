@@ -13,16 +13,16 @@ dependencies:
 
   zego_zim: ^2.21.1+1
 
-  zego_uikit: ^2.28.23
-  zego_uikit_signaling_plugin: ^2.8.15
-  zego_uikit_beauty_plugin: ^1.7.9
-  zego_plugin_adapter: ^2.13.9
+  zego_uikit: ^2.28.24
+  zego_uikit_signaling_plugin: ^2.8.16
+  zego_uikit_beauty_plugin: ^1.7.10
+  zego_plugin_adapter: ^2.13.10
 
-  zego_uikit_prebuilt_video_conference: ^2.10.1
-  zego_uikit_prebuilt_call: ^4.17.10
-  zego_uikit_prebuilt_live_audio_room: ^3.16.3
-  zego_uikit_prebuilt_live_streaming: ^3.14.2
-  zego_zimkit: ^1.19.2
+  zego_uikit_prebuilt_video_conference: ^2.10.2
+  zego_uikit_prebuilt_call: ^4.18.0
+  zego_uikit_prebuilt_live_audio_room: ^3.16.4
+  zego_uikit_prebuilt_live_streaming: ^3.14.3
+  zego_zimkit: ^1.19.4
 
   cupertino_icons: ^1.0.8
   go_router: ^14.6.2
