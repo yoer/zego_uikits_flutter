@@ -131,7 +131,7 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
                   await addFileToArchive(entity, 'android_files/$relativePath');
                 }
                 // 2. 只要在 zego_prebuilt、ZIMAudioLog、ZIMLogs 这3个文件夹下的任何文件都要打包
-                else if (relativePath.startsWith('zego_prebuilt/') ||
+                else if (relativePath.startsWith('ZegoUIKits/') ||
                     relativePath.startsWith('ZIMAudioLog/') ||
                     relativePath.startsWith('ZIMLogs/')) {
                   debugPrint('feedback: 匹配到指定文件夹内容: $relativePath');

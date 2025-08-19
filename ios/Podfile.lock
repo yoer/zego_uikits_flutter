@@ -1330,7 +1330,7 @@ PODS:
     - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
-  - flutter_logs (0.0.1):
+  - flutter_logs_yoer (0.0.1):
     - Flutter
     - ZIPFoundation
   - flutter_ringtone_player (0.0.1):
@@ -1553,7 +1553,7 @@ DEPENDENCIES:
   - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - flutter_logs (from `.symlinks/plugins/flutter_logs/ios`)
+  - flutter_logs_yoer (from `.symlinks/plugins/flutter_logs_yoer/ios`)
   - flutter_ringtone_player (from `.symlinks/plugins/flutter_ringtone_player/ios`)
   - flutter_volume_controller (from `.symlinks/plugins/flutter_volume_controller/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -1649,8 +1649,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  flutter_logs:
-    :path: ".symlinks/plugins/flutter_logs/ios"
+  flutter_logs_yoer:
+    :path: ".symlinks/plugins/flutter_logs_yoer/ios"
   flutter_ringtone_player:
     :path: ".symlinks/plugins/flutter_ringtone_player/ios"
   flutter_volume_controller:
@@ -1735,7 +1735,7 @@ SPEC CHECKSUMS:
   flutter_email_sender: aa1e9772696691d02cd91fea829856c11efb8e58
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
   flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
-  flutter_logs: 30a36079651dcdfb260dbff875bf882bbbcaa22e
+  flutter_logs_yoer: 4b6ed7705cc0e5306d9ecce1d5be5568045e0e73
   flutter_ringtone_player: a77c42464250845611eaa44c27e8714acc800138
   flutter_volume_controller: c2be490cb0487e8b88d0d9fc2b7e1c139a4ebccb
   fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
