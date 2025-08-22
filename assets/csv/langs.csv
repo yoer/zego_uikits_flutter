@@ -73,14 +73,14 @@ settings.audio_video,Audio & Video,音视频,ऑडियो और वीडि
 settings.show_mic_state,Show Microphone Icon,显示麦克风图标,माइक्रोफोन आइकन दिखाएँ
 settings.show_user_name,Show User Name,显示用户名,उपयोगकर्ता नाम दिखाएँ
 settings.show_video_on_invitee_call,Show Video on Invitee Call,被邀请者通话时显示视频,आमंत्रित किए गए कॉल पर वीडियो दिखाएँ
-settings.invitee_ui_show_avatar,Show Avatar,显示头像,अवतार दिखाएँ
-settings.invitee_ui_show_central_name,Show Central Name,显示中央名称,केंद्रीय नाम दिखाएँ
-settings.invitee_ui_show_calling_text,Show Calling Text,显示通话文本,कॉलिंग टेक्स्ट दिखाएँ
-settings.invitee_ui_use_video_view_aspect_fill,Use Video View Aspect Fill,使用视频视图等比填充,वीडियो व्यू अनुपात भरना उपयोग करें
-settings.invitee_ui_default_microphone_on,Default Microphone On,默认开启麦克风,डिफ़ॉल्ट माइक्रोफोन चालू
-settings.invitee_ui_default_camera_on,Default Camera On,默认开启摄像头,डिफ़ॉल्ट कैमरा चालू
-settings.invitee_ui_show_main_buttons_text,Show Main Buttons Text,显示主按钮文本,मुख्य बटन टेक्स्ट दिखाएँ
-settings.invitee_ui_show_sub_buttons_text,Show Sub Buttons Text,显示子按钮文本,उप बटन टेक्स्ट दिखाएँ
+settings.ui_show_avatar,Show Avatar,显示头像,अवतार दिखाएँ
+settings.ui_show_central_name,Show Central Name,显示中央名称,केंद्रीय नाम दिखाएँ
+settings.ui_show_calling_text,Show Calling Text,显示通话文本,कॉलिंग टेक्स्ट दिखाएँ
+settings.ui_use_video_view_aspect_fill,Use Video View Aspect Fill,使用视频视图等比填充,वीडियो व्यू अनुपात भरना उपयोग करें
+settings.ui_default_microphone_on,Default Microphone On,默认开启麦克风,डिफ़ॉल्ट माइक्रोफोन चालू
+settings.ui_default_camera_on,Default Camera On,默认开启摄像头,डिफ़ॉल्ट कैमरा चालू
+settings.ui_show_main_buttons_text,Show Main Buttons Text,显示主按钮文本,मुख्य बटन टेक्स्ट दिखाएँ
+settings.ui_show_sub_buttons_text,Show Sub Buttons Text,显示子按钮文本,उप बटन टेक्स्ट दिखाएँ
 settings.turn_on_camera_when_joining,Turn on camera when joining,开启摄像头进入,जुड़ते समय कैमरा चालू करें
 settings.turn_on_mic_when_joining,Turn on mic when joining,开启麦克风进入,जुड़ते समय माइक्रोफोन चालू करें
 settings.use_speaker_when_joining,Use speaker when joining,开启扬声器进入,जुड़ते समय स्पीकर का उपयोग करें

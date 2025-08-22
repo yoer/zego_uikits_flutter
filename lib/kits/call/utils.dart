@@ -77,18 +77,27 @@ Future<bool> initCallInvitation() async {
       uiConfig: ZegoCallInvitationUIConfig(
         withSafeArea: CallCache().invitation.safeArea,
         inviter: ZegoCallInvitationInviterUIConfig(
-          useVideoViewAspectFill: CallCache().videoAspectFill,
+          useVideoViewAspectFill:
+              CallCache().invitation.uiUseVideoViewAspectFill,
+          showAvatar: CallCache().invitation.uiShowAvatar,
+          showCentralName: CallCache().invitation.uiShowCentralName,
+          showCallingText: CallCache().invitation.uiShowCallingText,
+          defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
+          defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
+          showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
+          showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
         ),
         invitee: ZegoCallInvitationInviteeUIConfig(
-          showAvatar: CallCache().inviteeUIShowAvatar,
-          showCentralName: CallCache().inviteeUIShowCentralName,
-          showCallingText: CallCache().inviteeUIShowCallingText,
-          useVideoViewAspectFill: CallCache().inviteeUIUseVideoViewAspectFill,
-          showVideoOnCalling: CallCache().showVideoOnInviteeCall,
-          defaultMicrophoneOn: CallCache().inviteeUIDefaultMicrophoneOn,
-          defaultCameraOn: CallCache().inviteeUIDefaultCameraOn,
-          showMainButtonsText: CallCache().inviteeUIShowMainButtonsText,
-          showSubButtonsText: CallCache().inviteeUIShowSubButtonsText,
+          showAvatar: CallCache().invitation.uiShowAvatar,
+          showCentralName: CallCache().invitation.uiShowCentralName,
+          showCallingText: CallCache().invitation.uiShowCallingText,
+          useVideoViewAspectFill:
+              CallCache().invitation.uiUseVideoViewAspectFill,
+          showVideoOnCalling: CallCache().invitation.showVideoOnInvitationCall,
+          defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
+          defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
+          showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
+          showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
         ),
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(
@@ -190,6 +199,8 @@ Future<bool> initCallInvitation() async {
           List<ZegoCallUser> callees,
           String customData,
         ) {
+          debugPrint("xxx onIncomingCallReceived, callID:$callID");
+
           final users = callees.length > 1 ? callees : [caller];
           CallCache().invitation.addHistory(
                 CallRecord(
@@ -221,6 +232,11 @@ Future<bool> initCallInvitation() async {
         },
         onIncomingCallTimeout: (String callID, ZegoCallUser caller) {
           CallCache().invitation.queryHistory(callID)?.hangup(false);
+        },
+        onInvitationUserStateChanged: (
+          List<ZegoSignalingPluginInvitationUserInfo> users,
+        ) {
+          debugPrint('xxx onInvitationUserStateChanged, users:$users');
         },
       ),
     );

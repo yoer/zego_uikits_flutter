@@ -47,88 +47,78 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               '${Translations.settings.calling}(${Translations.settings.starTips})',
               [
                 settingsCheckBox(
-                  title: '${Translations.settings.showVideoOnInviteeCall}(*)',
-                  value: CallCache().showVideoOnInviteeCall,
+                  title: '${Translations.settings.uiShowAvatar}(*)',
+                  value: CallCache().invitation.uiShowAvatar,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().showVideoOnInviteeCall = value ?? true;
+                      CallCache().invitation.uiShowAvatar = value ?? true;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title: '${Translations.settings.inviteeUIShowAvatar}(*)',
-                  value: CallCache().inviteeUIShowAvatar,
+                  title: '${Translations.settings.uiShowCentralName}(*)',
+                  value: CallCache().invitation.uiShowCentralName,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIShowAvatar = value ?? true;
+                      CallCache().invitation.uiShowCentralName = value ?? true;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title: '${Translations.settings.inviteeUIShowCentralName}(*)',
-                  value: CallCache().inviteeUIShowCentralName,
+                  title: '${Translations.settings.uiShowCallingText}(*)',
+                  value: CallCache().invitation.uiShowCallingText,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIShowCentralName = value ?? true;
+                      CallCache().invitation.uiShowCallingText = value ?? true;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title: '${Translations.settings.inviteeUIShowCallingText}(*)',
-                  value: CallCache().inviteeUIShowCallingText,
+                  title: '${Translations.settings.uiUseVideoViewAspectFill}(*)',
+                  value: CallCache().invitation.uiUseVideoViewAspectFill,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIShowCallingText = value ?? true;
-                    });
-                  },
-                ),
-                settingsCheckBox(
-                  title:
-                      '${Translations.settings.inviteeUIUseVideoViewAspectFill}(*)',
-                  value: CallCache().inviteeUIUseVideoViewAspectFill,
-                  onChanged: (value) {
-                    setState(() {
-                      CallCache().inviteeUIUseVideoViewAspectFill =
+                      CallCache().invitation.uiUseVideoViewAspectFill =
                           value ?? false;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title:
-                      '${Translations.settings.inviteeUIDefaultMicrophoneOn}(*)',
-                  value: CallCache().inviteeUIDefaultMicrophoneOn,
+                  title: '${Translations.settings.uiDefaultMicrophoneOn}(*)',
+                  value: CallCache().invitation.uiDefaultMicrophoneOn,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIDefaultMicrophoneOn = value ?? true;
+                      CallCache().invitation.uiDefaultMicrophoneOn =
+                          value ?? true;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title: '${Translations.settings.inviteeUIDefaultCameraOn}(*)',
-                  value: CallCache().inviteeUIDefaultCameraOn,
+                  title: '${Translations.settings.uiDefaultCameraOn}(*)',
+                  value: CallCache().invitation.uiDefaultCameraOn,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIDefaultCameraOn = value ?? true;
+                      CallCache().invitation.uiDefaultCameraOn = value ?? true;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title:
-                      '${Translations.settings.inviteeUIShowMainButtonsText}(*)',
-                  value: CallCache().inviteeUIShowMainButtonsText,
+                  title: '${Translations.settings.uiShowMainButtonsText}(*)',
+                  value: CallCache().invitation.uiShowMainButtonsText,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIShowMainButtonsText = value ?? false;
+                      CallCache().invitation.uiShowMainButtonsText =
+                          value ?? false;
                     });
                   },
                 ),
                 settingsCheckBox(
-                  title:
-                      '${Translations.settings.inviteeUIShowSubButtonsText}(*)',
-                  value: CallCache().inviteeUIShowSubButtonsText,
+                  title: '${Translations.settings.uiShowSubButtonsText}(*)',
+                  value: CallCache().invitation.uiShowSubButtonsText,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().inviteeUIShowSubButtonsText = value ?? true;
+                      CallCache().invitation.uiShowSubButtonsText =
+                          value ?? true;
                     });
                   },
                 ),

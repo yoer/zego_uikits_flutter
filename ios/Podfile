@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '14.0'
+platform :ios, '13.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -49,6 +49,15 @@ post_install do |installer|
         'PERMISSION_MICROPHONE=1',
         'PERMISSION_NOTIFICATIONS=1',
       ]
+      
+      # iOS 13 compatibility settings
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      
+      # Add iOS 13 compatibility flags
+      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 14.0
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= []
+        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'IOS_13_COMPATIBILITY=1'
+      end
     end
     # End of the permission_handler configuration
 

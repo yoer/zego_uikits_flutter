@@ -126,21 +126,15 @@ class TranslationsSettings {
   String get showMicState => tr('${base}show_mic_state');
   String get showUserName => tr('${base}show_user_name');
   String get showVideoOnInviteeCall => tr('${base}show_video_on_invitee_call');
-  String get inviteeUIShowAvatar => tr('${base}invitee_ui_show_avatar');
-  String get inviteeUIShowCentralName =>
-      tr('${base}invitee_ui_show_central_name');
-  String get inviteeUIShowCallingText =>
-      tr('${base}invitee_ui_show_calling_text');
-  String get inviteeUIUseVideoViewAspectFill =>
-      tr('${base}invitee_ui_use_video_view_aspect_fill');
-  String get inviteeUIDefaultMicrophoneOn =>
-      tr('${base}invitee_ui_default_microphone_on');
-  String get inviteeUIDefaultCameraOn =>
-      tr('${base}invitee_ui_default_camera_on');
-  String get inviteeUIShowMainButtonsText =>
-      tr('${base}invitee_ui_show_main_buttons_text');
-  String get inviteeUIShowSubButtonsText =>
-      tr('${base}invitee_ui_show_sub_buttons_text');
+  String get uiShowAvatar => tr('${base}ui_show_avatar');
+  String get uiShowCentralName => tr('${base}ui_show_central_name');
+  String get uiShowCallingText => tr('${base}ui_show_calling_text');
+  String get uiUseVideoViewAspectFill =>
+      tr('${base}ui_use_video_view_aspect_fill');
+  String get uiDefaultMicrophoneOn => tr('${base}ui_default_microphone_on');
+  String get uiDefaultCameraOn => tr('${base}ui_default_camera_on');
+  String get uiShowMainButtonsText => tr('${base}ui_show_main_buttons_text');
+  String get uiShowSubButtonsText => tr('${base}ui_show_sub_buttons_text');
   String get turnOnCameraWhenJoining =>
       tr('${base}turn_on_camera_when_joining');
   String get turnOnMicrophoneWhenJoining =>
