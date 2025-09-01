@@ -19,7 +19,7 @@ dependencies:
   zego_plugin_adapter: ^2.13.10
 
   zego_uikit_prebuilt_video_conference: ^2.10.2
-  zego_uikit_prebuilt_call: ^4.18.0
+  zego_uikit_prebuilt_call: ^4.18.2
   zego_uikit_prebuilt_live_audio_room: ^3.16.4
   zego_uikit_prebuilt_live_streaming: ^3.14.3
   zego_zimkit: ^1.19.4
@@ -56,9 +56,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^4.0.0
   flutter_launcher_icons: ^0.14.2
   import_sorter: ^4.6.0  # run 'flutter pub run import_sorter:main'
+  flutter_lints: ^6.0.0
+  lints: ^6.0.0
 
 flutter:
   uses-material-design: true

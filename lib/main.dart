@@ -1,8 +1,8 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Dart imports:
 import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
@@ -16,12 +16,12 @@ import 'package:zego_uikits_demo/kits/cache.dart';
 import 'app.dart';
 import 'data/translations.dart';
 import 'data/user.dart';
+import 'firestore/fcm_service.dart';
 import 'kits/audio_room/cache.dart';
 import 'kits/call/cache.dart';
 import 'kits/conference/cache.dart';
 import 'kits/live_streaming/cache.dart';
 import 'kits/live_streaming/gifts/service.dart';
-import 'firestore/fcm_service.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
