@@ -10,6 +10,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/toast.dart';
@@ -19,7 +20,7 @@ class FeedbacksPage extends StatefulWidget {
   const FeedbacksPage({super.key});
 
   @override
-  _FeedbacksPageState createState() => _FeedbacksPageState();
+  State<FeedbacksPage> createState() => _FeedbacksPageState();
 }
 
 class _FeedbacksPageState extends State<FeedbacksPage> {
@@ -29,6 +30,7 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
   final TextEditingController _contentController = TextEditingController();
   bool _addLogs = true;
   bool _isLoading = false;
+  bool _useEmailMode = false; // false = 分享模式（默认），true = 邮箱模式
 
   Future<List<String>> _getLogsZipPaths() async {
     if (!_addLogs) return [];
@@ -204,6 +206,59 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
     }
   }
 
+  Future<void> _shareWithLogs(List<String> zipPaths) async {
+    if (zipPaths.isEmpty) {
+      debugPrint('feedback: No logs to share');
+      showInfoToast('No logs to share');
+      return;
+    }
+
+    debugPrint('feedback: Starting to share ${zipPaths.length} files...');
+
+    try {
+      if (zipPaths.length == 1) {
+        // 单个文件直接分享
+        await Share.shareXFiles(
+          [XFile(zipPaths[0])],
+          text:
+              '${_titleController.text.isEmpty ? Translations.feedback.feedbackDefault : _titleController.text}\n\n${_contentController.text}',
+          subject: _titleController.text.isEmpty
+              ? Translations.feedback.feedbackDefault
+              : _titleController.text,
+        );
+      } else {
+        // 多个文件，先创建一个包含所有文件的临时目录
+        final tempDir = await getTemporaryDirectory();
+        final shareDir = Directory(
+            '${tempDir.path}/feedback_logs_${DateTime.now().millisecondsSinceEpoch}');
+        await shareDir.create();
+
+        // 复制所有zip文件到分享目录
+        for (var i = 0; i < zipPaths.length; i++) {
+          final sourceFile = File(zipPaths[i]);
+          final targetFile = File('${shareDir.path}/logs_part_${i + 1}.zip');
+          await sourceFile.copy(targetFile.path);
+        }
+
+        // 创建反馈内容文件
+        final feedbackFile = File('${shareDir.path}/feedback.txt');
+        await feedbackFile.writeAsString(
+            '${_titleController.text.isEmpty ? Translations.feedback.feedbackDefault : _titleController.text}\n\n${_contentController.text}');
+
+        // 分享整个目录（iOS会显示为文件夹）
+        await Share.shareXFiles(
+          [XFile(shareDir.path)],
+          text: Translations.feedback.logsWithParts(zipPaths.length),
+        );
+      }
+
+      showInfoToast(Translations.feedback.thankYou);
+    } catch (e) {
+      debugPrint('feedback: Error sharing files: $e');
+      showInfoToast('${Translations.feedback.shareFailed}: $e');
+    }
+  }
+
   Future<void> _sendEmailsWithLogs(List<String> zipPaths) async {
     if (zipPaths.isEmpty) {
       debugPrint('feedback: No logs to send');
@@ -217,8 +272,8 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
       debugPrint(
           'feedback: Sending email part ${i + 1} of ${zipPaths.length}...');
       final Email email = Email(
-        body: _contentController.text +
-            '\n\nLogs part ${i + 1} of ${zipPaths.length}',
+        body:
+            '${_contentController.text}\n\nLogs part ${i + 1} of ${zipPaths.length}',
         subject:
             '${_titleController.text.isEmpty ? "Empty" : _titleController.text} (Part ${i + 1}/${zipPaths.length})',
         recipients: ['ejunyue@163.com'],
@@ -282,6 +337,79 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
                     },
                   ),
                   SizedBox(height: 15.r),
+                  // 发送模式选择
+                  Container(
+                    padding: EdgeInsets.all(16.r),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Translations.feedback.sendMethod,
+                          style: TextStyle(
+                            fontSize: 16.r,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(height: 10.r),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<bool>(
+                                title: Text(
+                                  Translations.feedback.systemShare,
+                                  style: TextStyle(fontSize: 14.r),
+                                ),
+                                subtitle: Text(
+                                  Translations.feedback.systemShareDesc,
+                                  style: TextStyle(
+                                      fontSize: 12.r, color: Colors.grey),
+                                ),
+                                value: false,
+                                groupValue: _useEmailMode,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _useEmailMode = value!;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<bool>(
+                                title: Text(
+                                  Translations.feedback.emailSend,
+                                  style: TextStyle(fontSize: 14.r),
+                                ),
+                                subtitle: Text(
+                                  Translations.feedback.emailSendDesc,
+                                  style: TextStyle(
+                                      fontSize: 12.r, color: Colors.grey),
+                                ),
+                                value: true,
+                                groupValue: _useEmailMode,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _useEmailMode = value!;
+                                  });
+                                },
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15.r),
                   Row(
                     children: [
                       Checkbox(
@@ -329,27 +457,45 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
             });
             try {
               if (!_addLogs) {
-                // 用户没有选择添加日志，发送单封邮件
-                final Email email = Email(
-                  body: _contentController.text,
-                  subject: _titleController.text.isEmpty
-                      ? 'Empty'
-                      : _titleController.text,
-                  recipients: ['ejunyue@163.com'],
-                  isHTML: false,
-                );
-                try {
-                  await FlutterEmailSender.send(email);
+                // 用户没有选择添加日志
+                if (_useEmailMode) {
+                  // 邮箱模式：发送单封邮件
+                  final Email email = Email(
+                    body: _contentController.text,
+                    subject: _titleController.text.isEmpty
+                        ? 'Empty'
+                        : _titleController.text,
+                    recipients: ['ejunyue@163.com'],
+                    isHTML: false,
+                  );
+                  try {
+                    await FlutterEmailSender.send(email);
+                    showInfoToast(Translations.feedback.thankYou);
+                  } catch (e) {
+                    debugPrint('feedback: Error sending email: $e');
+                    showInfoToast('Failed to send email: $e');
+                  }
+                } else {
+                  // 分享模式：分享文本内容
+                  await Share.share(
+                    '${_titleController.text.isEmpty ? Translations.feedback.feedbackDefault : _titleController.text}\n\n${_contentController.text}',
+                    subject: _titleController.text.isEmpty
+                        ? Translations.feedback.feedbackDefault
+                        : _titleController.text,
+                  );
                   showInfoToast(Translations.feedback.thankYou);
-                } catch (e) {
-                  debugPrint('feedback: Error sending email: $e');
-                  showInfoToast('Failed to send email: $e');
                 }
               } else {
                 // 用户选择了添加日志
                 List<String> zipPaths = await _getLogsZipPaths();
                 if (zipPaths.isNotEmpty) {
-                  await _sendEmailsWithLogs(zipPaths);
+                  if (_useEmailMode) {
+                    // 邮箱模式：发送带日志的邮件
+                    await _sendEmailsWithLogs(zipPaths);
+                  } else {
+                    // 分享模式：分享日志文件
+                    await _shareWithLogs(zipPaths);
+                  }
                 } else {
                   showInfoToast('No logs found');
                 }
@@ -375,7 +521,9 @@ class _FeedbacksPageState extends State<FeedbacksPage> {
             ),
           ),
           child: Text(
-            Translations.feedback.button,
+            _useEmailMode
+                ? Translations.feedback.sendEmail
+                : Translations.feedback.shareFeedback,
             style: TextStyle(
               color: Colors.white,
               fontSize: 30.r,
