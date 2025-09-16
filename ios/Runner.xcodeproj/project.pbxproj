@@ -14,6 +14,7 @@
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		410AFE3F2D26999B0056E111 /* BeautyResources in Resources */ = {isa = PBXBuildFile; fileRef = 410AFE3E2D26999B0056E111 /* BeautyResources */; };
 		413411502E167808008D2A21 /* ZegoExpressEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4134114F2E167808008D2A21 /* ZegoExpressEngine.xcframework */; };
+		41B404912E72820100E46B0A /* LiveCommunicationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B404902E72820100E46B0A /* LiveCommunicationKit.framework */; };
 		41BA3E402D1C21D6008CF9A3 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41BA3E3F2D1C21D6008CF9A3 /* ReplayKit.framework */; };
 		41BA3E432D1C21D6008CF9A3 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA3E422D1C21D6008CF9A3 /* SampleHandler.swift */; };
 		41BA3E472D1C21D6008CF9A3 /* ScreenShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41BA3E3E2D1C21D6008CF9A3 /* ScreenShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -78,6 +79,7 @@
 		3E5928C2AB6CA1281963F029 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		410AFE3E2D26999B0056E111 /* BeautyResources */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BeautyResources; path = ../../android/app/src/main/assets/BeautyResources; sourceTree = "<group>"; };
 		4134114F2E167808008D2A21 /* ZegoExpressEngine.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ZegoExpressEngine.xcframework; path = .symlinks/plugins/zego_express_engine/ios/libs/ZegoExpressEngine.xcframework; sourceTree = "<group>"; };
+		41B404902E72820100E46B0A /* LiveCommunicationKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LiveCommunicationKit.framework; path = System/Library/Frameworks/LiveCommunicationKit.framework; sourceTree = SDKROOT; };
 		41BA3E3E2D1C21D6008CF9A3 /* ScreenShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ScreenShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		41BA3E3F2D1C21D6008CF9A3 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		41BA3E422D1C21D6008CF9A3 /* SampleHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleHandler.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41B404912E72820100E46B0A /* LiveCommunicationKit.framework in Frameworks */,
 				41D4CC622D18542200AFE201 /* CallKit.framework in Frameworks */,
 				41D4CC642D18542A00AFE201 /* PushKit.framework in Frameworks */,
 				04845B6CCFDF41EA3678DF3E /* Pods_Runner.framework in Frameworks */,
@@ -148,6 +151,7 @@
 		39E79101F5A42E87D10906D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41B404902E72820100E46B0A /* LiveCommunicationKit.framework */,
 				41BB93F72E277D4600728A1F /* Pods_Runner.framework */,
 				4134114F2E167808008D2A21 /* ZegoExpressEngine.xcframework */,
 				41D4CC632D18542A00AFE201 /* PushKit.framework */,
@@ -587,7 +591,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -689,7 +693,7 @@
 				INFOPLIST_FILE = ScreenShare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ScreenShare;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -729,7 +733,7 @@
 				INFOPLIST_FILE = ScreenShare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ScreenShare;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -766,7 +770,7 @@
 				INFOPLIST_FILE = ScreenShare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ScreenShare;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -833,7 +837,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -884,7 +888,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;

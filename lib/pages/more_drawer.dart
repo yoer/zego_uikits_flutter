@@ -48,6 +48,7 @@ class _MoreDrawerState extends State<MoreDrawer> {
             SizedBox(height: 80.r),
             settingsButton(),
             feedbackButton(),
+            streamTestButton(),
             aboutButton(),
             const Expanded(child: SizedBox()),
             clearButton(),
@@ -239,6 +240,23 @@ class _MoreDrawerState extends State<MoreDrawer> {
       ),
       onTap: () async {
         PageRouter.feedbacks.go(context);
+      },
+    );
+  }
+
+  Widget streamTestButton() {
+    return ListTile(
+      title: Text(
+        Translations.drawer.streamTest,
+        style: itemTextStyle,
+      ),
+      contentPadding: itemPadding,
+      leading: const Icon(
+        Icons.stream,
+        color: Colors.black,
+      ),
+      onTap: () async {
+        PageRouter.streamTest.go(context);
       },
     );
   }

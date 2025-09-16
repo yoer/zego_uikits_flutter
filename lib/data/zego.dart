@@ -6,6 +6,7 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
+import 'package:zego_zim_audio/zego_zim_audio.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
@@ -48,6 +49,9 @@ class ZegoSDKer {
           ),
         ),
       );
+
+      /// Set the following three configs before initializing ZIMAudio
+      _syncZIMAudioConfigToExpressConfig();
       await ZIMKit().connectUser(
         id: user.id,
         name: user.name,
@@ -72,6 +76,17 @@ class ZegoSDKer {
     ZegoUIKit().uninit();
 
     isInit = false;
+  }
+
+  void _syncZIMAudioConfigToExpressConfig() {
+    /// Ensure consistency with the RTC SDK configuration and support coexistence of audio sessions
+    ZIMAudio.setAdvancedConfig('audio_session_mix_with_others', 'true');
+
+    /// Ensure consistency with the RTC SDK configuration to avoid the RTC SDK repeatedly modifying options
+    ZIMAudio.setAdvancedConfig('bluetooth_capture_only_voip', 'true');
+
+    ///After ZIMAudio is deinitialized, the audio session is not deactivated
+    ZIMAudio.setAdvancedConfig('audio_session_do_nothing', 'true');
   }
 
   ZegoSDKer._internal();

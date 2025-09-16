@@ -1483,6 +1483,8 @@ PODS:
   - SDWebImage (5.21.1):
     - SDWebImage/Core (= 5.21.1)
   - SDWebImage/Core (5.21.1)
+  - share_plus (0.0.1):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -1499,12 +1501,12 @@ PODS:
     - FlutterMacOS
   - wakelock_plus (0.0.1):
     - Flutter
-  - zego_callkit (1.0.0):
-    - Flutter
   - zego_effects_plugin (0.0.1):
     - Flutter
     - ZegoEffects (< 2.1, >= 2.0)
-  - zego_express_engine (3.21.0):
+  - zego_express_engine (3.22.0):
+    - Flutter
+  - zego_live_communication_kit (1.0.0):
     - Flutter
   - zego_uikit (0.0.1):
     - Flutter
@@ -1562,15 +1564,16 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
-  - zego_callkit (from `.symlinks/plugins/zego_callkit/ios`)
   - zego_effects_plugin (from `.symlinks/plugins/zego_effects_plugin/ios`)
   - zego_express_engine (from `.symlinks/plugins/zego_express_engine/ios`)
+  - zego_live_communication_kit (from `.symlinks/plugins/zego_live_communication_kit/ios`)
   - zego_uikit (from `.symlinks/plugins/zego_uikit/ios`)
   - zego_uikit_beauty_plugin (from `.symlinks/plugins/zego_uikit_beauty_plugin/ios`)
   - zego_uikit_prebuilt_call (from `.symlinks/plugins/zego_uikit_prebuilt_call/ios`)
@@ -1667,6 +1670,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite_darwin:
@@ -1679,12 +1684,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   wakelock_plus:
     :path: ".symlinks/plugins/wakelock_plus/ios"
-  zego_callkit:
-    :path: ".symlinks/plugins/zego_callkit/ios"
   zego_effects_plugin:
     :path: ".symlinks/plugins/zego_effects_plugin/ios"
   zego_express_engine:
     :path: ".symlinks/plugins/zego_express_engine/ios"
+  zego_live_communication_kit:
+    :path: ".symlinks/plugins/zego_live_communication_kit/ios"
   zego_uikit:
     :path: ".symlinks/plugins/zego_uikit/ios"
   zego_uikit_beauty_plugin:
@@ -1755,6 +1760,7 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   SDWebImage: f29024626962457f3470184232766516dee8dfea
+  share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
@@ -1762,9 +1768,9 @@ SPEC CHECKSUMS:
   vibration: 69774ad57825b11c951ee4c46155f455d7a592ce
   video_player_avfoundation: 2cef49524dd1f16c5300b9cd6efd9611ce03639b
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
-  zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_effects_plugin: 6371f4b32ec481da84d12caac155aac37d42f28b
-  zego_express_engine: 1164f43c703759f55e0751377425f660d15b2904
+  zego_express_engine: e81024e004a282760ab48584aa4fe74ecdb5ee03
+  zego_live_communication_kit: 745706a104a4382e492daad40f77cf8488904d0e
   zego_uikit: 0843069d9d4d0e4845abf0ea9b24efa95c1760fa
   zego_uikit_beauty_plugin: e1ed4d8f56beffc744b167b95b0b8ef1a1a56d4a
   zego_uikit_prebuilt_call: 7fe09774f68ec5344fd16378ff2d3bc2de36c6f8
@@ -1780,6 +1786,6 @@ SPEC CHECKSUMS:
   ZIPFoundation: b8c29ea7ae353b309bc810586181fd073cb3312c
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 
-PODFILE CHECKSUM: 3901072922073aed7ba58a66124af48096c826f5
+PODFILE CHECKSUM: 099ee9cfb076e248603a2007c0cf83bf635fe44b
 
 COCOAPODS: 1.16.2

@@ -13,6 +13,7 @@ import 'package:zego_uikits_demo/kits/conference/settings.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/settings.dart';
 import 'package:zego_uikits_demo/pages/about.dart';
 import 'package:zego_uikits_demo/pages/feedback.dart';
+import 'package:zego_uikits_demo/pages/test/stream_test/page.dart';
 import 'package:zego_uikits_demo/pages/home.dart';
 import 'package:zego_uikits_demo/pages/loading.dart';
 import 'package:zego_uikits_demo/pages/login.dart';
@@ -27,6 +28,7 @@ enum PageRouter {
   settings,
   abouts,
   feedbacks,
+  streamTest,
   callSettings,
   audioRoomSettings,
   liveStreamingSettings,
@@ -51,6 +53,8 @@ extension PageRouterExtension on PageRouter {
         return 'abouts';
       case PageRouter.feedbacks:
         return 'feedbacks';
+      case PageRouter.streamTest:
+        return 'streamTest';
       case PageRouter.callSettings:
         return 'call settings';
       case PageRouter.audioRoomSettings:
@@ -80,6 +84,8 @@ extension PageRouterExtension on PageRouter {
         return '/abouts';
       case PageRouter.feedbacks:
         return '/feedbacks';
+      case PageRouter.streamTest:
+        return '/streamTest';
       case PageRouter.callSettings:
         return '/call/settings';
       case PageRouter.audioRoomSettings:
@@ -148,6 +154,11 @@ GoRouter router = GoRouter(
       path: PageRouter.feedbacks.path,
       name: PageRouter.feedbacks.name,
       builder: (context, state) => const FeedbacksPage(),
+    ),
+    GoRoute(
+      path: PageRouter.streamTest.path,
+      name: PageRouter.streamTest.name,
+      builder: (context, state) => const StreamTestPage(),
     ),
     GoRoute(
       path: PageRouter.callSettings.path,

@@ -18,6 +18,7 @@ class Translations {
   static TranslationsSettings settings = TranslationsSettings();
   static TranslationsDrawer drawer = TranslationsDrawer();
   static TranslationsFeedback feedback = TranslationsFeedback();
+  static TranslationsStreamTest streamTest = TranslationsStreamTest();
   static TranslationsGift gift = TranslationsGift();
   static TranslationsLiveStreaming liveStreaming = TranslationsLiveStreaming();
   static TranslationsCall call = TranslationsCall();
@@ -184,6 +185,7 @@ class TranslationsDrawer {
   String get signOut => tr('${base}sign_out');
   String get about => tr('${base}about');
   String get feedback => tr('${base}feedback');
+  String get streamTest => tr('${base}stream_test');
   String get clear => tr('${base}clear');
 }
 
@@ -196,6 +198,48 @@ class TranslationsFeedback {
   String get button => tr('${base}button');
   String get thankYou => tr('${base}thankYou');
   String get sent => tr('${base}sent');
+  String get sendMethod => tr('${base}send_method');
+  String get systemShare => tr('${base}system_share');
+  String get systemShareDesc => tr('${base}system_share_desc');
+  String get emailSend => tr('${base}email_send');
+  String get emailSendDesc => tr('${base}email_send_desc');
+  String get shareFeedback => tr('${base}share_feedback');
+  String get sendEmail => tr('${base}send_email');
+  String get shareFailed => tr('${base}share_failed');
+  String get feedbackDefault => tr('${base}feedback_default');
+  String logsWithParts(int parts) =>
+      tr('${base}logs_with_parts', args: [parts.toString()]);
+}
+
+class TranslationsStreamTest {
+  String get base => 'stream_test.';
+  String get title => tr('${base}title');
+  String get roomSettings => tr('${base}room_settings');
+  String get roomId => tr('${base}room_id');
+  String get userId => tr('${base}user_id');
+  String get userName => tr('${base}user_name');
+  String get streamId => tr('${base}stream_id');
+  String get joinRoom => tr('${base}join_room');
+  String get pleaseFillFields => tr('${base}please_fill_fields');
+  String get roomInfo => tr('${base}room_info');
+  String get userInfo => tr('${base}user_info');
+  String get streamInfo => tr('${base}stream_info');
+  String get joinedSuccessfully => tr('${base}joined_successfully');
+  String get failedToJoin => tr('${base}failed_to_join');
+  String get leftSuccessfully => tr('${base}left_successfully');
+  String get failedToLeave => tr('${base}failed_to_leave');
+  String get cameraSettings => tr('${base}camera_settings');
+  String get microphoneSettings => tr('${base}microphone_settings');
+  String get turnOnCamera => tr('${base}turn_on_camera');
+  String get turnOnMicrophone => tr('${base}turn_on_microphone');
+  String get localStream => tr('${base}local_stream');
+  String get remoteStream => tr('${base}remote_stream');
+  String get localUserId => tr('${base}local_user_id');
+  String get localUserName => tr('${base}local_user_name');
+  String get localStreamId => tr('${base}local_stream_id');
+  String get remoteUserId => tr('${base}remote_user_id');
+  String get remoteUserName => tr('${base}remote_user_name');
+  String get remoteStreamId => tr('${base}remote_stream_id');
 }
 
 class TranslationsLiveStreaming {
