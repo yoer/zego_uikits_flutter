@@ -136,6 +136,18 @@ class TranslationsSettings {
   String get uiDefaultCameraOn => tr('${base}ui_default_camera_on');
   String get uiShowMainButtonsText => tr('${base}ui_show_main_buttons_text');
   String get uiShowSubButtonsText => tr('${base}ui_show_sub_buttons_text');
+
+  // minimized settings
+  String get uiInviterMinimizedCancelButtonVisible =>
+      tr('${base}ui_inviter_minimized_cancel_button_visible');
+  String get uiInviterMinimizedShowTips =>
+      tr('${base}ui_inviter_minimized_show_tips');
+  String get uiInviteeMinimizedAcceptButtonVisible =>
+      tr('${base}ui_invitee_minimized_accept_button_visible');
+  String get uiInviteeMinimizedDeclineButtonVisible =>
+      tr('${base}ui_invitee_minimized_decline_button_visible');
+  String get uiInviteeMinimizedShowTips =>
+      tr('${base}ui_invitee_minimized_show_tips');
   String get turnOnCameraWhenJoining =>
       tr('${base}turn_on_camera_when_joining');
   String get turnOnMicrophoneWhenJoining =>

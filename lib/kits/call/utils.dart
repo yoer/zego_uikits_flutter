@@ -86,6 +86,13 @@ Future<bool> initCallInvitation() async {
           defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
           showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
           showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
+          minimized: ZegoCallInvitationInviterMinimizedUIConfig(
+            cancelButton: ZegoCallButtonUIConfig(
+                visible: CallCache()
+                    .invitation
+                    .uiInviterMinimizedCancelButtonVisible),
+            showTips: CallCache().invitation.uiInviterMinimizedShowTips,
+          ),
         ),
         invitee: ZegoCallInvitationInviteeUIConfig(
           showAvatar: CallCache().invitation.uiShowAvatar,
@@ -98,6 +105,17 @@ Future<bool> initCallInvitation() async {
           defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
           showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
           showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
+          minimized: ZegoCallInvitationInviteeMinimizedUIConfig(
+            acceptButton: ZegoCallButtonUIConfig(
+                visible: CallCache()
+                    .invitation
+                    .uiInviteeMinimizedAcceptButtonVisible),
+            declineButton: ZegoCallButtonUIConfig(
+                visible: CallCache()
+                    .invitation
+                    .uiInviteeMinimizedDeclineButtonVisible),
+            showTips: CallCache().invitation.uiInviteeMinimizedShowTips,
+          ),
         ),
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(

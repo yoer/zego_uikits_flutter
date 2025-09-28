@@ -122,6 +122,75 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                     });
                   },
                 ),
+                // minimized settings for inviter
+                settingsCheckBox(
+                  title:
+                      '${Translations.settings.uiInviterMinimizedCancelButtonVisible}(*)',
+                  value: CallCache()
+                      .invitation
+                      .uiInviterMinimizedCancelButtonVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache()
+                              .invitation
+                              .uiInviterMinimizedCancelButtonVisible =
+                          value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title:
+                      '${Translations.settings.uiInviterMinimizedShowTips}(*)',
+                  value: CallCache().invitation.uiInviterMinimizedShowTips,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().invitation.uiInviterMinimizedShowTips =
+                          value ?? true;
+                    });
+                  },
+                ),
+                // minimized settings for invitee
+                settingsCheckBox(
+                  title:
+                      '${Translations.settings.uiInviteeMinimizedAcceptButtonVisible}(*)',
+                  value: CallCache()
+                      .invitation
+                      .uiInviteeMinimizedAcceptButtonVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache()
+                              .invitation
+                              .uiInviteeMinimizedAcceptButtonVisible =
+                          value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title:
+                      '${Translations.settings.uiInviteeMinimizedDeclineButtonVisible}(*)',
+                  value: CallCache()
+                      .invitation
+                      .uiInviteeMinimizedDeclineButtonVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache()
+                              .invitation
+                              .uiInviteeMinimizedDeclineButtonVisible =
+                          value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title:
+                      '${Translations.settings.uiInviteeMinimizedShowTips}(*)',
+                  value: CallCache().invitation.uiInviteeMinimizedShowTips,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().invitation.uiInviteeMinimizedShowTips =
+                          value ?? true;
+                    });
+                  },
+                ),
               ],
             ),
             settingsGroup(

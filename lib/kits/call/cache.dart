@@ -34,6 +34,15 @@ class CallInvitationCache {
   bool _uiShowMainButtonsText = false;
   bool _uiShowSubButtonsText = true;
 
+  // minimized settings for inviter
+  bool _uiInviterMinimizedCancelButtonVisible = false;
+  bool _uiInviterMinimizedShowTips = true;
+
+  // minimized settings for invitee
+  bool _uiInviteeMinimizedAcceptButtonVisible = false;
+  bool _uiInviteeMinimizedDeclineButtonVisible = false;
+  bool _uiInviteeMinimizedShowTips = true;
+
   CallRecord? queryHistory(String callID) {
     final index = historyNotifier.value.indexWhere((e) => e.callID == callID);
     return -1 != index ? historyNotifier.value[index] : null;
@@ -208,6 +217,51 @@ class CallInvitationCache {
     });
   }
 
+  // inviter minimized settings
+  bool get uiInviterMinimizedCancelButtonVisible =>
+      _uiInviterMinimizedCancelButtonVisible;
+  set uiInviterMinimizedCancelButtonVisible(bool value) {
+    _uiInviterMinimizedCancelButtonVisible = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiInviterMinimizedCancelButtonVisibleKey, value);
+    });
+  }
+
+  bool get uiInviterMinimizedShowTips => _uiInviterMinimizedShowTips;
+  set uiInviterMinimizedShowTips(bool value) {
+    _uiInviterMinimizedShowTips = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiInviterMinimizedShowTipsKey, value);
+    });
+  }
+
+  // invitee minimized settings
+  bool get uiInviteeMinimizedAcceptButtonVisible =>
+      _uiInviteeMinimizedAcceptButtonVisible;
+  set uiInviteeMinimizedAcceptButtonVisible(bool value) {
+    _uiInviteeMinimizedAcceptButtonVisible = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiInviteeMinimizedAcceptButtonVisibleKey, value);
+    });
+  }
+
+  bool get uiInviteeMinimizedDeclineButtonVisible =>
+      _uiInviteeMinimizedDeclineButtonVisible;
+  set uiInviteeMinimizedDeclineButtonVisible(bool value) {
+    _uiInviteeMinimizedDeclineButtonVisible = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiInviteeMinimizedDeclineButtonVisibleKey, value);
+    });
+  }
+
+  bool get uiInviteeMinimizedShowTips => _uiInviteeMinimizedShowTips;
+  set uiInviteeMinimizedShowTips(bool value) {
+    _uiInviteeMinimizedShowTips = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiInviteeMinimizedShowTipsKey, value);
+    });
+  }
+
   bool get showVideoOnInvitationCall => _showVideoOnInvitationCall;
   set showVideoOnInvitationCall(bool value) {
     _showVideoOnInvitationCall = value;
@@ -248,6 +302,18 @@ class CallInvitationCache {
     _uiShowSubButtonsText =
         prefs.get(_uiShowSubButtonsTextKey) as bool? ?? true;
 
+    // load minimized settings
+    _uiInviterMinimizedCancelButtonVisible =
+        prefs.get(_uiInviterMinimizedCancelButtonVisibleKey) as bool? ?? false;
+    _uiInviterMinimizedShowTips =
+        prefs.get(_uiInviterMinimizedShowTipsKey) as bool? ?? true;
+    _uiInviteeMinimizedAcceptButtonVisible =
+        prefs.get(_uiInviteeMinimizedAcceptButtonVisibleKey) as bool? ?? false;
+    _uiInviteeMinimizedDeclineButtonVisible =
+        prefs.get(_uiInviteeMinimizedDeclineButtonVisibleKey) as bool? ?? false;
+    _uiInviteeMinimizedShowTips =
+        prefs.get(_uiInviteeMinimizedShowTipsKey) as bool? ?? true;
+
     historyNotifier.value = (prefs.getStringList(_cacheHistoryKey) ?? [])
         .map((e) => CallRecord.fromJson(e))
         .toList();
@@ -272,6 +338,13 @@ class CallInvitationCache {
     _uiShowMainButtonsText = false;
     _uiShowSubButtonsText = true;
 
+    // reset minimized settings
+    _uiInviterMinimizedCancelButtonVisible = false;
+    _uiInviterMinimizedShowTips = true;
+    _uiInviteeMinimizedAcceptButtonVisible = false;
+    _uiInviteeMinimizedDeclineButtonVisible = false;
+    _uiInviteeMinimizedShowTips = true;
+
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheSupportMissNotificationKey);
     prefs.remove(_cacheSupportMissNotificationReDialKey);
@@ -291,6 +364,13 @@ class CallInvitationCache {
     prefs.remove(_uiDefaultCameraOnKey);
     prefs.remove(_uiShowMainButtonsTextKey);
     prefs.remove(_uiShowSubButtonsTextKey);
+
+    // remove minimized settings
+    prefs.remove(_uiInviterMinimizedCancelButtonVisibleKey);
+    prefs.remove(_uiInviterMinimizedShowTipsKey);
+    prefs.remove(_uiInviteeMinimizedAcceptButtonVisibleKey);
+    prefs.remove(_uiInviteeMinimizedDeclineButtonVisibleKey);
+    prefs.remove(_uiInviteeMinimizedShowTipsKey);
   }
 
   final String _cacheSupportMissNotificationKey = 'cache_call_i_s_miss_call';
@@ -320,6 +400,18 @@ class CallInvitationCache {
   final String _uiShowMainButtonsTextKey =
       'cache_call_ui_show_main_buttons_text';
   final String _uiShowSubButtonsTextKey = 'cache_call_ui_show_sub_buttons_text';
+
+  // minimized settings keys
+  final String _uiInviterMinimizedCancelButtonVisibleKey =
+      'cache_call_ui_inviter_minimized_cancel_button_visible';
+  final String _uiInviterMinimizedShowTipsKey =
+      'cache_call_ui_inviter_minimized_show_tips';
+  final String _uiInviteeMinimizedAcceptButtonVisibleKey =
+      'cache_call_ui_invitee_minimized_accept_button_visible';
+  final String _uiInviteeMinimizedDeclineButtonVisibleKey =
+      'cache_call_ui_invitee_minimized_decline_button_visible';
+  final String _uiInviteeMinimizedShowTipsKey =
+      'cache_call_ui_invitee_minimized_show_tips';
 }
 
 class CallCache {
