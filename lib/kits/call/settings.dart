@@ -103,6 +103,15 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   },
                 ),
                 settingsCheckBox(
+                  title: '${Translations.settings.uiDefaultSpeakerOn}(*)',
+                  value: CallCache().invitation.uiDefaultSpeakerOn,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().invitation.uiDefaultSpeakerOn = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
                   title: '${Translations.settings.uiShowMainButtonsText}(*)',
                   value: CallCache().invitation.uiShowMainButtonsText,
                   onChanged: (value) {

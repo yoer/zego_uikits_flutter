@@ -79,6 +79,7 @@ settings.ui_show_calling_text,Show Calling Text,显示通话文本,कॉलि�
 settings.ui_use_video_view_aspect_fill,Use Video View Aspect Fill,使用视频视图等比填充,वीडियो व्यू अनुपात भरना उपयोग करें
 settings.ui_default_microphone_on,Default Microphone On,默认开启麦克风,डिफ़ॉल्ट माइक्रोफोन चालू
 settings.ui_default_camera_on,Default Camera On,默认开启摄像头,डिफ़ॉल्ट कैमरा चालू
+settings.ui_default_speaker_on,Default Speaker On,默认开启扬声器,डिफ़ॉल्ट स्पीकर चालू
 settings.ui_show_main_buttons_text,Show Main Buttons Text,显示主按钮文本,मुख्य बटन टेक्स्ट दिखाएँ
 settings.ui_show_sub_buttons_text,Show Sub Buttons Text,显示子按钮文本,उप बटन टेक्स्ट दिखाएँ
 settings.ui_inviter_minimized_cancel_button_visible,Inviter Minimized Cancel Button Visible,发起者最小化取消按钮可见,आमंत्रक छोटा रद्द बटन दिखाई देता है

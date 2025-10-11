@@ -134,6 +134,7 @@ class TranslationsSettings {
       tr('${base}ui_use_video_view_aspect_fill');
   String get uiDefaultMicrophoneOn => tr('${base}ui_default_microphone_on');
   String get uiDefaultCameraOn => tr('${base}ui_default_camera_on');
+  String get uiDefaultSpeakerOn => tr('${base}ui_default_speaker_on');
   String get uiShowMainButtonsText => tr('${base}ui_show_main_buttons_text');
   String get uiShowSubButtonsText => tr('${base}ui_show_sub_buttons_text');
 
