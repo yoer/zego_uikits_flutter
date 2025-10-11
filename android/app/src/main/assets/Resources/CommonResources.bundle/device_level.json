@@ -1,0 +1,48 @@
+{
+    "type": "device_level",
+    "version": "1.5.0",
+    "platform": "android",
+    "level_strategy":
+    {
+        "default":
+        {
+            "exactly_low": 65,
+            "low":65,
+            "middle":73,
+            "high":81
+        },
+        "qualcomm":
+        {
+            "cpu_frequency":
+            {
+                "exactly_low": 1.8,
+                "low": 2.0,
+                "middle": 2.2,
+                "high": 2.4
+            },
+            "gpu_serial":
+            {
+                "low": 600,
+                "middle": 620,
+                "high": 630
+            }
+        },
+        "mtk":
+        {
+            "cpu_frequency":
+            {
+                "exactly_low": 1.8,
+                "low": 2.0,
+                "middle": 2.2,
+                "high": 2.4
+            }
+        }
+    },
+
+    "whitelist": {
+        "device_level_exactly_low": ["PRO 7 Plus"],
+        "device_level_low": ["SM-A235F","SM-A245M","Le X620"],
+        "device_level_middle": ["V2171A"],
+        "device_level_high": []
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "version": "1.5.0",
+    "filter": 3009,
+    "type": "effect_config",
+    "items": [
+        {
+            "type": "skinColor",
+            "externals": {
+                "bind_face": false,
+                "binarization": false,
+                "light_wrapping": true
+            }
+        }
+    ]
+}

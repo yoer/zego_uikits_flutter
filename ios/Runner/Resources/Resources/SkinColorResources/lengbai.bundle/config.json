@@ -1,0 +1,21 @@
+{
+  "version": "1.5.0",
+  "filter": 3009,
+  "type": "style",
+  "name": "冷白",
+  "items": [
+    {
+      "type": "skin",
+      "default": {
+        "range": [0, 100]
+      },
+      "externals":{
+          "bg_lut": "res/filter_bg.png",
+          "skin_lut": "res/filter_skin.png",
+          "mask": "res/mask.png",
+          "t_max": "res/temperature_max.png",
+          "t_min": "res/temperature_min.png"
+      }
+    }
+  ]
+}

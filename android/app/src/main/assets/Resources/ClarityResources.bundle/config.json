@@ -1,0 +1,27 @@
+{
+  "version": "1.5.0",
+  "filter": 3006,
+  "type": "style",
+  "name": "清晰",
+  "items": [
+    {
+      "type": "lut",
+      "default": {
+        "res": "res/clear_ios.png",
+        "range": [0, 35]
+      },
+      "windows": {
+        "res": "res/clear.png",
+        "range": [0, 35]
+      },
+      "macos": {
+        "res": "res/clear.png",
+        "range": [0, 35]
+      },
+      "android": {
+        "res": "res/clear_ios.png",
+        "range": [0, 35]
+      }
+    }
+  ]
+}
