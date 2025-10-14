@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
+import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'utils/router.dart';
@@ -26,6 +27,8 @@ class MoreDrawer extends StatefulWidget {
 }
 
 class _MoreDrawerState extends State<MoreDrawer> {
+  bool _isSharing = false;
+
   TextStyle get itemTextStyle => TextStyle(
         color: Colors.black,
         fontSize: 25.r,
@@ -37,26 +40,40 @@ class _MoreDrawerState extends State<MoreDrawer> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width / 5.0 * 2;
 
-    return Drawer(
-      width: width,
-      backgroundColor: Colors.white,
-      child: Container(
-        margin: EdgeInsets.all(10.r),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 80.r),
-            settingsButton(),
-            feedbackButton(),
-            streamTestButton(),
-            aboutButton(),
-            const Expanded(child: SizedBox()),
-            clearButton(),
-            logoutButton(),
-            SizedBox(height: 80.r),
-          ],
+    return Stack(
+      children: [
+        Drawer(
+          width: width,
+          backgroundColor: Colors.white,
+          child: Container(
+            margin: EdgeInsets.all(10.r),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 80.r),
+                settingsButton(),
+                feedbackButton(),
+                shareLogsButton(),
+                streamTestButton(),
+                aboutButton(),
+                const Expanded(child: SizedBox()),
+                clearButton(),
+                logoutButton(),
+                SizedBox(height: 80.r),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (_isSharing)
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withValues(alpha: 0.3),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+      ],
     );
   }
 
@@ -240,6 +257,47 @@ class _MoreDrawerState extends State<MoreDrawer> {
       ),
       onTap: () async {
         PageRouter.feedbacks.go(context);
+      },
+    );
+  }
+
+  Widget shareLogsButton() {
+    return ListTile(
+      title: Text(
+        Translations.drawer.shareLogs,
+        style: itemTextStyle,
+      ),
+      contentPadding: itemPadding,
+      leading: const Icon(
+        Icons.share,
+        color: Colors.black,
+      ),
+      onTap: () async {
+        setState(() {
+          _isSharing = true;
+        });
+
+        try {
+          final success = await ZegoUIKit().exportLogs(
+            title: 'App Logs - ${DateTime.now().toString().split('.')[0]}',
+            content: 'Application logs for debugging',
+          );
+
+          if (success) {
+            showInfoToast('Logs shared successfully');
+          } else {
+            showInfoToast('No logs found to share');
+          }
+        } catch (e) {
+          debugPrint('Error sharing logs: $e');
+          showInfoToast('Failed to share logs: $e');
+        } finally {
+          if (mounted) {
+            setState(() {
+              _isSharing = false;
+            });
+          }
+        }
       },
     );
   }

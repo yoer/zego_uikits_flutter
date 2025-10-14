@@ -84,6 +84,7 @@ Future<bool> initCallInvitation() async {
           showCallingText: CallCache().invitation.uiShowCallingText,
           defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
           defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
+          defaultSpeakerOn: CallCache().invitation.uiDefaultSpeakerOn,
           showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
           showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
           minimized: ZegoCallInvitationInviterMinimizedUIConfig(

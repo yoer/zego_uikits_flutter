@@ -198,6 +198,7 @@ class TranslationsDrawer {
   String get signOut => tr('${base}sign_out');
   String get about => tr('${base}about');
   String get feedback => tr('${base}feedback');
+  String get shareLogs => tr('${base}share_logs');
   String get streamTest => tr('${base}stream_test');
   String get clear => tr('${base}clear');
 }
