@@ -1754,7 +1754,7 @@ SPEC CHECKSUMS:
   flutter_dtmf: 637e453658148b677dd32bb9849d1d7223d5033d
   flutter_email_sender: aa1e9772696691d02cd91fea829856c11efb8e58
   flutter_keyboard_visibility: 4625131e43015dbbe759d9b20daaf77e0e3f6619
-  flutter_local_notifications: 395056b3175ba4f08480a7c5de30cd36d69827e4
+  flutter_local_notifications: a5a732f069baa862e728d839dd2ebb904737effb
   flutter_logs_yoer: 4b6ed7705cc0e5306d9ecce1d5be5568045e0e73
   flutter_ringtone_player: a77c42464250845611eaa44c27e8714acc800138
   flutter_volume_controller: c2be490cb0487e8b88d0d9fc2b7e1c139a4ebccb
