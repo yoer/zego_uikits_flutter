@@ -15,7 +15,6 @@
 		410AFE3F2D26999B0056E111 /* BeautyResources in Resources */ = {isa = PBXBuildFile; fileRef = 410AFE3E2D26999B0056E111 /* BeautyResources */; };
 		413411502E167808008D2A21 /* ZegoExpressEngine.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4134114F2E167808008D2A21 /* ZegoExpressEngine.xcframework */; };
 		415CD6762E9A46ED003769C7 /* AVAudioSession+Switch.m in Sources */ = {isa = PBXBuildFile; fileRef = 415CD6752E9A46ED003769C7 /* AVAudioSession+Switch.m */; };
-		41B404912E72820100E46B0A /* LiveCommunicationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41B404902E72820100E46B0A /* LiveCommunicationKit.framework */; };
 		41BA3E402D1C21D6008CF9A3 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41BA3E3F2D1C21D6008CF9A3 /* ReplayKit.framework */; };
 		41BA3E432D1C21D6008CF9A3 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41BA3E422D1C21D6008CF9A3 /* SampleHandler.swift */; };
 		41BA3E472D1C21D6008CF9A3 /* ScreenShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 41BA3E3E2D1C21D6008CF9A3 /* ScreenShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -124,7 +123,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41B404912E72820100E46B0A /* LiveCommunicationKit.framework in Frameworks */,
 				41D4CC622D18542200AFE201 /* CallKit.framework in Frameworks */,
 				41D4CC642D18542A00AFE201 /* PushKit.framework in Frameworks */,
 				04845B6CCFDF41EA3678DF3E /* Pods_Runner.framework in Frameworks */,
@@ -427,9 +425,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -459,9 +461,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
