@@ -40,8 +40,8 @@ class ZegoSDKer {
     try {
       await ZegoUIKit().initLog();
 
-      /// Set the following three configs before initializing ZIMAudio
-      _syncZIMAudioConfigToExpressConfig();
+      await _syncZIMAudioConfigToExpressConfigBeforeZIMAudioInit();
+
       await ZIMKit().init(
         appID: int.parse(SettingsCache().appID),
         appSign: SettingsCache().appSign,
@@ -56,6 +56,8 @@ class ZegoSDKer {
           ),
         ),
       );
+
+      await _syncZIMAudioConfigToExpressConfigAfterZIMAudioInit();
 
       await ZIMKit().connectUser(
         id: user.id,
@@ -102,14 +104,17 @@ class ZegoSDKer {
     }
   }
 
-  void _syncZIMAudioConfigToExpressConfig() {
+  Future<void> _syncZIMAudioConfigToExpressConfigBeforeZIMAudioInit() async {
+    debugPrint('sync zim audio advanced config');
+
+    await ZIMAudio.setAdvancedConfig('audio_session_do_nothing', 'true');
+  }
+
+  Future<void> _syncZIMAudioConfigToExpressConfigAfterZIMAudioInit() async {
     debugPrint('sync zim audio advanced config');
 
     /// Ensure consistency with the RTC SDK configuration and support coexistence of audio sessions
-    ZIMAudio.setAdvancedConfig('audio_session_mix_with_others', 'true');
-
-    ///After ZIMAudio is deinitialized, the audio session is not deactivated
-    ZIMAudio.setAdvancedConfig('audio_session_do_nothing', 'true');
+    await ZIMAudio.setAdvancedConfig('audio_session_mix_with_others', 'true');
   }
 
   ZegoSDKer._internal();
