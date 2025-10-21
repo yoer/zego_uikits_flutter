@@ -253,6 +253,11 @@ class CallInnerText {
     innerText.screenSharingTipText = "You are sharing screen";
     innerText.stopScreenSharingButtonText = "Stop sharing";
 
+    // Proximity sensor related texts
+    innerText.screenBlockedTitle = "Call in progress...";
+    innerText.screenBlockedSubtitle =
+        "Move phone away from ear to restore operation";
+
     return innerText;
   }
 
@@ -292,6 +297,10 @@ class CallInnerText {
     innerText.screenSharingTipText = "您正在共享屏幕";
     innerText.stopScreenSharingButtonText = "停止共享";
 
+    // Proximity sensor related texts
+    innerText.screenBlockedTitle = "通话中...";
+    innerText.screenBlockedSubtitle = "将手机远离耳朵以恢复操作";
+
     return innerText;
   }
 
@@ -330,6 +339,11 @@ class CallInnerText {
     // Screen sharing related texts
     innerText.screenSharingTipText = "आप स्क्रीन शेयर कर रहे हैं";
     innerText.stopScreenSharingButtonText = "शेयरिंग बंद करें";
+
+    // Proximity sensor related texts
+    innerText.screenBlockedTitle = "कॉल चल रहा है...";
+    innerText.screenBlockedSubtitle =
+        "ऑपरेशन को पुनर्स्थापित करने के लिए फोन को कान से दूर करें";
 
     return innerText;
   }
