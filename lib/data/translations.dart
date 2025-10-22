@@ -189,6 +189,10 @@ class TranslationsSettings {
       tr('${base}duration.seconds_tips', args: [seconds.toString()]);
 
   String get conferenceListId => tr('${base}conference_list_id');
+  String get others => tr('${base}others');
+
+  String get enableDebugToast => tr('${base}enable_debug_toast');
+  String get audioRouteChanged => tr('${base}audio_route_changed');
 }
 
 class TranslationsDrawer {
