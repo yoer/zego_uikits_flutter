@@ -276,6 +276,11 @@ class TranslationsLiveStreaming {
   String get endPK => tr('${base}pk.end');
   String get quitPK => tr('${base}pk.quit');
   String get invitePK => tr('${base}pk.invite');
+  String get manualInputTips => tr('${base}pk.manual_input_tips');
+  String get hostIdPlaceholder => tr('${base}pk.host_id_placeholder');
+  String get sendInvite => tr('${base}pk.send_invite');
+  String get inviteSent => tr('${base}pk.invite_sent');
+  String get pleaseEnterHostId => tr('${base}pk.please_enter_host_id');
 
   String get mediaSharingTitle => tr('${base}media_sharing.title');
 }

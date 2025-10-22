@@ -31,11 +31,19 @@ class LiveStreamingPKHostList extends StatefulWidget {
 
 class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
   bool autoAccept = false;
+  final TextEditingController _hostIdController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
 
     autoAccept = LiveStreamingCache().pkAutoAccept;
+  }
+
+  @override
+  void dispose() {
+    _hostIdController.dispose();
+    super.dispose();
   }
 
   @override
@@ -132,12 +140,83 @@ class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
 
   Widget hostEmptyTips() {
     return Center(
-      child: Text(
-        Translations.liveStreaming.pkHostEmptyTips,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 30.r,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            Translations.liveStreaming.pkHostEmptyTips,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30.r,
+            ),
+          ),
+          SizedBox(height: 40.r),
+          Text(
+            Translations.liveStreaming.manualInputTips,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 24.r,
+            ),
+          ),
+          SizedBox(height: 20.r),
+          SizedBox(
+            width: 400.r,
+            child: TextField(
+              controller: _hostIdController,
+              decoration: InputDecoration(
+                hintText: Translations.liveStreaming.hostIdPlaceholder,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16.r,
+                  vertical: 12.r,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20.r),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.red,
+              padding: EdgeInsets.symmetric(
+                horizontal: 32.r,
+                vertical: 16.r,
+              ),
+            ),
+            child: Text(
+              Translations.liveStreaming.sendInvite,
+              style: TextStyle(fontSize: 24.r),
+            ),
+            onPressed: () {
+              final hostId = _hostIdController.text.trim();
+              if (hostId.isEmpty) {
+                showFailedToast(Translations.liveStreaming.pleaseEnterHostId);
+                return;
+              }
+
+              ZegoUIKitPrebuiltLiveStreamingController().pk.sendRequest(
+                targetHostIDs: [hostId],
+                isAutoAccept: autoAccept,
+              ).then(
+                (result) {
+                  if (!mounted) return;
+
+                  if (result.error != null) {
+                    showFailedToast(
+                      '${Translations.liveStreaming.invitePK}:${result.error.toString()}',
+                    );
+                  } else {
+                    _hostIdController.clear();
+                    showInfoToast(Translations.liveStreaming.inviteSent);
+                    Navigator.pop(context);
+                  }
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
