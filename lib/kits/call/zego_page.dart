@@ -1,13 +1,16 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 
 // Package imports:
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikits_demo/common/toast.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/kits/cache.dart';
 import 'package:zego_uikits_demo/kits/call/utils.dart';
+import 'package:zego_uikits_demo/data/translations.dart';
 
 class ZegoCallPage extends StatefulWidget {
   const ZegoCallPage({
@@ -38,6 +41,20 @@ class ZegoCallPage extends StatefulWidget {
 }
 
 class _ZegoCallPageState extends State<ZegoCallPage> {
+  @override
+  void initState() {
+    ZegoUIKit().getLocalUser().audioRoute.addListener(onAudioRouteChanged);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ZegoUIKit().getLocalUser().audioRoute.removeListener(onAudioRouteChanged);
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -71,5 +88,12 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
     }
 
     return config;
+  }
+
+  void onAudioRouteChanged() {
+    if (KitCommonCache().enableDebugToast) {
+      showInfoToast(
+          '${Translations.settings.audioRouteChanged}:${ZegoUIKit().getLocalUser().audioRoute.value}');
+    }
   }
 }

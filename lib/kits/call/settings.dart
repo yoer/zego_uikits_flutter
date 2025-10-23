@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikits_demo/common/settings.dart';
 import 'package:zego_uikits_demo/common/string_list_editor.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
+import 'package:zego_uikits_demo/kits/cache.dart';
 import 'cache.dart';
 
 class CallPageSettings extends StatefulWidget {
@@ -99,6 +100,15 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                   onChanged: (value) {
                     setState(() {
                       CallCache().invitation.uiDefaultCameraOn = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: '${Translations.settings.uiDefaultSpeakerOn}(*)',
+                  value: CallCache().invitation.uiDefaultSpeakerOn,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().invitation.uiDefaultSpeakerOn = value ?? true;
                     });
                   },
                 ),

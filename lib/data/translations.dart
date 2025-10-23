@@ -134,6 +134,7 @@ class TranslationsSettings {
       tr('${base}ui_use_video_view_aspect_fill');
   String get uiDefaultMicrophoneOn => tr('${base}ui_default_microphone_on');
   String get uiDefaultCameraOn => tr('${base}ui_default_camera_on');
+  String get uiDefaultSpeakerOn => tr('${base}ui_default_speaker_on');
   String get uiShowMainButtonsText => tr('${base}ui_show_main_buttons_text');
   String get uiShowSubButtonsText => tr('${base}ui_show_sub_buttons_text');
 
@@ -188,6 +189,10 @@ class TranslationsSettings {
       tr('${base}duration.seconds_tips', args: [seconds.toString()]);
 
   String get conferenceListId => tr('${base}conference_list_id');
+  String get others => tr('${base}others');
+
+  String get enableDebugToast => tr('${base}enable_debug_toast');
+  String get audioRouteChanged => tr('${base}audio_route_changed');
 }
 
 class TranslationsDrawer {
@@ -197,6 +202,7 @@ class TranslationsDrawer {
   String get signOut => tr('${base}sign_out');
   String get about => tr('${base}about');
   String get feedback => tr('${base}feedback');
+  String get shareLogs => tr('${base}share_logs');
   String get streamTest => tr('${base}stream_test');
   String get clear => tr('${base}clear');
 }
@@ -274,6 +280,11 @@ class TranslationsLiveStreaming {
   String get endPK => tr('${base}pk.end');
   String get quitPK => tr('${base}pk.quit');
   String get invitePK => tr('${base}pk.invite');
+  String get manualInputTips => tr('${base}pk.manual_input_tips');
+  String get hostIdPlaceholder => tr('${base}pk.host_id_placeholder');
+  String get sendInvite => tr('${base}pk.send_invite');
+  String get inviteSent => tr('${base}pk.invite_sent');
+  String get pleaseEnterHostId => tr('${base}pk.please_enter_host_id');
 
   String get mediaSharingTitle => tr('${base}media_sharing.title');
 }

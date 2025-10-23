@@ -1,16 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Package imports:
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
+import 'package:zego_uikits_demo/pages/test/stream_test/defines.dart';
 import 'package:zego_uikits_demo/pages/test/stream_test/room.dart';
 import 'package:zego_uikits_demo/pages/test/stream_test/settings.dart';
-import 'package:zego_uikits_demo/pages/test/stream_test/defines.dart';
 
 class StreamTestPage extends StatefulWidget {
   const StreamTestPage({super.key});

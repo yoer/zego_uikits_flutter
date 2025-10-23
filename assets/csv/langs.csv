@@ -79,6 +79,7 @@ settings.ui_show_calling_text,Show Calling Text,显示通话文本,कॉलि�
 settings.ui_use_video_view_aspect_fill,Use Video View Aspect Fill,使用视频视图等比填充,वीडियो व्यू अनुपात भरना उपयोग करें
 settings.ui_default_microphone_on,Default Microphone On,默认开启麦克风,डिफ़ॉल्ट माइक्रोफोन चालू
 settings.ui_default_camera_on,Default Camera On,默认开启摄像头,डिफ़ॉल्ट कैमरा चालू
+settings.ui_default_speaker_on,Default Speaker On,默认开启扬声器,डिफ़ॉल्ट स्पीकर चालू
 settings.ui_show_main_buttons_text,Show Main Buttons Text,显示主按钮文本,मुख्य बटन टेक्स्ट दिखाएँ
 settings.ui_show_sub_buttons_text,Show Sub Buttons Text,显示子按钮文本,उप बटन टेक्स्ट दिखाएँ
 settings.ui_inviter_minimized_cancel_button_visible,Inviter Minimized Cancel Button Visible,发起者最小化取消按钮可见,आमंत्रक छोटा रद्द बटन दिखाई देता है
@@ -93,6 +94,9 @@ settings.duration,"Duration","通话时长","काल की अवधि"
 settings.duration.auto_hang_up,"Auto Hang Up","自动挂断","स्वचालित हैंड अप"
 settings.duration.seconds_tips,"{} seconds remaining","剩余 {} 秒","{} सेकंड शेष"
 settings.duration.end_tips,"About to end","即将结束","समापन के बारे में"
+settings.others,Others,其他,अन्य
+settings.enable_debug_toast,"Enable Debug Toast","启用调试提示","डिबग टोस्ट सक्षम करें"
+settings.audio_route_changed,"Local Audio Route Changed","本地音频路由已更改","स्थानीय ऑडियो रूट बदल गया"
 intro.skip,Skip,跳过,"छोड़ें"
 intro.done,Done,完成,"पूर्ण"
 intro.enter,Enter,进入,"प्रवेश करें"
@@ -112,6 +116,7 @@ drawer.language,Language,语言,"भाषा"
 drawer.sign_out,Sign Out,退出,"साइन आउट"
 drawer.about,About,关于,बारे में
 drawer.feedback,Feedback,反馈,प्रतिक्रिया
+drawer.share_logs,Share Logs,分享日志,लॉग साझा करें
 drawer.stream_test,Stream Test,流测试,"स्ट्रीम टेस्ट"
 drawer.clear,Clear Cache,清空缓存,कैश साफ़ करें
 feedback.title,Feedback Title,反馈标题,"प्रतिक्रिया शीर्षक"
@@ -175,6 +180,11 @@ live.pk.host_empty_tips,"Hosts are empty, invite more people to use it.","主播
 live.pk.end,"End PK","结束PK","PK समाप्त करें"
 live.pk.quit,"Quit PK","退出PK","PK छोड़ें"
 live.pk.invite,"Invite to PK","邀请PK","PK के लिए आमंत्रित करें"
+live.pk.manual_input_tips,"Manually input Host ID to invite","手动输入Host ID发起邀请","होस्ट आईडी मैन्युअल रूप से दर्ज करें"
+live.pk.host_id_placeholder,"Please enter Host ID","请输入Host ID","कृपया होस्ट आईडी दर्ज करें"
+live.pk.send_invite,"Send PK Invite","发起PK邀请","PK आमंत्रण भेजें"
+live.pk.invite_sent,"PK invitation sent","PK邀请已发送","PK आमंत्रण भेजा गया"
+live.pk.please_enter_host_id,"Please enter Host ID","请输入Host ID","कृपया होस्ट आईडी दर्ज करें"
 live.media_sharing.title,"Media Sharing","媒体共享","मीडिया साझाकरण"
 call.invitation.title,"Invitation",呼叫邀请,"आमंत्रण"
 call.one_on_one.title,"One on One",一对一通话,"एक-से-एक"

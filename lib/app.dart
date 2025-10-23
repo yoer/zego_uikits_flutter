@@ -13,9 +13,7 @@ import 'package:zego_uikits_demo/pages/utils/router.dart';
 import 'common/constant.dart';
 
 class App extends StatefulWidget {
-  const App({
-    super.key,
-  });
+  const App({super.key});
 
   @override
   State<App> createState() => _AppState();

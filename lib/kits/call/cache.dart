@@ -31,6 +31,7 @@ class CallInvitationCache {
   bool _uiUseVideoViewAspectFill = false;
   bool _uiDefaultMicrophoneOn = true;
   bool _uiDefaultCameraOn = true;
+  bool _uiDefaultSpeakerOn = true;
   bool _uiShowMainButtonsText = false;
   bool _uiShowSubButtonsText = true;
 
@@ -201,6 +202,14 @@ class CallInvitationCache {
     });
   }
 
+  bool get uiDefaultSpeakerOn => _uiDefaultSpeakerOn;
+  set uiDefaultSpeakerOn(bool value) {
+    _uiDefaultSpeakerOn = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_uiDefaultSpeakerOnKey, value);
+    });
+  }
+
   bool get uiShowMainButtonsText => _uiShowMainButtonsText;
   set uiShowMainButtonsText(bool value) {
     _uiShowMainButtonsText = value;
@@ -297,6 +306,7 @@ class CallInvitationCache {
     _uiDefaultMicrophoneOn =
         prefs.get(_uiDefaultMicrophoneOnKey) as bool? ?? true;
     _uiDefaultCameraOn = prefs.get(_uiDefaultCameraOnKey) as bool? ?? true;
+    _uiDefaultSpeakerOn = prefs.get(_uiDefaultSpeakerOnKey) as bool? ?? true;
     _uiShowMainButtonsText =
         prefs.get(_uiShowMainButtonsTextKey) as bool? ?? false;
     _uiShowSubButtonsText =
@@ -362,6 +372,7 @@ class CallInvitationCache {
     prefs.remove(_uiUseVideoViewAspectFillKey);
     prefs.remove(_uiDefaultMicrophoneOnKey);
     prefs.remove(_uiDefaultCameraOnKey);
+    prefs.remove(_uiDefaultSpeakerOnKey);
     prefs.remove(_uiShowMainButtonsTextKey);
     prefs.remove(_uiShowSubButtonsTextKey);
 
@@ -397,6 +408,7 @@ class CallInvitationCache {
   final String _uiDefaultMicrophoneOnKey =
       'cache_call_ui_default_microphone_on';
   final String _uiDefaultCameraOnKey = 'cache_call_ui_default_camera_on';
+  final String _uiDefaultSpeakerOnKey = 'cache_call_ui_default_speaker_on';
   final String _uiShowMainButtonsTextKey =
       'cache_call_ui_show_main_buttons_text';
   final String _uiShowSubButtonsTextKey = 'cache_call_ui_show_sub_buttons_text';

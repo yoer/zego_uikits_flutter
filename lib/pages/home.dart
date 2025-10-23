@@ -40,6 +40,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final tabIndexNotifier = ValueNotifier<int>(0);
   late PageController pageController;
+  final unreadCountNotifier = ValueNotifier<int>(0);
 
   List<StreamSubscription<dynamic>?> subscriptions = [];
 
@@ -50,6 +51,11 @@ class HomePageState extends State<HomePage> {
     if (kDebugMode) {
       subscriptions.add(ZegoUIKit().getErrorStream().listen(onUIKitError));
     }
+
+    // Listen to unread message count
+    ZIMKit().getTotalUnreadMessageCount().addListener(() {
+      unreadCountNotifier.value = ZIMKit().getTotalUnreadMessageCount().value;
+    });
 
     pageController = PageController(initialPage: 0);
 
@@ -237,38 +243,111 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget navigatorBar(int tabIndex) {
-    return CircleNavBar(
-      activeIcons: [
-        BottomNavIndex.call.icon,
-        BottomNavIndex.liveStreaming.icon,
-        BottomNavIndex.audioRoom.icon,
-        BottomNavIndex.conference.icon,
-        BottomNavIndex.chat.icon,
-      ],
-      inactiveIcons: [
-        Text(BottomNavIndex.call.text),
-        Text(BottomNavIndex.liveStreaming.text),
-        Text(BottomNavIndex.audioRoom.text),
-        Text(BottomNavIndex.conference.text),
-        Text(BottomNavIndex.chat.text),
-      ],
-      color: Colors.white,
-      height: PageStyle.navigatorBarHeight(),
-      circleWidth: PageStyle.navigatorBarHeight(),
-      activeIndex: tabIndex,
-      onTap: (index) {
-        tabIndexNotifier.value = index;
-        pageController.jumpToPage(index);
+    return ValueListenableBuilder<int>(
+      valueListenable: unreadCountNotifier,
+      builder: (context, unreadCount, _) {
+        return CircleNavBar(
+          activeIcons: [
+            BottomNavIndex.call.icon,
+            BottomNavIndex.liveStreaming.icon,
+            BottomNavIndex.audioRoom.icon,
+            BottomNavIndex.conference.icon,
+            _buildChatIconWithBadge(unreadCount),
+          ],
+          inactiveIcons: [
+            Text(BottomNavIndex.call.text),
+            Text(BottomNavIndex.liveStreaming.text),
+            Text(BottomNavIndex.audioRoom.text),
+            Text(BottomNavIndex.conference.text),
+            _buildChatTextWithBadge(unreadCount),
+          ],
+          color: Colors.white,
+          height: PageStyle.navigatorBarHeight(),
+          circleWidth: PageStyle.navigatorBarHeight(),
+          activeIndex: tabIndex,
+          onTap: (index) {
+            tabIndexNotifier.value = index;
+            pageController.jumpToPage(index);
+          },
+          padding: EdgeInsets.only(left: 20.r, right: 20.r, bottom: 5.r),
+          cornerRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+            bottomRight: Radius.circular(24),
+            bottomLeft: Radius.circular(24),
+          ),
+          shadowColor: Colors.deepPurple,
+          elevation: 5.r,
+        );
       },
-      padding: EdgeInsets.only(left: 20.r, right: 20.r, bottom: 5.r),
-      cornerRadius: const BorderRadius.only(
-        topLeft: Radius.circular(8),
-        topRight: Radius.circular(8),
-        bottomRight: Radius.circular(24),
-        bottomLeft: Radius.circular(24),
-      ),
-      shadowColor: Colors.deepPurple,
-      elevation: 5.r,
+    );
+  }
+
+  Widget _buildChatIconWithBadge(int unreadCount) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        BottomNavIndex.chat.icon,
+        if (unreadCount > 0)
+          Positioned(
+            right: -4,
+            top: -4,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                unreadCount > 99 ? '99+' : unreadCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 9,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildChatTextWithBadge(int unreadCount) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Text(BottomNavIndex.chat.text),
+        if (unreadCount > 0)
+          Positioned(
+            right: -6,
+            top: -6,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                unreadCount > 99 ? '99+' : unreadCount.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 9,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
     );
   }
 

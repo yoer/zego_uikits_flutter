@@ -13,12 +13,12 @@ import 'package:zego_uikits_demo/kits/conference/settings.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/settings.dart';
 import 'package:zego_uikits_demo/pages/about.dart';
 import 'package:zego_uikits_demo/pages/feedback.dart';
-import 'package:zego_uikits_demo/pages/test/stream_test/page.dart';
 import 'package:zego_uikits_demo/pages/home.dart';
 import 'package:zego_uikits_demo/pages/loading.dart';
 import 'package:zego_uikits_demo/pages/login.dart';
 import 'package:zego_uikits_demo/pages/settings.dart';
 import 'package:zego_uikits_demo/pages/splash.dart';
+import 'package:zego_uikits_demo/pages/test/stream_test/page.dart';
 
 enum PageRouter {
   splash,

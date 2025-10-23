@@ -225,6 +225,20 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ],
                 ),
+                settingsGroup(
+                  Translations.settings.others,
+                  [
+                    settingsCheckBox(
+                      title: Translations.settings.enableDebugToast,
+                      value: KitCommonCache().enableDebugToast,
+                      onChanged: (value) {
+                        setState(() {
+                          KitCommonCache().enableDebugToast = value ?? false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
                 SizedBox(height: 20.r),
                 saveButton(),
               ],
