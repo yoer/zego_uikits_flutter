@@ -24,16 +24,18 @@ class _ZegoChatPageState extends State<ZegoChatPage> {
         children: [
           Positioned.fill(
             child: ZIMKitConversationListView(
-              onPressed: (context, conversation, defaultAction) {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return DemoChattingMessageListPage(
-                      conversationID: conversation.id,
-                      conversationType: conversation.type,
-                    );
-                  },
-                ));
-              },
+              events: ZIMKitConversationListEvents(
+                onPressed: (context, conversation, defaultAction) {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return DemoChattingMessageListPage(
+                        conversationID: conversation.id,
+                        conversationType: conversation.type,
+                      );
+                    },
+                  ));
+                },
+              ),
             ),
           ),
           Positioned(

@@ -1,17 +1,23 @@
-part of 'red_envelope.dart';
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 class RedEnvelopeMessage extends StatelessWidget {
   const RedEnvelopeMessage({
-    super.key,
+    Key? key,
     required this.message,
-  });
+  }) : super(key: key);
 
   final ZIMKitMessage message;
 
   void onTap() {
     debugPrint('RedEnvelopeMessage: onTap');
     ZIMKit().updateLocalExtendedData(
-        message, 'localExtendedData-${Random().nextInt(99)}');
+      message,
+      'localExtendedData-${Random().nextInt(99)}',
+    );
   }
 
   @override
@@ -43,15 +49,20 @@ class RedEnvelopeMessage extends StatelessWidget {
                               height: redEnvelopeHeight,
                               color: Colors.red,
                               child: const Center(
-                                  child: CircleAvatar(
-                                      radius: 5,
-                                      backgroundColor: Colors.amber)),
+                                child: CircleAvatar(
+                                  radius: 5,
+                                  backgroundColor: Colors.amber,
+                                ),
+                              ),
                             ),
                             const SizedBox(width: 16),
-                            const Text('Red Envelope',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
+                            const Text(
+                              'Red Envelope',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         const Divider(thickness: 1),
@@ -60,9 +71,13 @@ class RedEnvelopeMessage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Text('ZEGOCLOUD',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 10))
+                            Text(
+                              'ZEGOCLOUD',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                              ),
+                            )
                           ],
                         ),
                       ],
@@ -78,8 +93,11 @@ class RedEnvelopeMessage extends StatelessWidget {
                 children: [
                   ValueListenableBuilder(
                     valueListenable: message.localExtendedData,
-                    builder: (BuildContext context, String localExtendedData,
-                        Widget? child) {
+                    builder: (
+                      BuildContext context,
+                      String localExtendedData,
+                      Widget? child,
+                    ) {
                       return Text(localExtendedData);
                     },
                   ),

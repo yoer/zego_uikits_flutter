@@ -9,23 +9,23 @@ void showDefaultNewPeerChatDialog(BuildContext context) {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title: Text(Translations.chat.newChat),
+            title: const Text('New Chat'),
             content: TextField(
               controller: userIDController,
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                labelText: Translations.chat.userIdsPlaceHolder,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'User ID',
               ),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text(Translations.tips.cancel),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(true),
-                child: Text(Translations.tips.ok),
+                child: const Text('OK'),
               ),
             ],
           );

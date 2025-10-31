@@ -11,7 +11,7 @@ void showDefaultNewGroupChatDialog(BuildContext context) {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title: Text(Translations.chat.newGroup),
+            title: const Text('New Group'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -21,9 +21,9 @@ void showDefaultNewGroupChatDialog(BuildContext context) {
                       child: TextField(
                         controller: groupNameController,
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: Translations.chat.groupName,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Group Name',
                         ),
                       ),
                     ),
@@ -31,9 +31,9 @@ void showDefaultNewGroupChatDialog(BuildContext context) {
                       child: TextField(
                         controller: groupIDController,
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          labelText: Translations.chat.groupIdPlaceHolder,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'ID(optional)',
                         ),
                       ),
                     ),
@@ -44,10 +44,10 @@ void showDefaultNewGroupChatDialog(BuildContext context) {
                   maxLines: 3,
                   controller: groupUsersController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: Translations.chat.userIdsPlaceHolder,
-                    hintText: Translations.chat.userIdsTips,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Invite User IDs',
+                    hintText: 'separate by comma, e.g. 123,987,229',
                   ),
                 ),
               ],
@@ -57,13 +57,13 @@ void showDefaultNewGroupChatDialog(BuildContext context) {
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text(Translations.tips.cancel),
+                child: const Text('Cancel'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 },
-                child: Text(Translations.tips.ok),
+                child: const Text('OK'),
               ),
             ],
           );

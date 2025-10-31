@@ -35,7 +35,7 @@ Future<dynamic> showDefaultGroupMemberListDialog(
       width: 60,
       height: 60,
       imageUrl: memberItem.memberAvatarUrl.isEmpty
-          ? avatarURL(memberItem.userID)
+          ? 'https://robohash.org/${memberItem.userID}.png?set=set4'
           : memberItem.memberAvatarUrl,
       fit: BoxFit.cover,
       progressIndicatorBuilder: (__, _, ___) => CircleAvatar(
@@ -215,19 +215,17 @@ Future<dynamic> showDefaultGroupMemberListDialog(
   return showModalBottomSheet(
     context: context,
     builder: (context) {
-      return SafeArea(
-        child: Container(
-          color: Colors.white,
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              title,
-              memberList,
-            ],
-          ),
+      return Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            title,
+            memberList,
+          ],
         ),
       );
     },

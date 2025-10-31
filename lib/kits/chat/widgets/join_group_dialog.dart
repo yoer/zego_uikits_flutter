@@ -43,7 +43,7 @@ void showDefaultJoinGroupDialog(BuildContext context) {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return DemoChattingMessageListPage(
                 conversationID: groupIDController.text,
-                conversationType: ZIMKitConversationType.group,
+                conversationType: ZIMConversationType.group,
               );
             }));
           }

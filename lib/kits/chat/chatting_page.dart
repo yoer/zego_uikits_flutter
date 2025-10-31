@@ -1,29 +1,28 @@
-// Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
-// Flutter imports:
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
+import 'package:flutter/services.dart';
+import 'package:zego_uikit/zego_uikit.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
-// Project imports:
-import 'package:zego_uikits_demo/common/toast.dart';
-import 'package:zego_uikits_demo/data/translations.dart';
-import 'chatting_page_actions.dart';
+import 'chatting_page_mixins.dart';
+import 'widgets/red_envelope_message.dart';
 import 'notification.dart';
-import 'widgets/widgets.dart';
 
 class DemoChattingMessageListPage extends StatefulWidget {
   const DemoChattingMessageListPage({
-    super.key,
+    Key? key,
     required this.conversationID,
     required this.conversationType,
-  });
+  }) : super(key: key);
 
   final String conversationID;
-  final ZIMKitConversationType conversationType;
+  final ZIMConversationType conversationType;
 
   @override
   State<DemoChattingMessageListPage> createState() =>
@@ -31,17 +30,18 @@ class DemoChattingMessageListPage extends StatefulWidget {
 }
 
 class _DemoChattingMessageListPageState
-    extends State<DemoChattingMessageListPage> {
+    extends State<DemoChattingMessageListPage>
+    with DemoChattingMessageListPageCallMixin {
   List<StreamSubscription> subscriptions = [];
 
   // In the initState method, subscribe the event.
   @override
   void initState() {
     subscriptions = [
-      if (widget.conversationType == ZIMKitConversationType.group)
-        ZIMKit()
-            .getGroupStateChangedEventStream()
-            .listen(onGroupStateChangedEvent)
+      if (widget.conversationType == ZIMConversationType.group)
+        ZIMKit().getGroupStateChangedEventStream().listen(
+              onGroupStateChangedEvent,
+            ),
     ];
     // When on the chat page, the notification for that chat page is not displayed.
     NotificationManager().ignoreConversationID = widget.conversationID;
@@ -61,73 +61,190 @@ class _DemoChattingMessageListPageState
 
   @override
   Widget build(BuildContext context) {
-    return ZIMKitMessageListPage(
-      conversationID: widget.conversationID,
-      conversationType: widget.conversationType,
-      events: ZIMKitMessageListPageEvents(
-        audioRecord: ZIMKitAudioRecordEvents(
-          onFailed: (int errorCode) {
-            /// audio message's error list:  https://doc-preview-zh.zego.im/article/20148
-            debugPrint('onRecordFailed: $errorCode');
-            var errorMessage = 'record failed:$errorCode';
-            switch (errorCode) {
-              case 32:
-                errorMessage = 'recording time is too short';
-                break;
-            }
+    return ValueListenableBuilder<ZIMKitMessageListMultiModeData>(
+      valueListenable: ZIMKitMessageListMultiSelectProcessor().modeNotifier,
+      builder: (context, multiModeData, _) {
+        return Scaffold(
+          appBar: multiModeData.isMultiMode ? appBar() : null,
+          body: Stack(
+            children: [
+              ZIMKitMessageListPage(
+                conversationID: widget.conversationID,
+                conversationType: widget.conversationType,
+                config: _listPageConfigs(),
+                style: _listPageStyles(),
+                events: _listPageEvents(),
+              ),
+              if (multiModeData.isMultiMode)
+                const Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: ZIMKitMultiSelectToolbarWidget(),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-            showFailedToast(errorMessage);
-          },
-          onCountdownTick: (int remainingSecond) {
-            debugPrint('onCountdownTick: $remainingSecond');
-            if (remainingSecond > 5 || remainingSecond <= 0) {
-              return;
-            }
+  AppBar appBar() {
+    return AppBar(
+      leading: TextButton(
+        onPressed: () {
+          ZIMKitMessageListMultiSelectProcessor().cancelMultiSelect();
+        },
+        child: const Text('取消', style: TextStyle(color: Colors.black87)),
+      ),
+      title: Text(
+        '已选择${ZIMKitMessageListMultiSelectProcessor().selectedMessages.length}条',
+      ),
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      elevation: 0.5,
+    );
+  }
 
-            showInfoToast('time remaining: $remainingSecond seconds');
+  ZIMKitMessageListPageConfigs _listPageConfigs() {
+    return ZIMKitMessageListPageConfigs(
+      messageInput: ZIMKitMessageInputConfigs(
+        actions: [
+          ZIMKitMessageInputAction.more(
+            buildZIMKitInputMoreActionItem(
+              context,
+              icon: Icons.call,
+              label: 'Call',
+              onTap: () {
+                showCallOptions(
+                  context: context,
+                  conversationID: widget.conversationID,
+                  conversationType: widget.conversationType,
+                );
+              },
+            ),
+          ),
+          ZIMKitMessageInputAction.more(
+            buildZIMKitInputMoreActionItem(
+              context,
+              icon: Icons.attach_money,
+              backgroundColor: Colors.redAccent,
+              label: 'Red Envelop',
+              onTap: () {
+                ZIMKit().sendCustomMessage(
+                  widget.conversationID,
+                  widget.conversationType,
+                  customType: DemoCustomMessageType.redEnvelope.index,
+                  customMessage: jsonEncode({'count': 10, 'money': 100}),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ZIMKitMessageListPageStyles _listPageStyles() {
+    return ZIMKitMessageListPageStyles(
+      appBarActions: [
+        IconButton(
+          icon: const Icon(Icons.more_horiz),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ZIMKitSingleChatDetailPage(
+                  conversationID: widget.conversationID,
+                  conversationType: widget.conversationType,
+                ),
+              ),
+            );
           },
         ),
+      ],
+      messageList: ZIMKitMessageListStyles(
+        messageContentBuilder: (
+          context,
+          message,
+          defaultWidget,
+        ) {
+          if (message.type == ZIMMessageType.custom &&
+              message.customContent?.type ==
+                  DemoCustomMessageType.redEnvelope.index) {
+            return RedEnvelopeMessage(message: message);
+          } else {
+            return defaultWidget;
+          }
+        },
       ),
+    );
+  }
+
+  ZIMKitMessageListPageEvents _listPageEvents() {
+    return ZIMKitMessageListPageEvents(
+      messageInput: _messageInputEvents(),
+      audioRecord: _audioRecordEvents(),
+    );
+  }
+
+  ZIMKitMessageInputEvents _messageInputEvents() {
+    return ZIMKitMessageInputEvents(
       onMessageSent: (ZIMKitMessage message) {
         if (message.info.error != null) {
           debugPrint(
-              'onMessageSent error: ${message.info.error!.message}, ${message.info.error!.code}');
-          showInfoToast('message send failed:'
-              '${message.info.error!.message}, '
-              'code:${message.info.error!.code}');
+            'onMessageSent error: ${message.info.error!.message}, ${message.info.error!.code}',
+          );
+          BotToast.showText(
+            text: 'message send failed:'
+                '${message.info.error!.message}, '
+                'code:${message.info.error!.code}',
+            contentColor: Colors.red,
+            textStyle: const TextStyle(fontSize: 10, color: Colors.white),
+          );
         } else {
           debugPrint('onMessageSent: ${message.type.name}');
         }
       },
-      appBarActions: demoAppBarActions(
-        context,
-        widget.conversationID,
-        widget.conversationType,
-      ),
-      onMessageItemLongPress: onMessageItemLongPress,
-      messageListBackgroundBuilder: (context, defaultWidget) {
-        return const ColoredBox(color: Colors.white);
-      },
-      messageContentBuilder: (context, message, defaultWidget) {
-        if (message.type == ZIMKitMessageType.custom &&
-            message.customContent!.type ==
-                DemoCustomMessageType.redEnvelope.index) {
-          return RedEnvelopeMessage(message: message);
-        } else {
-          return defaultWidget;
+    );
+  }
+
+  ZIMKitAudioRecordEvents _audioRecordEvents() {
+    return ZIMKitAudioRecordEvents(
+      onFailed: (int errorCode) {
+        /// audio message's error list:  https://doc-preview-zh.zego.im/article/20148
+        debugPrint('onRecordFailed: $errorCode');
+        var errorMessage = 'record failed:$errorCode';
+        switch (errorCode) {
+          case 32:
+            errorMessage = 'recording time is too short';
+            break;
         }
+        BotToast.showText(
+          text: errorMessage,
+          contentColor: Colors.red,
+          textStyle: const TextStyle(fontSize: 10, color: Colors.white),
+        );
       },
-      messageInputActions: [
-        ZIMKitMessageInputAction.more(demoSendRedEnvelopeButton(
-          widget.conversationID,
-          widget.conversationType,
-        )),
-      ],
+      onCountdownTick: (int remainingSecond) {
+        debugPrint('onCountdownTick: $remainingSecond');
+        if (remainingSecond > 5 || remainingSecond <= 0) {
+          return;
+        }
+
+        BotToast.showText(
+          text: 'time remaining: $remainingSecond seconds',
+          contentColor: Colors.black.withOpacity(0.3),
+          textStyle: const TextStyle(fontSize: 10, color: Colors.white),
+          duration: const Duration(milliseconds: 800),
+        );
+      },
     );
   }
 
   Future<void> onGroupStateChangedEvent(
-      ZIMKitEventGroupStateChanged event) async {
+    ZIMKitEventGroupStateChanged event,
+  ) async {
     debugPrint('getGroupStateChangedEventStream: $event');
     // If you need to automatically exit the page and delete a group
     // conversation that is already in the 'quit' state,
@@ -141,46 +258,4 @@ class _DemoChattingMessageListPageState
     //   }
     // }
   }
-}
-
-Future<void> onMessageItemLongPress(
-  BuildContext context,
-  LongPressStartDetails details,
-  ZIMKitMessage message,
-  Function defaultAction,
-) async {
-  showCupertinoDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (context) {
-      return CupertinoAlertDialog(
-        title: Text(Translations.tips.confirm),
-        content: const Text('Delete or recall this message?'),
-        actions: [
-          CupertinoDialogAction(
-            onPressed: Navigator.of(context).pop,
-            child: Text(Translations.tips.cancel),
-          ),
-          CupertinoDialogAction(
-            onPressed: () {
-              ZIMKit().deleteMessage([message]);
-              Navigator.pop(context);
-            },
-            child: Text(Translations.chat.delete),
-          ),
-          CupertinoDialogAction(
-            onPressed: () {
-              ZIMKit().recallMessage(message).catchError((error) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(error.toString())),
-                );
-              });
-              Navigator.pop(context);
-            },
-            child: Text(Translations.chat.revoke),
-          ),
-        ],
-      );
-    },
-  );
 }

@@ -30,10 +30,9 @@ class ZegoSDKer {
 
     isInit = true;
 
-    ZegoUIKit()
-        .getLocalUser()
-        .audioRoute
-        .addListener(_onLocalAudioRouteChanged);
+    ZegoUIKit().getLocalUser().audioRoute.addListener(
+      _onLocalAudioRouteChanged,
+    );
 
     final user = UserService().loginUserNotifier.value!;
 
@@ -45,14 +44,16 @@ class ZegoSDKer {
       await ZIMKit().init(
         appID: int.parse(SettingsCache().appID),
         appSign: SettingsCache().appSign,
-        notificationConfig: ZegoZIMKitNotificationConfig(
-          resourceID: ChatCache().resourceID,
-          androidNotificationConfig: ZegoZIMKitAndroidNotificationConfig(
-            channelID: "zimkit_message",
-            channelName: 'Chat Message',
-            sound: 'message',
-            icon: 'message',
-            enable: false,
+        config: ZIMKitConfig(
+          notificationConfig: ZegoZIMKitNotificationConfig(
+            resourceID: ChatCache().resourceID,
+            androidNotificationConfig: ZegoZIMKitAndroidNotificationConfig(
+              channelID: "zimkit_message",
+              channelName: 'Chat Message',
+              sound: 'message',
+              icon: 'message',
+              enable: false,
+            ),
           ),
         ),
       );
@@ -70,9 +71,9 @@ class ZegoSDKer {
       ///  [FBI WARING]
       ///  useSystemCallingUI Must be called AFTER zimkit.init!!!
       ///  otherwise the offline handler will be caught by zimkit, resulting in callkit unable to receive the offline handler
-      await ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
-        [ZegoUIKitSignalingPlugin()],
-      );
+      await ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI([
+        ZegoUIKitSignalingPlugin(),
+      ]);
       await initCallInvitation();
     } catch (e) {
       debugPrint('ERROR!!!! init sdk on login failed:$e');
@@ -80,10 +81,9 @@ class ZegoSDKer {
   }
 
   void uninit() {
-    ZegoUIKit()
-        .getLocalUser()
-        .audioRoute
-        .removeListener(_onLocalAudioRouteChanged);
+    ZegoUIKit().getLocalUser().audioRoute.removeListener(
+      _onLocalAudioRouteChanged,
+    );
 
     ZegoUIKit().uninit();
 

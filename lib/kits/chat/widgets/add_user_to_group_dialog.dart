@@ -49,7 +49,7 @@ void showDefaultAddUserToGroupDialog(BuildContext context, String groupID) {
             .addUersToGroup(groupID, groupUsersController.text.split(','))
             .then((int? errorCode) {
           if (errorCode != 0) {
-            debugPrint('addUersToGroup faild');
+            debugPrint('addUersToGroup failed');
           }
         });
       }
