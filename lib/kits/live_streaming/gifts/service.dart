@@ -15,8 +15,10 @@ class GiftService {
   Future<bool> send(
     int giftID,
     int count,
+    String liveID,
   ) async {
     return ZegoUIKit().sendInRoomCommand(
+      targetRoomID: liveID,
       const JsonEncoder().convert(
         GiftProtocol.toCommandMap(giftID, count),
       ),

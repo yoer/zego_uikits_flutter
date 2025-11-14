@@ -32,23 +32,23 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
   void initState() {
     super.initState();
 
-    ZegoUIKit().getRoomStateStream().addListener(onRoomStateChanged);
+    ZegoUIKit().getRoomsStateStream().addListener(onRoomsStateChanged);
   }
 
   @override
   void dispose() {
-    ZegoUIKit().getRoomStateStream().removeListener(onRoomStateChanged);
+    ZegoUIKit().getRoomsStateStream().removeListener(onRoomsStateChanged);
 
     super.dispose();
   }
 
-  void onRoomStateChanged() {
-    final roomState = ZegoUIKit().getRoomStateStream().value;
-    if (roomState.reason == ZegoRoomStateChangedReason.Logined) {
-      showInfoToast(
-        Translations.liveStreaming.swipingJoinTips(ZegoUIKit().getRoom().id),
-      );
-    }
+  void onRoomsStateChanged() {
+    final roomsState = ZegoUIKit().getRoomsStateStream().value;
+    roomsState.states.forEach((roomID, roomState) {
+      if (roomState.reason == ZegoUIKitRoomStateChangedReason.Logined) {
+        showInfoToast(Translations.liveStreaming.swipingJoinTips(roomID));
+      }
+    });
   }
 
   @override
@@ -81,7 +81,7 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
                   token: SettingsCache().appToken,
                   userID: user.id,
                   userName: user.name,
-                  roomID: 'live_${liveIDs.first}',
+                  liveID: 'live_${liveIDs.first}',
                   isHost: false,
                   configQuery: (config) {
                     config.swiping = ZegoLiveStreamingSwipingConfig(

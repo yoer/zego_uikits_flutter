@@ -62,7 +62,7 @@ class _MediaAudioRoomPageState extends State<MediaAudioRoomPage> {
           },
           eventsQuery: (ZegoUIKitPrebuiltLiveAudioRoomEvents events) {
             events.room.onStateChanged = (ZegoUIKitRoomState state) {
-              if (state.reason == ZegoRoomStateChangedReason.Logined) {
+              if (state.reason == ZegoUIKitRoomStateChangedReason.Logined) {
                 tryAutoPlayMedia(isHost);
               }
             };

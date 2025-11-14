@@ -40,7 +40,7 @@ void startLiveStreaming({
         token: SettingsCache().appToken,
         userID: user.id,
         userName: user.name,
-        roomID: addRoomIDPrefix ? 'live_$liveID' : liveID,
+        liveID: addRoomIDPrefix ? 'live_$liveID' : liveID,
         isHost: isHost,
         configQuery: configQuery,
         eventsQuery: eventsQuery,
@@ -67,7 +67,7 @@ class ZegoLiveStreamingPage extends StatefulWidget {
     required this.token,
     required this.userID,
     required this.userName,
-    required this.roomID,
+    required this.liveID,
     required this.isHost,
     this.configQuery,
     this.eventsQuery,
@@ -78,7 +78,7 @@ class ZegoLiveStreamingPage extends StatefulWidget {
   final String token;
   final String userID;
   final String userName;
-  final String roomID;
+  final String liveID;
   final bool isHost;
 
   final ZegoUIKitPrebuiltLiveStreamingConfigQuery? configQuery;
@@ -103,7 +103,7 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
         appSign: widget.appSign,
         userID: widget.userID,
         userName: widget.userName,
-        liveID: widget.roomID,
+        liveID: widget.liveID,
         config: config(),
         events: event(),
       ),
@@ -112,9 +112,6 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
 
   ZegoUIKitPrebuiltLiveStreamingEvents event() {
     final audienceEvents = ZegoUIKitPrebuiltLiveStreamingEvents(
-      onError: (ZegoUIKitError error) {
-        debugPrint('onError:$error');
-      },
       audioVideo: ZegoLiveStreamingAudioVideoEvents(
         onCameraTurnOnByOthersConfirmation: (BuildContext context) {
           return onTurnOnAudienceDeviceConfirmation(
@@ -130,17 +127,24 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
         },
       ),
     );
-    final hostEvents = ZegoUIKitPrebuiltLiveStreamingEvents(
-      onError: (ZegoUIKitError error) {
-        debugPrint('onError:$error');
-      },
-    );
 
-    final events = widget.isHost ? hostEvents : audienceEvents;
+    final events =
+        widget.isHost ? ZegoUIKitPrebuiltLiveStreamingEvents() : audienceEvents;
 
+    events.onError = (ZegoUIKitError error) {
+      debugPrint('onError:$error');
+    };
     events.onStateUpdated = (state) {
       liveStateNotifier.value = state;
     };
+    events.beauty = ZegoLiveStreamingBeautyEvents(
+      onError: (error) {
+        debugPrint('live onBeautyError:$error');
+      },
+      onFaceDetection: (data) {
+        debugPrint('live onBeautyFaceDetection:$data');
+      },
+    );
 
     return widget.eventsQuery?.call(events) ?? events;
   }
@@ -217,7 +221,10 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
             valueListenable:
                 ZegoUIKitPrebuiltLiveStreamingController().coHost.hostNotifier,
             builder: (context, host, _) {
-              return GiftButton(targetReceiver: host);
+              return GiftButton(
+                targetReceiver: host,
+                liveID: widget.liveID,
+              );
             },
           ),
         ),
@@ -238,8 +245,8 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
 
   Widget memberButtonBuilder(int memberCount) {
     final remoteUsers = (widget.isHost
-            ? ZegoUIKit().getRemoteUsers()
-            : ZegoUIKit().getAllUsers())
+            ? ZegoUIKit().getRemoteUsers(targetRoomID: widget.liveID)
+            : ZegoUIKit().getAllUsers(targetRoomID: widget.liveID))
         .take(3)
         .toList();
     return Row(
@@ -348,11 +355,18 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
       child: Row(
         children: [
           ValueListenableBuilder<bool>(
-            valueListenable: ZegoUIKit().getCameraStateNotifier(user.id),
+            valueListenable: ZegoUIKit().getCameraStateNotifier(
+              targetRoomID: widget.liveID,
+              user.id,
+            ),
             builder: (context, isCameraEnabled, _) {
               return GestureDetector(
                 onTap: () {
-                  ZegoUIKit().turnCameraOn(!isCameraEnabled, userID: user.id);
+                  ZegoUIKit().turnCameraOn(
+                    targetRoomID: widget.liveID,
+                    !isCameraEnabled,
+                    userID: user.id,
+                  );
                 },
                 child: SizedBox(
                   width: size.width * 0.4,
@@ -366,11 +380,15 @@ class _ZegoLiveStreamingPageState extends State<ZegoLiveStreamingPage> {
           ),
           SizedBox(width: size.width * 0.1),
           ValueListenableBuilder<bool>(
-            valueListenable: ZegoUIKit().getMicrophoneStateNotifier(user.id),
+            valueListenable: ZegoUIKit().getMicrophoneStateNotifier(
+              targetRoomID: widget.liveID,
+              user.id,
+            ),
             builder: (context, isMicrophoneEnabled, _) {
               return GestureDetector(
                 onTap: () {
                   ZegoUIKit().turnMicrophoneOn(
+                    targetRoomID: widget.liveID,
                     !isMicrophoneEnabled,
                     userID: user.id,
 

@@ -121,7 +121,8 @@ Future<bool> initCallInvitation() async {
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(
         androidNotificationConfig: ZegoCallAndroidNotificationConfig(
-          showFullScreen: true,
+          showOnFullScreen: true,
+          showOnLockedScreen: true,
           fullScreenBackgroundAssetURL: CallAssets.offlineBackground,
           callChannel: ZegoCallAndroidNotificationChannelConfig(
             channelID: "call_invitation",
@@ -156,6 +157,14 @@ Future<bool> initCallInvitation() async {
         );
       },
       events: ZegoUIKitPrebuiltCallEvents(
+        beauty: ZegoCallBeautyEvents(
+          onError: (error) {
+            debugPrint('call onBeautyError:$error');
+          },
+          onFaceDetection: (data) {
+            // debugPrint('onBeautyFaceDetection:$data');
+          },
+        ),
         onCallEnd: (
           ZegoCallEndEvent event,
           VoidCallback defaultAction,
@@ -234,10 +243,7 @@ Future<bool> initCallInvitation() async {
                 ),
               );
 
-          if (ZegoRoomStateChangedReason.Logining ==
-                  ZegoUIKit().getRoomStateStream().value.reason ||
-              ZegoRoomStateChangedReason.Logined ==
-                  ZegoUIKit().getRoomStateStream().value.reason) {
+          if (ZegoUIKit().hasRoomLogin()) {
             /// auto reject if in room(others kit)
             ZegoUIKitPrebuiltCallInvitationService().reject();
           }
@@ -356,49 +362,77 @@ ZegoUIKitPrebuiltCallConfig callConfig({
   }
 
   if (CallCache().invitation.canInvitingInCalling) {
+    // ZegoUIKit().getRoomsStateStream().addListener(onRoomsStateChanged);
+    // void onRoomsStateChanged() {
+    //   final roomsState = ZegoUIKit().getRoomsStateStream().value;
+    //   roomsState.states.forEach((roomID, roomState) {
+    //     if (roomState.reason == ZegoRoomStateChangedReason.Logined) {
+    //       showInfoToast(Translations.liveStreaming.swipingJoinTips(roomID));
+    //     }
+    //   });
+    // }
+
+    /// todo 多房间状态 + 当前房间
     //support calling invitation
-    final sendCallingInvitationButton = StreamBuilder(
-      stream: ZegoUIKit().getUserListStream(),
-      builder: (context, snapshot) {
-        return ValueListenableBuilder(
-            valueListenable:
+    final sendCallingInvitationButton =
+        ValueListenableBuilder<ZegoUIKitRoomsState>(
+      valueListenable: ZegoUIKit().getRoomsStateStream(),
+      builder: (context, roomsState, _) {
+        return StreamBuilder(
+          stream: ZegoUIKit().getUserListStream(
+            targetRoomID: ZegoUIKit().getCurrentRoom().id,
+          ),
+          builder: (context, snapshot) {
+            return ValueListenableBuilder(
+                valueListenable:
 
-                /// '#' is removed when send call invitation
-                ZIMKit().queryGroupMemberList('#${ZegoUIKit().getRoom().id}'),
-            builder: (context, List<ZIMGroupMemberInfo> members, _) {
-              final memberIDsInCall =
-                  ZegoUIKit().getRemoteUsers().map((user) => user.id).toList();
-              final membersNotInCall = members.where((member) {
-                if (member.userID == ZIMKit().currentUser()!.baseInfo.userID) {
-                  return false;
-                }
+                    /// '#' is removed when send call invitation
+                    ZIMKit().queryGroupMemberList(
+                        '#${ZegoUIKit().getCurrentRoom().id}'),
+                builder: (context, List<ZIMGroupMemberInfo> members, _) {
+                  final memberIDsInCall = ZegoUIKit()
+                      .getRemoteUsers(
+                        targetRoomID: ZegoUIKit().getCurrentRoom().id,
+                      )
+                      .map((user) => user.id)
+                      .toList();
+                  final membersNotInCall = members.where((member) {
+                    if (member.userID ==
+                        ZIMKit().currentUser()!.baseInfo.userID) {
+                      return false;
+                    }
 
-                return !memberIDsInCall.contains(member.userID);
-              }).toList();
-              return ZegoSendCallingInvitationButton(
-                avatarBuilder: (
-                  BuildContext context,
-                  Size size,
-                  ZegoUIKitUser? user,
-                  Map<String, dynamic> extraInfo,
-                ) {
-                  return avatar(user?.id ?? '');
-                },
-                selectedUsers: ZegoUIKit()
-                    .getRemoteUsers()
-                    .map((e) => ZegoCallUser(
-                          e.id,
-                          e.name,
-                        ))
-                    .toList(),
-                waitingSelectUsers: membersNotInCall
-                    .map((member) => ZegoCallUser(
-                          member.userID,
-                          member.userName,
-                        ))
-                    .toList(),
-              );
-            });
+                    return !memberIDsInCall.contains(member.userID);
+                  }).toList();
+                  return ZegoSendCallingInvitationButton(
+                    callID: ZegoUIKit().getCurrentRoom().id,
+                    avatarBuilder: (
+                      BuildContext context,
+                      Size size,
+                      ZegoUIKitUser? user,
+                      Map<String, dynamic> extraInfo,
+                    ) {
+                      return avatar(user?.id ?? '');
+                    },
+                    selectedUsers: ZegoUIKit()
+                        .getRemoteUsers(
+                          targetRoomID: ZegoUIKit().getCurrentRoom().id,
+                        )
+                        .map((e) => ZegoCallUser(
+                              e.id,
+                              e.name,
+                            ))
+                        .toList(),
+                    waitingSelectUsers: membersNotInCall
+                        .map((member) => ZegoCallUser(
+                              member.userID,
+                              member.userName,
+                            ))
+                        .toList(),
+                  );
+                });
+          },
+        );
       },
     );
 

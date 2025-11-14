@@ -47,70 +47,67 @@ class KitsFirebaseService {
   }
 
   void _startListening() {
-    ZegoUIKit().getRoomStateStream().addListener(onRoomStateUpdated);
+    ZegoUIKit().getRoomsStateStream().addListener(onRoomsStateUpdated);
   }
 
-  void onRoomStateUpdated() {
-    final roomState = ZegoUIKit().getRoomStateStream().value;
+  void onRoomsStateUpdated() {
+    final roomsState = ZegoUIKit().getRoomsStateStream().value;
+    roomsState.states.forEach((roomID, roomState) {
+      final currentLoginUser = UserService().loginUserNotifier.value;
+      final roomType = RoomTypeExtension.fromRoomID(roomID);
 
-    final isRoomLogin =
-        roomState.reason == ZegoRoomStateChangedReason.Logining ||
-            roomState.reason == ZegoRoomStateChangedReason.Logined;
+      var isHost = false;
+      if (roomState.isLogin) {
+        switch (roomType) {
+          case RoomType.none:
+          case RoomType.unknown:
+          case RoomType.call:
+          case RoomType.liveStreamingList:
+            break;
+          case RoomType.audioRoom:
+            isHost =
+                ZegoUIKitPrebuiltLiveAudioRoomController().seat.localIsHost;
+            break;
+          case RoomType.liveStreaming:
+          case RoomType.liveStreamingPK:
+            isHost = ZegoUIKitPrebuiltLiveStreamingController()
+                    .coHost
+                    .hostNotifier
+                    .value
+                    ?.id ==
+                currentLoginUser?.id;
 
-    final currentLoginUser = UserService().loginUserNotifier.value;
-    final currentRoomID = isRoomLogin ? ZegoUIKit().getRoom().id : '';
-    final roomType = RoomTypeExtension.fromRoomID(currentRoomID);
+            ZegoUIKitPrebuiltLiveStreamingController()
+                .coHost
+                .hostNotifier
+                .removeListener(onLiveStreamingHostUpdated);
+            ZegoUIKitPrebuiltLiveStreamingController()
+                .coHost
+                .hostNotifier
+                .addListener(onLiveStreamingHostUpdated);
+            break;
+          case RoomType.conference:
+            break;
+        }
+      } else {
+        KitsFirebaseService().userTable.updateUserLiveStreamingPKState(
+              currentLoginUser?.id ?? '',
+              LiveStreamingPKState.idle,
+            );
 
-    var isHost = false;
-    if (isRoomLogin) {
-      switch (roomType) {
-        case RoomType.none:
-        case RoomType.unknown:
-        case RoomType.call:
-        case RoomType.liveStreamingList:
-          break;
-        case RoomType.audioRoom:
-          isHost = ZegoUIKitPrebuiltLiveAudioRoomController().seat.localIsHost;
-          break;
-        case RoomType.liveStreaming:
-        case RoomType.liveStreamingPK:
-          isHost = ZegoUIKitPrebuiltLiveStreamingController()
-                  .coHost
-                  .hostNotifier
-                  .value
-                  ?.id ==
-              currentLoginUser?.id;
-
-          ZegoUIKitPrebuiltLiveStreamingController()
-              .coHost
-              .hostNotifier
-              .removeListener(onLiveStreamingHostUpdated);
-          ZegoUIKitPrebuiltLiveStreamingController()
-              .coHost
-              .hostNotifier
-              .addListener(onLiveStreamingHostUpdated);
-          break;
-        case RoomType.conference:
-          break;
+        ZegoUIKitPrebuiltLiveStreamingController()
+            .coHost
+            .hostNotifier
+            .removeListener(onLiveStreamingHostUpdated);
       }
-    } else {
-      KitsFirebaseService().userTable.updateUserLiveStreamingPKState(
-            currentLoginUser?.id ?? '',
-            LiveStreamingPKState.idle,
-          );
 
-      ZegoUIKitPrebuiltLiveStreamingController()
-          .coHost
-          .hostNotifier
-          .removeListener(onLiveStreamingHostUpdated);
-    }
-
-    userTable.updateUserRoomInfo(
-      currentLoginUser?.id ?? '',
-      currentRoomID,
-      roomType,
-      isHost,
-    );
+      userTable.updateUserRoomInfo(
+        currentLoginUser?.id ?? '',
+        roomID,
+        roomType,
+        isHost,
+      );
+    });
   }
 
   void onLiveStreamingHostUpdated() {

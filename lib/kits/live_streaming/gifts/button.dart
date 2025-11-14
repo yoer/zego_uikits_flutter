@@ -12,9 +12,11 @@ import 'package:zego_uikits_demo/kits/live_streaming/gifts/sheet.dart';
 class GiftButton extends StatefulWidget {
   const GiftButton({
     super.key,
+    required this.liveID,
     required this.targetReceiver,
   });
 
+  final String liveID;
   final ZegoUIKitUser? targetReceiver;
 
   @override
@@ -40,7 +42,11 @@ class _GiftButtonState extends State<GiftButton> {
                   onSend: null == widget.targetReceiver
                       ? null
                       : (model) {
-                          GiftService().send(model.id, 1);
+                          GiftService().send(
+                            model.id,
+                            1,
+                            widget.liveID,
+                          );
                         },
                 );
               }

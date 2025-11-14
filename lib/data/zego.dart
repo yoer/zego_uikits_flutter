@@ -31,8 +31,8 @@ class ZegoSDKer {
     isInit = true;
 
     ZegoUIKit().getLocalUser().audioRoute.addListener(
-      _onLocalAudioRouteChanged,
-    );
+          _onLocalAudioRouteChanged,
+        );
 
     final user = UserService().loginUserNotifier.value!;
 
@@ -82,8 +82,8 @@ class ZegoSDKer {
 
   void uninit() {
     ZegoUIKit().getLocalUser().audioRoute.removeListener(
-      _onLocalAudioRouteChanged,
-    );
+          _onLocalAudioRouteChanged,
+        );
 
     ZegoUIKit().uninit();
 
@@ -93,7 +93,7 @@ class ZegoSDKer {
   void _onLocalAudioRouteChanged() {
     /// Synchronize the audio route of zim audio, otherwise the two SDKs will compete with each other
     final currentAudioRoute = ZegoUIKit().getLocalUser().audioRoute.value;
-    final isSpeaker = currentAudioRoute == ZegoUIKitAudioRoute.speaker;
+    final isSpeaker = currentAudioRoute == ZegoUIKitAudioRoute.Speaker;
 
     debugPrint('sync zim audio route, isSpeaker:$isSpeaker');
 

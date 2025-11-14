@@ -43,7 +43,7 @@ class _MediaLiveStreamingPageState extends State<MediaLiveStreamingPage> {
           },
           eventsQuery: (ZegoUIKitPrebuiltLiveStreamingEvents events) {
             events.room.onStateChanged = (ZegoUIKitRoomState state) {
-              if (state.reason == ZegoRoomStateChangedReason.Logined) {
+              if (state.reason == ZegoUIKitRoomStateChangedReason.Logined) {
                 tryAutoPlayMedia();
               }
             };

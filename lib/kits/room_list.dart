@@ -42,15 +42,15 @@ class _RoomListState extends State<RoomList> {
   void initState() {
     super.initState();
 
-    onRoomStateUpdated();
-    ZegoUIKit().getRoomStateStream().addListener(onRoomStateUpdated);
+    onRoomsStateUpdated();
+    ZegoUIKit().getRoomsStateStream().addListener(onRoomsStateUpdated);
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    ZegoUIKit().getRoomStateStream().removeListener(onRoomStateUpdated);
+    ZegoUIKit().getRoomsStateStream().removeListener(onRoomsStateUpdated);
   }
 
   @override
@@ -213,9 +213,7 @@ class _RoomListState extends State<RoomList> {
     );
   }
 
-  void onRoomStateUpdated() {
-    final value = ZegoUIKit().getRoomStateStream().value;
-    inRoomNotifier.value = ZegoRoomStateChangedReason.Logined == value.reason ||
-        ZegoRoomStateChangedReason.Logining == value.reason;
+  void onRoomsStateUpdated() {
+    inRoomNotifier.value = ZegoUIKit().hasRoomLogin();
   }
 }

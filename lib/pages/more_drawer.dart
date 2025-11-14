@@ -54,7 +54,6 @@ class _MoreDrawerState extends State<MoreDrawer> {
                 settingsButton(),
                 feedbackButton(),
                 shareLogsButton(),
-                streamTestButton(),
                 aboutButton(),
                 const Expanded(child: SizedBox()),
                 clearButton(),
@@ -298,23 +297,6 @@ class _MoreDrawerState extends State<MoreDrawer> {
             });
           }
         }
-      },
-    );
-  }
-
-  Widget streamTestButton() {
-    return ListTile(
-      title: Text(
-        Translations.drawer.streamTest,
-        style: itemTextStyle,
-      ),
-      contentPadding: itemPadding,
-      leading: const Icon(
-        Icons.stream,
-        color: Colors.black,
-      ),
-      onTap: () async {
-        PageRouter.streamTest.go(context);
       },
     );
   }

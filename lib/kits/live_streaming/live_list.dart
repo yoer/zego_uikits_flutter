@@ -28,8 +28,7 @@ class LiveStreamingLiveListPage extends StatefulWidget {
 
 class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
   final hostInfosEmptyNotifier = ValueNotifier<bool>(true);
-  final outsideLiveListController =
-      ZegoLiveStreamingOutsideLiveListController();
+  final liveHallController = ZegoLiveStreamingHallListController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +69,19 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
   }
 
   Widget liveList() {
-    return ZegoLiveStreamingOutsideLiveList(
+    return ZegoLiveStreamingHallList(
       appID: int.parse(SettingsCache().appID),
       appSign: SettingsCache().appSign,
       token: SettingsCache().appToken,
-      controller: outsideLiveListController,
-      style: ZegoLiveStreamingOutsideLiveListStyle(
+      controller: liveHallController,
+      style: ZegoLiveStreamingHallListStyle(
         scrollDirection: LiveStreamingCache().liveListHorizontal
             ? Axis.horizontal
             : Axis.vertical,
         scrollAxisCount: LiveStreamingCache().liveListAxisCount,
         itemAspectRatio:
             LiveStreamingCache().liveListHorizontal ? 16.0 / 9.0 : 9.0 / 16.0,
-        item: ZegoLiveStreamingOutsideLiveListItemStyle(
+        item: ZegoLiveStreamingHallListItemStyle(
           foregroundBuilder: foreground,
           loadingBuilder: (
             BuildContext context,
@@ -90,8 +89,10 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
             String roomID,
           ) {
             return ValueListenableBuilder<bool>(
-              valueListenable:
-                  ZegoUIKit().getCameraStateNotifier(user?.id ?? ''),
+              valueListenable: ZegoUIKit().getCameraStateNotifier(
+                targetRoomID: liveHallController.roomID,
+                user?.id ?? '',
+              ),
               builder: (context, isCameraOpen, _) {
                 return isCameraOpen
                     ? Container()
@@ -118,9 +119,9 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
           ),
         ),
       ),
-      config: ZegoOutsideRoomAudioVideoViewListConfig(
-        video: ZegoUIKitVideoConfig.preset180P(),
-        audioVideoResourceMode: ZegoAudioVideoResourceMode.onlyRTC,
+      config: ZegoLiveStreamingHallListConfig(
+        video: ZegoVideoConfigExtension.preset180P(),
+        audioVideoResourceMode: ZegoUIKitStreamResourceMode.OnlyRTC,
       ),
     );
   }
@@ -169,7 +170,7 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
                 isHost: false,
                 addRoomIDPrefix: false,
                 configQuery: (config) {
-                  config.outsideLives.controller = outsideLiveListController;
+                  config.hall.controller = liveHallController;
                   return config;
                 },
               );
@@ -185,13 +186,13 @@ class _LiveStreamingLiveListPageState extends State<LiveStreamingLiveListPage> {
         .liveListMap
         .value
         .entries
-        .map((entry) => ZegoLiveStreamingOutsideLiveListHost(
+        .map((entry) => ZegoLiveStreamingHallHost(
               user: ZegoUIKitUser(id: entry.key, name: ''),
               roomID: 'live_${entry.value}',
             ))
         .toList();
 
     hostInfosEmptyNotifier.value = hostInfos.isEmpty;
-    outsideLiveListController.updateHosts(hostInfos);
+    liveHallController.updateHosts(hostInfos);
   }
 }

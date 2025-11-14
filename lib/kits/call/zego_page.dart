@@ -65,6 +65,16 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
         userName: widget.userName,
         callID: widget.roomID,
         config: config,
+        events: ZegoUIKitPrebuiltCallEvents(
+          beauty: ZegoCallBeautyEvents(
+            onError: (error) {
+              debugPrint('call onBeautyError:$error');
+            },
+            onFaceDetection: (data) {
+              // debugPrint('onBeautyFaceDetection:$data');
+            },
+          ),
+        ),
         plugins: [
           ...(KitCommonCache().supportAdvanceBeauty
               ? [ZegoUIKitBeautyPlugin()]
