@@ -16,7 +16,6 @@ class LiveStreamingCache {
   );
   final liveListMap = ValueNotifier<Map<String, String>>({});
   bool _liveListHorizontal = false;
-  int _liveListAxisCount = 2;
 
   bool _pkAutoAccept = false;
 
@@ -142,15 +141,6 @@ class LiveStreamingCache {
     });
   }
 
-  int get liveListAxisCount => _liveListAxisCount;
-  set liveListAxisCount(int value) {
-    _liveListAxisCount = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setInt(_cacheLiveListAxisCountKey, value);
-    });
-  }
-
   bool get pkAutoAccept => _pkAutoAccept;
   set pkAutoAccept(bool value) {
     pkAutoAccept = value;
@@ -165,7 +155,6 @@ class LiveStreamingCache {
     liveListMap.value = {};
 
     _liveListHorizontal = false;
-    _liveListAxisCount = 2;
 
     _pkAutoAccept = false;
 
@@ -181,7 +170,6 @@ class LiveStreamingCache {
     prefs.remove(_cacheRoomIDListKey);
     prefs.remove(_cacheLiveListMapKey);
     prefs.remove(_cacheLiveListAxisKey);
-    prefs.remove(_cacheLiveListAxisCountKey);
 
     prefs.remove(_cachePKAutoAcceptKey);
 
@@ -210,7 +198,6 @@ class LiveStreamingCache {
         : LiveStreamingCache.defaultRoomIDList();
 
     _liveListHorizontal = prefs.get(_cacheLiveListAxisKey) as bool? ?? false;
-    _liveListAxisCount = prefs.get(_cacheLiveListAxisCountKey) as int? ?? 2;
 
     final liveListMapJson = prefs.get(_cacheLiveListMapKey) as String? ?? '';
     try {
@@ -237,7 +224,6 @@ class LiveStreamingCache {
   final String _cacheRoomIDListKey = 'cache_ls_room_id_list';
   final String _cacheLiveListMapKey = 'cache_ls_live_list_map';
   final String _cacheLiveListAxisKey = 'cache_ls_live_list_axis';
-  final String _cacheLiveListAxisCountKey = 'cache_ls_live_list_axis_count';
 
   final String _cachePKAutoAcceptKey = 'cache_ls_pk_auto_accept';
 

@@ -104,21 +104,6 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
                     });
                   },
                 ),
-                settingSwitchDropList<int>(
-                    title: Translations.settings.liveListAxisCount,
-                    defaultValue: LiveStreamingCache().liveListAxisCount,
-                    itemValues: [1, 2, 3],
-                    onChanged: (int count) {
-                      setState(() {
-                        LiveStreamingCache().liveListAxisCount = count;
-                      });
-                    },
-                    widgetBuilder: (int count) {
-                      return Text(
-                        '$count${LiveStreamingCache().liveListHorizontal ? Translations.settings.row : Translations.settings.column}',
-                        style: settingsTextStyle,
-                      );
-                    })
               ],
             ),
             settingsGroup(Translations.settings.pk, [

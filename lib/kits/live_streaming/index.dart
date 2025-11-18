@@ -15,7 +15,7 @@ import 'package:zego_uikits_demo/kits/live_streaming/normal.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/pk.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/swiping.dart';
 import 'package:zego_uikits_demo/pages/utils/router.dart';
-import 'live_list.dart';
+import 'hall/home.dart';
 import 'media.dart';
 
 class LiveStreamingPage extends StatefulWidget {
@@ -138,7 +138,7 @@ class _LiveStreamingPageState extends State<LiveStreamingPage>
                           DateTime.now().millisecondsSinceEpoch;
                     });
                   },
-                  child: LiveStreamingLiveListPage(
+                  child: LiveStreamingLiveHallHome(
                     settingPageBackNotifier: settingPageBackNotifier,
                   ),
                 ),
