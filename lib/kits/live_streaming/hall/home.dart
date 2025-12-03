@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
 // Project imports:
-import 'package:zego_uikits_demo/common/avatar.dart';
-import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/translations.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
-import 'package:zego_uikits_demo/kits/live_streaming/zego_page.dart';
-
 import 'page.dart';
 
 class LiveStreamingLiveHallHome extends StatefulWidget {
@@ -29,8 +26,6 @@ class LiveStreamingLiveHallHome extends StatefulWidget {
 }
 
 class _LiveStreamingLiveHallHomeState extends State<LiveStreamingLiveHallHome> {
-  final liveHallController = ZegoLiveStreamingHallListController();
-
   var currentPageIndex = 0;
   final hallHostsNotifier = ValueNotifier<List<ZegoLiveStreamingHallHost>>([]);
 
@@ -80,6 +75,7 @@ class _LiveStreamingLiveHallHomeState extends State<LiveStreamingLiveHallHome> {
         padding: EdgeInsets.all(16.r),
         child: ElevatedButton(
           onPressed: () {
+            debugPrint('------------liveListButton click------------------');
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -112,7 +108,11 @@ class _LiveStreamingLiveHallHomeState extends State<LiveStreamingLiveHallHome> {
         .value
         .entries
         .map((entry) => ZegoLiveStreamingHallHost(
-              user: ZegoUIKitUser(id: entry.key, name: ''),
+              user: ZegoUIKitUser(
+                id: entry.key,
+                name: '',
+                isAnotherRoomUser: true,
+              ),
               roomID: 'live_${entry.value}',
             ))
         .toList();

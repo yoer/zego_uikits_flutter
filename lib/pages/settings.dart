@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -235,6 +237,13 @@ class _SettingsPageState extends State<SettingsPage> {
                         setState(() {
                           KitCommonCache().enableDebugToast = value ?? false;
                         });
+                      },
+                    ),
+                    settingsCheckBox(
+                      title: Translations.settings.enableDebugMode,
+                      value: KitCommonCache().enableDebugToast,
+                      onChanged: (value) {
+                        setState(() {});
                       },
                     ),
                   ],

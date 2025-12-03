@@ -375,7 +375,7 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     /// todo 多房间状态 + 当前房间
     //support calling invitation
     final sendCallingInvitationButton =
-        ValueListenableBuilder<ZegoUIKitRoomsState>(
+        ValueListenableBuilder<Map<String, ZegoUIKitRoomState>>(
       valueListenable: ZegoUIKit().getRoomsStateStream(),
       builder: (context, roomsState, _) {
         return StreamBuilder(

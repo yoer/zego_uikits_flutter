@@ -169,7 +169,11 @@ class CallInvitationDialPadState extends State<CallInvitationDialPad> {
     }
 
     final invitees = inviteeIDs
-        .map((inviteeID) => ZegoUIKitUser(id: inviteeID, name: ''))
+        .map((inviteeID) => ZegoUIKitUser(
+              id: inviteeID,
+              name: '',
+              isAnotherRoomUser: false,
+            ))
         .toList();
     return ZegoSendCallInvitationButton(
       isVideoCall: isVideoCall,

@@ -164,7 +164,11 @@ class _ContactState extends State<Contact> with SingleTickerProviderStateMixin {
     return ZegoSendCallInvitationButton(
       isVideoCall: isVideoCall,
       invitees: [
-        ZegoUIKitUser(id: userDoc.id, name: userDoc.name),
+        ZegoUIKitUser(
+          id: userDoc.id,
+          name: userDoc.name,
+          isAnotherRoomUser: false,
+        ),
       ],
       resourceID: CallCache().invitation.resourceID,
       iconSize: Size(size.width * 0.8, size.height * 0.8),

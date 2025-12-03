@@ -352,7 +352,7 @@ class HomePageState extends State<HomePage> {
   }
 
   void onUIKitError(ZegoUIKitError error) {
-    debugPrint('onUIKitError:$error');
+    // debugPrint('onUIKitError:$error');
     // showFailedToast(
     //   '${Translations.tips.error}, ${Translations.tips.errorCode}:${error.code}, ${Translations.tips.errorMsg}:${error.message}',
     // );

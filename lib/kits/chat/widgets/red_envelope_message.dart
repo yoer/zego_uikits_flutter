@@ -1,14 +1,17 @@
+// Dart imports:
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 class RedEnvelopeMessage extends StatelessWidget {
   const RedEnvelopeMessage({
-    Key? key,
+    super.key,
     required this.message,
-  }) : super(key: key);
+  });
 
   final ZIMKitMessage message;
 

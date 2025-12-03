@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:firebase_core/firebase_core.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
@@ -52,12 +53,12 @@ class KitsFirebaseService {
 
   void onRoomsStateUpdated() {
     final roomsState = ZegoUIKit().getRoomsStateStream().value;
-    roomsState.states.forEach((roomID, roomState) {
+    roomsState.forEach((roomID, roomState) {
       final currentLoginUser = UserService().loginUserNotifier.value;
       final roomType = RoomTypeExtension.fromRoomID(roomID);
 
       var isHost = false;
-      if (roomState.isLogin) {
+      if (roomState.isLogin2) {
         switch (roomType) {
           case RoomType.none:
           case RoomType.unknown:

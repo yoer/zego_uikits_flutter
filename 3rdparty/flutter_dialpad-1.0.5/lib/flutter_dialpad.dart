@@ -56,7 +56,7 @@ class DialPad extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DialPadState createState() => _DialPadState();
+  State<DialPad> createState() => _DialPadState();
 }
 
 class _DialPadState extends State<DialPad> {
@@ -263,7 +263,7 @@ class DialButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DialButtonState createState() => _DialButtonState();
+  State<DialButton> createState() => _DialButtonState();
 }
 
 class _DialButtonState extends State<DialButton>

@@ -1,7 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
@@ -138,6 +138,7 @@ mixin DemoChattingMessageListPageCallMixin {
             ZegoUIKitUser(
               id: conversationID,
               name: ZIMKit().getConversation(conversationID, type).value.name,
+              isAnotherRoomUser: false,
             )
           ],
           onPressed: (String code, String message, List<String> errorInvitees) {

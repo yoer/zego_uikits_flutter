@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_prebuilt_live_audio_room/zego_uikit_prebuilt_live_audio_room.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
@@ -23,6 +24,19 @@ class AboutsPage extends StatefulWidget {
 }
 
 class _AboutsPagePageState extends State<AboutsPage> {
+  late Future<String> _appVersion;
+
+  @override
+  void initState() {
+    super.initState();
+    _appVersion = _getAppVersion();
+  }
+
+  Future<String> _getAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -53,31 +67,40 @@ class _AboutsPagePageState extends State<AboutsPage> {
   }
 
   Widget kitsInfo() {
-    return Table(
-      border: TableBorder.all(),
-      children: [
-        const TableRow(children: [
-          TableCell(child: Center(child: Text('Kit'))),
-          TableCell(child: Center(child: Text('Version'))),
-        ]),
-        version(
-          'Call',
-          ZegoUIKitPrebuiltCallController().version,
-        ),
-        version(
-          'LiveAudioRoom',
-          ZegoUIKitPrebuiltLiveAudioRoomController().version,
-        ),
-        version(
-          'LiveStreaming',
-          ZegoUIKitPrebuiltLiveStreamingController().version,
-        ),
-        version(
-          'VideoConference',
-          ZegoUIKitPrebuiltVideoConferenceController().version,
-        ),
-        version('ZIMKit', ZIMKit().getVersion()),
-      ],
+    return FutureBuilder<String>(
+      future: _appVersion,
+      builder: (context, snapshot) {
+        return Table(
+          border: TableBorder.all(),
+          children: [
+            const TableRow(children: [
+              TableCell(child: Center(child: Text('Kit'))),
+              TableCell(child: Center(child: Text('Version'))),
+            ]),
+            version(
+              'App',
+              snapshot.data ?? 'Loading...',
+            ),
+            version(
+              'Call',
+              ZegoUIKitPrebuiltCallController().version,
+            ),
+            version(
+              'LiveAudioRoom',
+              ZegoUIKitPrebuiltLiveAudioRoomController().version,
+            ),
+            version(
+              'LiveStreaming',
+              ZegoUIKitPrebuiltLiveStreamingController().version,
+            ),
+            version(
+              'VideoConference',
+              ZegoUIKitPrebuiltVideoConferenceController().version,
+            ),
+            version('ZIMKit', ZIMKit().getVersion()),
+          ],
+        );
+      },
     );
   }
 

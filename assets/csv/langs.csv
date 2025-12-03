@@ -96,6 +96,7 @@ settings.duration.seconds_tips,"{} seconds remaining","剩余 {} 秒","{} से
 settings.duration.end_tips,"About to end","即将结束","समापन के बारे में"
 settings.others,Others,其他,अन्य
 settings.enable_debug_toast,"Enable Debug Toast","启用调试提示","डिबग टोस्ट सक्षम करें"
+settings.enable_debug_mode,"Enable Debug Mode","启用调试信息","डिबगिंग जानकारी सक्षम करें"
 settings.audio_route_changed,"Local Audio Route Changed","本地音频路由已更改","स्थानीय ऑडियो रूट बदल गया"
 intro.skip,Skip,跳过,"छोड़ें"
 intro.done,Done,完成,"पूर्ण"
@@ -186,6 +187,8 @@ live.pk.send_invite,"Send PK Invite","发起PK邀请","PK आमंत्रण 
 live.pk.invite_sent,"PK invitation sent","PK邀请已发送","PK आमंत्रण भेजा गया"
 live.pk.please_enter_host_id,"Please enter Host ID","请输入Host ID","कृपया होस्ट आईडी दर्ज करें"
 live.media_sharing.title,"Media Sharing","媒体共享","मीडिया साझाकरण"
+live.click_to_enter_live,"Click to Enter Live","点击进入直播间","लाइव में प्रवेश करने के लिए क्लिक करें"
+live.living,"Live","直播中","लाइव"
 call.invitation.title,"Invitation",呼叫邀请,"आमंत्रण"
 call.one_on_one.title,"One on One",一对一通话,"एक-से-एक"
 call.group.title,"Group",多人通话,"समूह"

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
 // Project imports:
@@ -25,8 +26,21 @@ class LiveStreamingSwipingPage extends StatefulWidget {
 }
 
 class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
-  var currentPageIndex = 0;
   List<String> liveIDs = [];
+
+  final hallHosts = LiveStreamingCache()
+      .liveListMap
+      .value
+      .entries
+      .map((entry) => ZegoLiveStreamingHallHost(
+            user: ZegoUIKitUser(
+              id: entry.key,
+              name: '',
+              isAnotherRoomUser: true,
+            ),
+            roomID: 'live_${entry.value}',
+          ))
+      .toList();
 
   @override
   void initState() {
@@ -44,7 +58,7 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
 
   void onRoomsStateChanged() {
     final roomsState = ZegoUIKit().getRoomsStateStream().value;
-    roomsState.states.forEach((roomID, roomState) {
+    roomsState.forEach((roomID, roomState) {
       if (roomState.reason == ZegoUIKitRoomStateChangedReason.Logined) {
         showInfoToast(Translations.liveStreaming.swipingJoinTips(roomID));
       }
@@ -70,8 +84,6 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
           onPressed: () {
             final user = UserService().loginUserNotifier.value!;
 
-            currentPageIndex = 0;
-
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -84,26 +96,11 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
                   liveID: 'live_${liveIDs.first}',
                   isHost: false,
                   configQuery: (config) {
+                    /// 更新滑动页的主播间滑动上下文
                     config.swiping = ZegoLiveStreamingSwipingConfig(
-                      requirePreviousLiveID: () {
-                        currentPageIndex = currentPageIndex - 1;
-                        if (currentPageIndex < 0) {
-                          // currentPageIndex = 0;  No page loop, at the top.
-                          currentPageIndex = liveIDs.length -
-                              1; //  Cycle through the pages to get back to the bottom
-                        }
-                        return 'live_${liveIDs[currentPageIndex]}';
-                      },
-                      requireNextLiveID: () {
-                        currentPageIndex = currentPageIndex + 1;
-                        if (currentPageIndex > liveIDs.length - 1) {
-                          //currentPageIndex = liveIDs.length - 1;   No page rotation. It's over.
-                          currentPageIndex =
-                              0; //  Cycle through the pages to get back to the top
-                        }
-
-                        return 'live_${liveIDs[currentPageIndex]}';
-                      },
+                      model: ZegoUIKitHallRoomListModel.fromActiveStreamUsers(
+                        activeStreamUsers: hallHosts,
+                      ),
                     );
 
                     return config;
