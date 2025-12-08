@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 // Package imports:
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/data/assets.dart';
@@ -15,7 +16,6 @@ class LiveStreamingCache {
     LiveStreamingCache.defaultRoomIDList(),
   );
   final liveListMap = ValueNotifier<Map<String, String>>({});
-  bool _liveListHorizontal = false;
 
   bool _pkAutoAccept = false;
 
@@ -27,7 +27,11 @@ class LiveStreamingCache {
   bool _showUserNameOnView = true;
   bool _showMicrophoneStateOnView = true;
 
+  ZegoLiveStreamingStreamMode _streamMode =
+      ZegoLiveStreamingStreamMode.preloaded;
+
   bool get showMicrophoneStateOnView => _showMicrophoneStateOnView;
+
   set showMicrophoneStateOnView(bool value) {
     _showMicrophoneStateOnView = value;
 
@@ -37,6 +41,7 @@ class LiveStreamingCache {
   }
 
   bool get showUserNameOnView => _showUserNameOnView;
+
   set showUserNameOnView(bool value) {
     _showUserNameOnView = value;
 
@@ -46,6 +51,7 @@ class LiveStreamingCache {
   }
 
   bool get videoAspectFill => _videoAspectFill;
+
   set videoAspectFill(bool value) {
     _videoAspectFill = value;
 
@@ -55,6 +61,7 @@ class LiveStreamingCache {
   }
 
   bool get supportGift => _supportGift;
+
   set supportGift(bool value) {
     _supportGift = value;
 
@@ -64,6 +71,7 @@ class LiveStreamingCache {
   }
 
   String get mediaDefaultURL => _mediaDefaultURL;
+
   set mediaDefaultURL(String value) {
     _mediaDefaultURL = value;
 
@@ -73,6 +81,7 @@ class LiveStreamingCache {
   }
 
   bool get autoPlayMedia => _autoPlayMedia;
+
   set autoPlayMedia(bool value) {
     _autoPlayMedia = value;
 
@@ -132,29 +141,29 @@ class LiveStreamingCache {
     });
   }
 
-  bool get liveListHorizontal => _liveListHorizontal;
-  set liveListHorizontal(bool value) {
-    _liveListHorizontal = value;
-
-    SharedPreferences.getInstance().then((prefs) {
-      prefs.setBool(_cacheLiveListAxisKey, value);
-    });
-  }
-
   bool get pkAutoAccept => _pkAutoAccept;
+
   set pkAutoAccept(bool value) {
-    pkAutoAccept = value;
+    _pkAutoAccept = value;
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cachePKAutoAcceptKey, value);
     });
   }
 
+  ZegoLiveStreamingStreamMode get streamMode => _streamMode;
+
+  set streamMode(ZegoLiveStreamingStreamMode value) {
+    _streamMode = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString(_cacheStreamModeKey, value.name);
+    });
+  }
+
   Future<void> clear() async {
     roomIDList.value = LiveStreamingCache.defaultRoomIDList();
     liveListMap.value = {};
-
-    _liveListHorizontal = false;
 
     _pkAutoAccept = false;
 
@@ -165,11 +174,11 @@ class LiveStreamingCache {
     _videoAspectFill = true;
     _showUserNameOnView = true;
     _showMicrophoneStateOnView = true;
+    _streamMode = ZegoLiveStreamingStreamMode.preloaded;
 
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheRoomIDListKey);
     prefs.remove(_cacheLiveListMapKey);
-    prefs.remove(_cacheLiveListAxisKey);
 
     prefs.remove(_cachePKAutoAcceptKey);
 
@@ -179,6 +188,7 @@ class LiveStreamingCache {
     prefs.remove(_supportMediaAutoPlayKey);
     prefs.remove(_supportVideoModeKey);
     prefs.remove(_supportGiftKey);
+    prefs.remove(_cacheStreamModeKey);
   }
 
   Future<void> load() async {
@@ -197,8 +207,6 @@ class LiveStreamingCache {
         ? cacheRoomIDList
         : LiveStreamingCache.defaultRoomIDList();
 
-    _liveListHorizontal = prefs.get(_cacheLiveListAxisKey) as bool? ?? false;
-
     final liveListMapJson = prefs.get(_cacheLiveListMapKey) as String? ?? '';
     try {
       liveListMap.value = Map<String, String>.from(jsonDecode(liveListMapJson));
@@ -215,6 +223,18 @@ class LiveStreamingCache {
     _showMicrophoneStateOnView =
         prefs.get(_supportShowMicStateKey) as bool? ?? true;
     _showUserNameOnView = prefs.get(_supportShowUserNameKey) as bool? ?? true;
+
+    final streamModeString = prefs.get(_cacheStreamModeKey) as String?;
+    if (streamModeString != null) {
+      try {
+        _streamMode = ZegoLiveStreamingStreamMode.values
+            .firstWhere((e) => e.name == streamModeString);
+      } catch (e) {
+        _streamMode = ZegoLiveStreamingStreamMode.preloaded;
+      }
+    } else {
+      _streamMode = ZegoLiveStreamingStreamMode.preloaded;
+    }
   }
 
   static List<String> defaultRoomIDList() {
@@ -223,7 +243,6 @@ class LiveStreamingCache {
 
   final String _cacheRoomIDListKey = 'cache_ls_room_id_list';
   final String _cacheLiveListMapKey = 'cache_ls_live_list_map';
-  final String _cacheLiveListAxisKey = 'cache_ls_live_list_axis';
 
   final String _cachePKAutoAcceptKey = 'cache_ls_pk_auto_accept';
 
@@ -235,6 +254,7 @@ class LiveStreamingCache {
 
   final String _supportVideoModeKey = 'cache_ls_video_mode';
   final String _supportGiftKey = 'cache_ls_gift';
+  final String _cacheStreamModeKey = 'cache_ls_stream_mode';
 
   bool _isLoaded = false;
 

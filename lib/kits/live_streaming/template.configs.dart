@@ -3,14 +3,12 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
@@ -218,64 +216,65 @@ Widget memberButtonBuilder(
   String liveID,
 ) {
   final remoteUsers = (isHost
-          ? ZegoUIKit().getRemoteUsers(targetRoomID: liveID)
-          : ZegoUIKit().getAllUsers(targetRoomID: liveID))
-      .take(3)
-      .toList();
+      ? ZegoUIKit().getRemoteUsers(targetRoomID: liveID)
+      : ZegoUIKit().getAllUsers(targetRoomID: liveID));
+
+  final topRightRedPoint = Positioned(
+    top: 1.r,
+    right: 1.r,
+    child: Container(
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.red,
+      ),
+      width: 20.zR,
+      height: 20.zR,
+    ),
+  );
+  final coHostRequestRedPoint = ValueListenableBuilder<List<ZegoUIKitUser>>(
+    valueListenable: ZegoUIKitPrebuiltLiveStreamingController()
+        .coHost
+        .requestCoHostUsersNotifier,
+    builder: (context, requestCoHostUsers, _) {
+      return Container(
+        height: 50.r,
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.3),
+          borderRadius: BorderRadius.circular(20.0.r),
+        ),
+        alignment: Alignment.center,
+        child: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.r),
+              child: Text(
+                remoteUsers.length.toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.r,
+                ),
+              ),
+            ),
+
+            /// request co-host notify red point
+            if (requestCoHostUsers.isNotEmpty) topRightRedPoint,
+          ],
+        ),
+      );
+    },
+  );
+
   return Row(
     children: [
-      ...remoteUsers.map(
-        (user) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.r),
-          width: 50.r,
-          height: 50.r,
-          child: CircleAvatar(child: avatar(user.id)),
-        ),
-      ),
-      ValueListenableBuilder<List<ZegoUIKitUser>>(
-        valueListenable: ZegoUIKitPrebuiltLiveStreamingController()
-            .coHost
-            .requestCoHostUsersNotifier,
-        builder: (context, requestCoHostUsers, _) {
-          return Container(
-            height: 50.r,
-            decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(20.0.r),
+      ...List.from(remoteUsers).take(3).toList().map(
+            (user) => Container(
+              margin: EdgeInsets.symmetric(horizontal: 10.r),
+              width: 50.r,
+              height: 50.r,
+              child: CircleAvatar(child: avatar(user.id)),
             ),
-            alignment: Alignment.center,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.r),
-                  child: Text(
-                    remoteUsers.length.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.r,
-                    ),
-                  ),
-                ),
-
-                /// request co-host notify red point
-                if (requestCoHostUsers.isNotEmpty)
-                  Positioned(
-                    top: 1.r,
-                    right: 1.r,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                      ),
-                      width: 20.zR,
-                      height: 20.zR,
-                    ),
-                  ),
-              ],
-            ),
-          );
-        },
-      ),
+          ),
+      coHostRequestRedPoint,
     ],
   );
 }

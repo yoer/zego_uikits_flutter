@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/settings.dart';
@@ -241,9 +242,12 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     settingsCheckBox(
                       title: Translations.settings.enableDebugMode,
-                      value: KitCommonCache().enableDebugToast,
+                      value: KitCommonCache().enableDebugMode,
                       onChanged: (value) {
-                        setState(() {});
+                        setState(() {
+                          KitCommonCache().enableDebugMode = value ?? false;
+                          ZegoUIKit().useDebugMode = value ?? false;
+                        });
                       },
                     ),
                   ],

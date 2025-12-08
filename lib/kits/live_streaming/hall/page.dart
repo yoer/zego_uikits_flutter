@@ -1,4 +1,6 @@
 // Flutter imports:
+
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -83,6 +85,7 @@ class _LiveStreamingLiveHallPageState extends State<LiveStreamingLiveHallPage> {
       hallModelDelegate: hallListModelDelegate,
       hallConfig: ZegoLiveStreamingHallListConfig(
         video: ZegoVideoConfigExtension.preset180P(),
+        streamMode: LiveStreamingCache().streamMode,
         audioVideoResourceMode: ZegoUIKitStreamResourceMode.OnlyRTC,
       ),
     );

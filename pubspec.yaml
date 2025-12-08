@@ -16,14 +16,14 @@ dependencies:
   zego_zim_audio: ^1.0.0+7
 
   zego_uikit: ^3.0.0
-  zego_uikit_signaling_plugin: ^2.8.19
+  zego_uikit_signaling_plugin: ^2.8.20
   zego_uikit_beauty_plugin: ^2.0.2
-  zego_plugin_adapter: ^2.14.0
+  zego_plugin_adapter: ^2.14.2
 
-  zego_uikit_prebuilt_video_conference: ^2.10.5
-  zego_uikit_prebuilt_call: ^4.21.0
-  zego_uikit_prebuilt_live_audio_room: ^3.16.8
-  zego_uikit_prebuilt_live_streaming: ^3.15.0
+  zego_uikit_prebuilt_video_conference: ^3.0.0
+  zego_uikit_prebuilt_call: ^5.0.0
+  zego_uikit_prebuilt_live_audio_room: ^4.0.0
+  zego_uikit_prebuilt_live_streaming: ^4.0.0
   zego_zimkit:
     git:
       url: https://github.com/ZEGOCLOUD/zego_zimkit_flutter.git

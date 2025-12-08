@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/settings.dart';
@@ -95,15 +96,7 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
               Translations.liveStreaming.liveListTitle,
               [
                 liveListEditor(),
-                settingsCheckBox(
-                  title: Translations.settings.liveListAxis,
-                  value: LiveStreamingCache().liveListHorizontal,
-                  onChanged: (value) {
-                    setState(() {
-                      LiveStreamingCache().liveListHorizontal = value ?? false;
-                    });
-                  },
-                ),
+                liveListStreamMode(),
               ],
             ),
             settingsGroup(Translations.settings.pk, [
@@ -133,6 +126,28 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
       },
       onDelete: (String roomID) {
         LiveStreamingCache().removeRoomID(roomID);
+      },
+    );
+  }
+
+  Widget liveListStreamMode() {
+    return settingSwitchDropList<ZegoLiveStreamingStreamMode>(
+      title: Translations.settings.streamMode,
+      defaultValue: LiveStreamingCache().streamMode,
+      itemValues: [
+        ZegoLiveStreamingStreamMode.preloaded,
+        ZegoLiveStreamingStreamMode.economy,
+      ],
+      onChanged: (streamMode) {
+        setState(() {
+          LiveStreamingCache().streamMode = streamMode;
+        });
+      },
+      widgetBuilder: (streamMode) {
+        return Text(
+          streamMode.name,
+          style: settingsTextStyle,
+        );
       },
     );
   }

@@ -98,6 +98,7 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
                   configQuery: (config) {
                     /// 更新滑动页的主播间滑动上下文
                     config.swiping = ZegoLiveStreamingSwipingConfig(
+                      streamMode: LiveStreamingCache().streamMode,
                       model: ZegoUIKitHallRoomListModel.fromActiveStreamUsers(
                         activeStreamUsers: hallHosts,
                       ),
