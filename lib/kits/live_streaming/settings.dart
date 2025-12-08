@@ -36,6 +36,15 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
               Translations.settings.liveListId,
               [
                 liveIDEditor(),
+                settingsCheckBox(
+                  title: Translations.settings.useModulePrefix,
+                  value: LiveStreamingCache().useModulePrefix,
+                  onChanged: (value) {
+                    setState(() {
+                      LiveStreamingCache().useModulePrefix = value ?? false;
+                    });
+                  },
+                ),
               ],
             ),
             settingsGroup(

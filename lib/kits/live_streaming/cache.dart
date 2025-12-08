@@ -18,6 +18,7 @@ class LiveStreamingCache {
   final liveListMap = ValueNotifier<Map<String, String>>({});
 
   bool _pkAutoAccept = false;
+  bool _useModulePrefix = false;
 
   String _mediaDefaultURL = '';
   bool _autoPlayMedia = true;
@@ -151,6 +152,16 @@ class LiveStreamingCache {
     });
   }
 
+  bool get useModulePrefix => _useModulePrefix;
+
+  set useModulePrefix(bool value) {
+    _useModulePrefix = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_cacheUseModulePrefixKey, value);
+    });
+  }
+
   ZegoLiveStreamingStreamMode get streamMode => _streamMode;
 
   set streamMode(ZegoLiveStreamingStreamMode value) {
@@ -166,6 +177,7 @@ class LiveStreamingCache {
     liveListMap.value = {};
 
     _pkAutoAccept = false;
+    _useModulePrefix = false;
 
     _mediaDefaultURL = '';
     _autoPlayMedia = true;
@@ -181,6 +193,7 @@ class LiveStreamingCache {
     prefs.remove(_cacheLiveListMapKey);
 
     prefs.remove(_cachePKAutoAcceptKey);
+    prefs.remove(_cacheUseModulePrefixKey);
 
     prefs.remove(_supportShowUserNameKey);
     prefs.remove(_supportShowMicStateKey);
@@ -213,6 +226,7 @@ class LiveStreamingCache {
     } catch (e) {}
 
     _pkAutoAccept = prefs.get(_cachePKAutoAcceptKey) as bool? ?? false;
+    _useModulePrefix = prefs.get(_cacheUseModulePrefixKey) as bool? ?? false;
 
     _autoPlayMedia = prefs.get(_supportMediaAutoPlayKey) as bool? ?? true;
     _mediaDefaultURL =
@@ -245,6 +259,7 @@ class LiveStreamingCache {
   final String _cacheLiveListMapKey = 'cache_ls_live_list_map';
 
   final String _cachePKAutoAcceptKey = 'cache_ls_pk_auto_accept';
+  final String _cacheUseModulePrefixKey = 'cache_ls_use_module_prefix';
 
   final String _supportShowUserNameKey = 'cache_ls_show_user_name';
   final String _supportShowMicStateKey = 'cache_ls_show_mic_state';

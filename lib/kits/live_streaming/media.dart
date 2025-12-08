@@ -33,9 +33,11 @@ class _MediaLiveStreamingPageState extends State<MediaLiveStreamingPage> {
       showStartButton: true,
       showJoinButton: true,
       onStart: (liveID) {
+        final finalLiveID =
+            LiveStreamingCache().useModulePrefix ? 'media_$liveID' : liveID;
         startLiveStreaming(
           context: context,
-          liveID: liveID,
+          liveID: finalLiveID,
           isHost: true,
           configQuery: (ZegoUIKitPrebuiltLiveStreamingConfig config) {
             config.mediaPlayer.defaultPlayer.support = true;
@@ -54,9 +56,11 @@ class _MediaLiveStreamingPageState extends State<MediaLiveStreamingPage> {
         );
       },
       onJoin: (liveID) {
+        final finalLiveID =
+            LiveStreamingCache().useModulePrefix ? 'media_$liveID' : liveID;
         startLiveStreaming(
           context: context,
-          liveID: liveID,
+          liveID: finalLiveID,
           isHost: false,
           configQuery: (ZegoUIKitPrebuiltLiveStreamingConfig config) {
             config.mediaPlayer.defaultPlayer.support = true;

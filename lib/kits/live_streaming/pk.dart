@@ -63,9 +63,11 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
     required String liveID,
     required bool isHost,
   }) {
+    final finalLiveID =
+        LiveStreamingCache().useModulePrefix ? 'pk_$liveID' : liveID;
     startLiveStreaming(
       context: context,
-      liveID: 'pk_$liveID',
+      liveID: finalLiveID,
       isHost: isHost,
       configQuery: (config) {
         // config.mediaPlayer.defaultPlayer.support = false;

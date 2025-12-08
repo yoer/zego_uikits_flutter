@@ -277,6 +277,8 @@ class TranslationsSettings {
 
   String get pkAutoAccept => tr('${base}pk.auto_accept');
 
+  String get useModulePrefix => tr('${base}use_module_prefix');
+
   String get streamMode => tr('${base}stream_mode');
 
   String get audioListId => tr('${base}audio_list_id');
