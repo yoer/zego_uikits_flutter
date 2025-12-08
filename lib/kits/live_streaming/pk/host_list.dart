@@ -1,14 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/common/toast.dart';
 import 'package:zego_uikits_demo/firestore/defines.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
+
 import '../../../common/avatar.dart';
 import '../../../data/assets.dart';
 import '../../../data/translations.dart';
@@ -21,6 +20,7 @@ class LiveStreamingPKHostList extends StatefulWidget {
     super.key,
     required this.stateNotifier,
   });
+
   final ValueNotifier<ZegoLiveStreamingState> stateNotifier;
 
   @override
@@ -53,47 +53,51 @@ class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
         horizontal: 20.r,
         vertical: 20.r,
       ),
-      child: LayoutBuilder(
-        builder: (context, constraint) {
-          return ValueListenableBuilder<Map<String, UserDoc>>(
-            valueListenable: KitsFirebaseService().userTable.cacheNotifier,
-            builder: (context, userDocsMap, _) {
-              final currentLoginUser = UserService().loginUserNotifier.value;
+      child: ValueListenableBuilder<Map<String, UserDoc>>(
+        valueListenable: KitsFirebaseService().userTable.cacheNotifier,
+        builder: (context, userDocsMap, _) {
+          final currentLoginUser = UserService().loginUserNotifier.value;
 
-              var userDocs = KitsFirebaseService().queryRoomActiveUsersWithType(
-                roomType: RoomType.liveStreamingPK,
-                isHost: true,
-              );
-              userDocs.removeWhere((e) => e.id == currentLoginUser?.id);
-              userDocs.sort((left, right) => left.id.compareTo(right.id));
-
-              return userDocs.isEmpty
-                  ? hostEmptyTips()
-                  : Column(
-                      children: [
-                        SizedBox(
-                          height: 50.r,
-                          child: controls(),
-                        ),
-                        SizedBox(
-                          height: 5.r,
-                        ),
-                        SizedBox(
-                          height: constraint.maxHeight - 50.r - 5.r,
-                          child: ListView.builder(
-                            itemCount: userDocs.length,
-                            itemBuilder: (context, index) {
-                              final userDoc = userDocs[index];
-                              return hostItem(userDoc, index);
-                            },
-                          ),
-                        ),
-                      ],
-                    );
-            },
+          var userDocs = KitsFirebaseService().queryRoomActiveUsersWithType(
+            roomType: RoomType.liveStreamingPK,
+            isHost: true,
           );
+          userDocs.removeWhere((e) => e.id == currentLoginUser?.id);
+          userDocs.sort((left, right) => left.id.compareTo(right.id));
+
+          return userDocs.isEmpty
+              ? noFirebaseHostList()
+              : firebaseHostList(userDocs);
         },
       ),
+    );
+  }
+
+  Widget firebaseHostList(List<UserDoc> userDocs) {
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return Column(
+          children: [
+            SizedBox(
+              height: 50.r,
+              child: controls(),
+            ),
+            SizedBox(
+              height: 5.r,
+            ),
+            SizedBox(
+              height: constraint.maxHeight - 50.r - 5.r,
+              child: ListView.builder(
+                itemCount: userDocs.length,
+                itemBuilder: (context, index) {
+                  final userDoc = userDocs[index];
+                  return hostItem(userDoc, index);
+                },
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -138,86 +142,169 @@ class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
     );
   }
 
-  Widget hostEmptyTips() {
+  /// 当firebase失效无法拉取用户列表
+  Widget noFirebaseHostList() {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            Translations.liveStreaming.pkHostEmptyTips,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 30.r,
-            ),
-          ),
+          _noFirebaseEmptyTips(),
           SizedBox(height: 40.r),
-          Text(
-            Translations.liveStreaming.manualInputTips,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 24.r,
-            ),
-          ),
+          _manualInputSection(),
           SizedBox(height: 20.r),
-          SizedBox(
-            width: 400.r,
-            child: TextField(
-              controller: _hostIdController,
-              decoration: InputDecoration(
-                hintText: Translations.liveStreaming.hostIdPlaceholder,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16.r,
-                  vertical: 12.r,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20.r),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.red,
-              padding: EdgeInsets.symmetric(
-                horizontal: 32.r,
-                vertical: 16.r,
-              ),
-            ),
-            child: Text(
-              Translations.liveStreaming.sendInvite,
-              style: TextStyle(fontSize: 24.r),
-            ),
-            onPressed: () {
-              final hostId = _hostIdController.text.trim();
-              if (hostId.isEmpty) {
-                showFailedToast(Translations.liveStreaming.pleaseEnterHostId);
-                return;
-              }
-
-              ZegoUIKitPrebuiltLiveStreamingController().pk.sendRequest(
-                targetHostIDs: [hostId],
-                isAutoAccept: autoAccept,
-              ).then(
-                (result) {
-                  if (!mounted) return;
-
-                  if (result.error != null) {
-                    showFailedToast(
-                      '${Translations.liveStreaming.invitePK}:${result.error.toString()}',
-                    );
-                  } else {
-                    _hostIdController.clear();
-                    showInfoToast(Translations.liveStreaming.inviteSent);
-                    Navigator.pop(context);
-                  }
-                },
-              );
-            },
-          ),
+          _sendInviteButton(),
+          SizedBox(height: 60.r),
+          _noFirebasePKControlButtons(),
         ],
       ),
+    );
+  }
+
+  Widget _noFirebaseEmptyTips() {
+    return Text(
+      Translations.liveStreaming.pkHostEmptyTips,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 30.r,
+      ),
+    );
+  }
+
+  Widget _manualInputSection() {
+    return Column(
+      children: [
+        Text(
+          Translations.liveStreaming.manualInputTips,
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 24.r,
+          ),
+        ),
+        SizedBox(height: 20.r),
+        SizedBox(
+          width: 400.r,
+          child: TextField(
+            controller: _hostIdController,
+            decoration: InputDecoration(
+              hintText: Translations.liveStreaming.hostIdPlaceholder,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16.r,
+                vertical: 12.r,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _sendInviteButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.r,
+          vertical: 16.r,
+        ),
+      ),
+      child: Text(
+        Translations.liveStreaming.sendInvite,
+        style: TextStyle(fontSize: 24.r),
+      ),
+      onPressed: () {
+        final hostId = _hostIdController.text.trim();
+        if (hostId.isEmpty) {
+          showFailedToast(Translations.liveStreaming.pleaseEnterHostId);
+          return;
+        }
+
+        ZegoUIKitPrebuiltLiveStreamingController().pk.sendRequest(
+          targetHostIDs: [hostId],
+          isAutoAccept: autoAccept,
+        ).then(
+          (result) {
+            if (!mounted) return;
+
+            if (result.error != null) {
+              showFailedToast(
+                '${Translations.liveStreaming.invitePK}:${result.error.toString()}',
+              );
+            } else {
+              _hostIdController.clear();
+              showInfoToast(Translations.liveStreaming.inviteSent);
+              Navigator.pop(context);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget _noFirebasePKControlButtons() {
+    return ValueListenableBuilder(
+      valueListenable: widget.stateNotifier,
+      builder: (context, state, _) {
+        if (state != ZegoLiveStreamingState.inPKBattle) {
+          return const SizedBox();
+        }
+
+        final currentLoginUser = UserService().loginUserNotifier.value;
+        final isInitiator = currentLoginUser?.id ==
+            ZegoUIKitPrebuiltLiveStreamingController().pk.currentInitiatorID;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isInitiator) _stopPKButton(),
+            if (isInitiator) SizedBox(width: 20.r),
+            _quitPKButton(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _stopPKButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.r,
+          vertical: 16.r,
+        ),
+      ),
+      child: Text(
+        Translations.liveStreaming.endPK,
+        style: TextStyle(fontSize: 24.r),
+      ),
+      onPressed: () {
+        ZegoUIKitPrebuiltLiveStreamingController().pk.stop();
+      },
+    );
+  }
+
+  Widget _quitPKButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.r,
+          vertical: 16.r,
+        ),
+      ),
+      child: Text(
+        Translations.liveStreaming.quitPK,
+        style: TextStyle(fontSize: 24.r),
+      ),
+      onPressed: () {
+        ZegoUIKitPrebuiltLiveStreamingController().pk.quit();
+      },
     );
   }
 
