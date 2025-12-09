@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/common/settings.dart';
 
@@ -129,10 +127,15 @@ class _StringListListTextEditorState extends State<StringListListTextEditor> {
 
             final dataIndex = index - 1;
             final leftValue = defaultLeftValues[dataIndex];
-            final rightValue = widget.defaultLeftRightMap[leftValue] ??
+            var rightValue = widget.defaultLeftRightMap[leftValue] ??
                 (widget.defaultRightValues.isEmpty
                     ? ''
                     : widget.defaultRightValues.first);
+            if (!widget.defaultRightValues.contains(rightValue)) {
+              rightValue = widget.defaultRightValues.isEmpty
+                  ? ''
+                  : widget.defaultRightValues.first;
+            }
             return Stack(
               children: [
                 Container(
