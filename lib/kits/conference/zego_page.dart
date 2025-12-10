@@ -51,6 +51,41 @@ class _ZegoConferencePageState extends State<ZegoConferencePage> {
 
   ZegoUIKitPrebuiltVideoConferenceConfig config() {
     var config = ZegoUIKitPrebuiltVideoConferenceConfig();
+
+    // Basic configurations
+    config.turnOnCameraWhenJoining = ConferenceCache().turnOnCameraWhenJoining;
+    config.useFrontFacingCamera = ConferenceCache().useFrontFacingCamera;
+    config.turnOnMicrophoneWhenJoining =
+        ConferenceCache().turnOnMicrophoneWhenJoining;
+    config.useSpeakerWhenJoining = ConferenceCache().useSpeakerWhenJoining;
+    config.rootNavigator = ConferenceCache().rootNavigator;
+
+    // AudioVideoViewConfig configurations
+    config.audioVideoViewConfig.muteInvisible = ConferenceCache().muteInvisible;
+    config.audioVideoViewConfig.isVideoMirror = ConferenceCache().isVideoMirror;
+    config.audioVideoViewConfig.showMicrophoneStateOnView =
+        ConferenceCache().showMicrophoneStateOnView;
+    config.audioVideoViewConfig.showCameraStateOnView =
+        ConferenceCache().showCameraStateOnView;
+    config.audioVideoViewConfig.showUserNameOnView =
+        ConferenceCache().showUserNameOnView;
+    config.audioVideoViewConfig.useVideoViewAspectFill =
+        ConferenceCache().videoAspectFill;
+    config.audioVideoViewConfig.showAvatarInAudioMode =
+        ConferenceCache().showAvatarInAudioMode;
+    config.audioVideoViewConfig.showSoundWavesInAudioMode =
+        ConferenceCache().showSoundWavesInAudioMode;
+
+    // TopMenuBarConfig configurations
+    config.topMenuBarConfig.isVisible = ConferenceCache().topMenuBarIsVisible;
+    config.topMenuBarConfig.title = ConferenceCache().topMenuBarTitle;
+    config.topMenuBarConfig.hideAutomatically =
+        ConferenceCache().topMenuBarHideAutomatically;
+    config.topMenuBarConfig.hideByClick =
+        ConferenceCache().topMenuBarHideByClick;
+    config.topMenuBarConfig.style = ConferenceCache().topMenuBarStyle == 0
+        ? ZegoMenuBarStyle.light
+        : ZegoMenuBarStyle.dark;
     config.topMenuBarConfig.buttons = [
       ZegoMenuBarButtonName.showMemberListButton,
       ZegoMenuBarButtonName.switchCameraButton,
@@ -60,8 +95,31 @@ class _ZegoConferencePageState extends State<ZegoConferencePage> {
         ZegoMenuBarButtonName.toggleScreenSharingButton,
       );
     }
-    config.audioVideoViewConfig.useVideoViewAspectFill =
-        ConferenceCache().videoAspectFill;
+
+    // BottomMenuBarConfig configurations
+    config.bottomMenuBarConfig.hideAutomatically =
+        ConferenceCache().bottomMenuBarHideAutomatically;
+    config.bottomMenuBarConfig.hideByClick =
+        ConferenceCache().bottomMenuBarHideByClick;
+    config.bottomMenuBarConfig.maxCount =
+        ConferenceCache().bottomMenuBarMaxCount;
+    config.bottomMenuBarConfig.style = ConferenceCache().bottomMenuBarStyle == 0
+        ? ZegoMenuBarStyle.light
+        : ZegoMenuBarStyle.dark;
+
+    // MemberListConfig configurations
+    config.memberListConfig.showMicrophoneState =
+        ConferenceCache().memberListShowMicrophoneState;
+    config.memberListConfig.showCameraState =
+        ConferenceCache().memberListShowCameraState;
+
+    // NotificationViewConfig configurations
+    config.notificationViewConfig.notifyUserLeave =
+        ConferenceCache().notificationViewNotifyUserLeave;
+
+    // DurationConfig configurations
+    config.duration.isVisible = ConferenceCache().durationIsVisible;
+    config.duration.canSync = ConferenceCache().durationCanSync;
 
     return config;
   }

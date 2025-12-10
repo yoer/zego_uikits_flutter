@@ -233,14 +233,6 @@ class TranslationsSettings {
   String get uiInviteeMinimizedShowTips =>
       tr('${base}ui_invitee_minimized_show_tips');
 
-  String get turnOnCameraWhenJoining =>
-      tr('${base}turn_on_camera_when_joining');
-
-  String get turnOnMicrophoneWhenJoining =>
-      tr('${base}turn_on_mic_when_joining');
-
-  String get useSpeakerWhenJoining => tr('${base}use_speaker_when_joining');
-
   String get callListId => tr('${base}call_list_id');
 
   String get invitationAbout => tr('${base}invitation_about');
@@ -281,6 +273,164 @@ class TranslationsSettings {
 
   String get streamMode => tr('${base}stream_mode');
 
+  String get coHost => tr('${base}co_host');
+
+  String get stopCoHostingWhenMicCameraOff =>
+      tr('${base}co_host.stop_co_hosting_when_mic_camera_off');
+
+  String get disableCoHostInvitationReceivedDialog =>
+      tr('${base}co_host.disable_invitation_received_dialog');
+
+  String get maxCoHostCount => tr('${base}co_host.max_co_host_count');
+
+  String get inviteTimeoutSecond => tr('${base}co_host.invite_timeout_second');
+
+  String get signalingPlugin => tr('${base}signaling_plugin');
+
+  String get signalingPluginUninitOnDispose =>
+      tr('${base}signaling_plugin.uninit_on_dispose');
+
+  String get signalingPluginLeaveRoomOnDispose =>
+      tr('${base}signaling_plugin.leave_room_on_dispose');
+
+  // Basic configurations
+  String get basic => tr('${base}basic');
+
+  String get turnOnCameraWhenJoining =>
+      tr('${base}turn_on_camera_when_joining');
+
+  String get useFrontFacingCamera => tr('${base}use_front_facing_camera');
+
+  String get turnOnMicrophoneWhenJoining =>
+      tr('${base}turn_on_microphone_when_joining');
+
+  String get useSpeakerWhenJoining => tr('${base}use_speaker_when_joining');
+
+  String get rootNavigator => tr('${base}root_navigator');
+
+  String get enableAccidentalTouchPrevention =>
+      tr('${base}enable_accidental_touch_prevention');
+
+  String get markAsLargeRoom => tr('${base}mark_as_large_room');
+
+  String get slideSurfaceToHide => tr('${base}slide_surface_to_hide');
+
+  String get showBackgroundTips => tr('${base}show_background_tips');
+
+  String get showToast => tr('${base}show_toast');
+
+  // AudioVideoView configurations
+  String get isVideoMirror => tr('${base}is_video_mirror');
+
+  String get showMicrophoneStateOnView =>
+      tr('${base}show_microphone_state_on_view');
+
+  String get showCameraStateOnView => tr('${base}show_camera_state_on_view');
+
+  String get showUserNameOnView => tr('${base}show_user_name_on_view');
+
+  String get showOnlyCameraMicrophoneOpened =>
+      tr('${base}show_only_camera_microphone_opened');
+
+  String get showLocalUser => tr('${base}show_local_user');
+
+  String get showWaitingCallAcceptAudioVideoView =>
+      tr('${base}show_waiting_call_accept_audio_video_view');
+
+  String get showAvatarInAudioMode => tr('${base}show_avatar_in_audio_mode');
+
+  String get showSoundWavesInAudioMode =>
+      tr('${base}show_sound_waves_in_audio_mode');
+
+  // TopMenuBar configurations
+  String get topMenuBar => tr('${base}top_menu_bar');
+
+  String get hideAutomatically => tr('${base}hide_automatically');
+
+  String get hideByClick => tr('${base}hide_by_click');
+
+  String get showCloseButton => tr('${base}show_close_button');
+
+  // BottomMenuBar configurations
+  String get bottomMenuBar => tr('${base}bottom_menu_bar');
+
+  String get showInRoomMessageButton =>
+      tr('${base}show_in_room_message_button');
+
+  String get bottomMenuBarMaxCount => tr('${base}bottom_menu_bar_max_count');
+
+  // MemberList configurations
+  String get memberList => tr('${base}member_list');
+
+  String get showCameraState => tr('${base}show_camera_state');
+
+  String get showFakeUser => tr('${base}show_fake_user');
+
+  String get notifyUserJoin => tr('${base}notify_user_join');
+
+  String get notifyUserLeave => tr('${base}notify_user_leave');
+
+  // InRoomMessage configurations
+  String get inRoomMessage => tr('${base}in_room_message');
+
+  String get inRoomMessageVisible => tr('${base}in_room_message.visible');
+
+  String get showFakeMessage => tr('${base}in_room_message.show_fake_message');
+
+  String get inRoomMessageShowName => tr('${base}in_room_message.show_name');
+
+  String get inRoomMessageShowAvatar =>
+      tr('${base}in_room_message.show_avatar');
+
+  String get inRoomMessageOpacity => tr('${base}in_room_message.opacity');
+
+  // Duration configurations
+  String get durationIsVisible => tr('${base}duration.is_visible');
+
+  // Preview configurations
+  String get preview => tr('${base}preview');
+
+  String get showPreviewForHost => tr('${base}preview.show_preview_for_host');
+
+  String get previewTopBarIsVisible => tr('${base}preview.top_bar_is_visible');
+
+  String get previewBottomBarIsVisible =>
+      tr('${base}preview.bottom_bar_is_visible');
+
+  String get previewBottomBarShowBeautyEffectButton =>
+      tr('${base}preview.bottom_bar_show_beauty_effect_button');
+
+  // PKBattle configurations
+  String get pkBattleUserReconnectingSecond =>
+      tr('${base}pk.user_reconnecting_second');
+
+  String get pkBattleUserDisconnectedSecond =>
+      tr('${base}pk.user_disconnected_second');
+
+  String get pkBattleTopPadding => tr('${base}pk.top_padding');
+
+  // ScreenSharing configurations
+  String get screenSharingAutoStopInvalidCount =>
+      tr('${base}screen_sharing.auto_stop_invalid_count');
+
+  String get screenSharingDefaultFullScreen =>
+      tr('${base}screen_sharing.default_full_screen');
+
+  // MediaPlayer configurations
+  String get mediaPlayer => tr('${base}media_player');
+
+  String get mediaPlayerSupportTransparent =>
+      tr('${base}media_player.support_transparent');
+
+  // PIP configurations
+  String get pipAspectWidth => tr('${base}pip.aspect_width');
+
+  String get pipAspectHeight => tr('${base}pip.aspect_height');
+
+  String get pipEnableWhenBackground => tr('${base}pip.enable_when_background');
+
+  String get pipIOSSupport => tr('${base}pip.ios_support');
+
   String get audioListId => tr('${base}audio_list_id');
 
   String get seat => tr('${base}seat');
@@ -309,6 +459,80 @@ class TranslationsSettings {
   String get enableDebugMode => tr('${base}enable_debug_mode');
 
   String get audioRouteChanged => tr('${base}audio_route_changed');
+
+  // RequiredUser configurations
+  String get requiredUser => tr('${base}required_user');
+
+  String get requiredUserEnabled => tr('${base}required_user.enabled');
+
+  String get requiredUserDetectSeconds =>
+      tr('${base}required_user.detect_seconds');
+
+  String get requiredUserDetectInDebugMode =>
+      tr('${base}required_user.detect_in_debug_mode');
+
+  // Invitation configurations
+  String get endCallWhenInitiatorLeave =>
+      tr('${base}end_call_when_initiator_leave');
+
+  String get offlineAutoEnterAcceptedOfflineCall =>
+      tr('${base}offline_auto_enter_accepted_offline_call');
+
+  // AudioRoom Seat configurations
+  String get seatCloseWhenJoining => tr('${base}seat.close_when_joining');
+
+  String get seatShowSoundWaveInAudioMode =>
+      tr('${base}seat.show_sound_wave_in_audio_mode');
+
+  String get seatKeepOriginalForeground =>
+      tr('${base}seat.keep_original_foreground');
+
+  // AudioRoom InRoomMessage configurations
+  String get inRoomMessageWidth => tr('${base}in_room_message.width');
+
+  String get inRoomMessageHeight => tr('${base}in_room_message.height');
+
+  // AudioRoom PIP configurations
+  String get pipAndroidShowUserName => tr('${base}pip.android_show_user_name');
+
+  // AudioRoom MediaPlayer configurations
+  String get mediaPlayerDefaultPlayerSupport =>
+      tr('${base}media_player.default_player_support');
+
+  // AudioRoom BackgroundMedia configurations
+  String get backgroundMedia => tr('${base}background_media');
+
+  String get backgroundMediaPath => tr('${base}background_media.path');
+
+  String get backgroundMediaEnableRepeat =>
+      tr('${base}background_media.enable_repeat');
+
+  // Conference AudioVideoViewConfig configurations
+  String get muteInvisible => tr('${base}mute_invisible');
+
+  // Conference TopMenuBarConfig configurations
+  String get topMenuBarTitle => tr('${base}top_menu_bar.title');
+
+  String get topMenuBarStyle => tr('${base}top_menu_bar.style');
+
+  // Conference BottomMenuBarConfig configurations
+  String get bottomMenuBarStyle => tr('${base}bottom_menu_bar.style');
+
+  // Conference MemberListConfig configurations
+  String get memberListShowMicrophoneState =>
+      tr('${base}member_list.show_microphone_state');
+
+  String get memberListShowCameraState =>
+      tr('${base}member_list.show_camera_state');
+
+  // Conference NotificationViewConfig configurations
+  String get notificationView => tr('${base}notification_view');
+
+  String get notificationViewNotifyUserLeave =>
+      tr('${base}notification_view.notify_user_leave');
+
+  // Conference DurationConfig configurations
+  String get durationCanSync => tr('${base}duration.can_sync');
 }
 
 class TranslationsDrawer {

@@ -79,6 +79,60 @@ Widget settingsEditor({
   );
 }
 
+Widget settingsIntEditor({
+  required String tips,
+  required int value,
+  required ValueChanged<int> onChanged,
+}) {
+  return Container(
+    margin: EdgeInsets.all(10.r),
+    child: TextField(
+      style: settingsTextStyle,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        labelText: tips,
+        labelStyle: settingsTextStyle,
+        hintText: value.toString(),
+        hintStyle: settingsTextStyle,
+        border: const OutlineInputBorder(),
+      ),
+      onChanged: (String value) {
+        final intValue = int.tryParse(value);
+        if (intValue != null) {
+          onChanged.call(intValue);
+        }
+      },
+    ),
+  );
+}
+
+Widget settingsDoubleEditor({
+  required String tips,
+  required double value,
+  required ValueChanged<double> onChanged,
+}) {
+  return Container(
+    margin: EdgeInsets.all(10.r),
+    child: TextField(
+      style: settingsTextStyle,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      decoration: InputDecoration(
+        labelText: tips,
+        labelStyle: settingsTextStyle,
+        hintText: value.toString(),
+        hintStyle: settingsTextStyle,
+        border: const OutlineInputBorder(),
+      ),
+      onChanged: (String value) {
+        final doubleValue = double.tryParse(value);
+        if (doubleValue != null) {
+          onChanged.call(doubleValue);
+        }
+      },
+    ),
+  );
+}
+
 Widget settingsRadio<T>({
   required String title,
   required T defaultValue,

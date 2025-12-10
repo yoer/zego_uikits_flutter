@@ -38,13 +38,13 @@ class _CallPageSettingsState extends State<CallPageSettings> {
             ),
             settingsLine(),
             settingsGroup(
-              '${Translations.settings.invitationAbout}(${Translations.settings.starTips})',
+              '邀请-${Translations.settings.invitationAbout}(${Translations.settings.starTips})',
               [
                 invitation(),
               ],
             ),
             settingsGroup(
-              '${Translations.settings.calling}(${Translations.settings.starTips})',
+              '邀请-${Translations.settings.calling}(${Translations.settings.starTips})',
               [
                 settingsCheckBox(
                   title: '${Translations.settings.uiShowAvatar}(*)',
@@ -203,23 +203,23 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               ],
             ),
             settingsGroup(
-              Translations.settings.audioVideo,
+              Translations.settings.basic,
               [
-                settingsCheckBox(
-                  title: '${Translations.settings.videoAspectFill}(*)',
-                  value: CallCache().videoAspectFill,
-                  onChanged: (value) {
-                    setState(() {
-                      CallCache().videoAspectFill = value ?? true;
-                    });
-                  },
-                ),
                 settingsCheckBox(
                   title: Translations.settings.turnOnCameraWhenJoining,
                   value: CallCache().turnOnCameraWhenJoining,
                   onChanged: (value) {
                     setState(() {
                       CallCache().turnOnCameraWhenJoining = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.useFrontFacingCamera,
+                  value: CallCache().useFrontCameraWhenJoining,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().useFrontCameraWhenJoining = value ?? true;
                     });
                   },
                 ),
@@ -241,6 +241,325 @@ class _CallPageSettingsState extends State<CallPageSettings> {
                     });
                   },
                 ),
+                settingsCheckBox(
+                  title: Translations.settings.rootNavigator,
+                  value: CallCache().rootNavigator,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().rootNavigator = value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.enableAccidentalTouchPrevention,
+                  value: CallCache().enableAccidentalTouchPrevention,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().enableAccidentalTouchPrevention =
+                          value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.audioVideo,
+              [
+                settingsCheckBox(
+                  title: '${Translations.settings.videoAspectFill}(*)',
+                  value: CallCache().videoAspectFill,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().videoAspectFill = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.isVideoMirror,
+                  value: CallCache().isVideoMirror,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().isVideoMirror = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showMicState,
+                  value: CallCache().showMicrophoneStateOnView,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showMicrophoneStateOnView = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showCameraStateOnView,
+                  value: CallCache().showCameraStateOnView,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showCameraStateOnView = value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showUserName,
+                  value: CallCache().showUserNameOnView,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showUserNameOnView = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showOnlyCameraMicrophoneOpened,
+                  value: CallCache().showOnlyCameraMicrophoneOpened,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showOnlyCameraMicrophoneOpened =
+                          value ?? false;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showLocalUser,
+                  value: CallCache().showLocalUser,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showLocalUser = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title:
+                      Translations.settings.showWaitingCallAcceptAudioVideoView,
+                  value: CallCache().showWaitingCallAcceptAudioVideoView,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showWaitingCallAcceptAudioVideoView =
+                          value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.uiShowAvatar,
+                  value: CallCache().showAvatarInAudioMode,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showAvatarInAudioMode = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showSoundWavesInAudioMode,
+                  value: CallCache().showSoundWavesInAudioMode,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().showSoundWavesInAudioMode = value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.topMenuBar,
+              [
+                settingsCheckBox(
+                  title: Translations.settings.visible,
+                  value: CallCache().topMenuBarIsVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().topMenuBarIsVisible = value ?? true;
+                    });
+                  },
+                ),
+                settingsEditor(
+                  tips: Translations.settings.title,
+                  value: CallCache().topMenuBarTitle,
+                  onChanged: (String value) {
+                    CallCache().topMenuBarTitle = value;
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.hideAutomatically,
+                  value: CallCache().topMenuBarHideAutomatically,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().topMenuBarHideAutomatically = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.hideByClick,
+                  value: CallCache().topMenuBarHideByClick,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().topMenuBarHideByClick = value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.bottomMenuBar,
+              [
+                settingsCheckBox(
+                  title: Translations.settings.visible,
+                  value: CallCache().bottomMenuBarIsVisible,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().bottomMenuBarIsVisible = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.hideAutomatically,
+                  value: CallCache().bottomMenuBarHideAutomatically,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().bottomMenuBarHideAutomatically =
+                          value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.hideByClick,
+                  value: CallCache().bottomMenuBarHideByClick,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().bottomMenuBarHideByClick = value ?? true;
+                    });
+                  },
+                ),
+                settingsIntEditor(
+                  tips: Translations.settings.bottomMenuBarMaxCount,
+                  value: CallCache().bottomMenuBarMaxCount,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().bottomMenuBarMaxCount = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.memberList,
+              [
+                settingsCheckBox(
+                  title: Translations.settings.showMicState,
+                  value: CallCache().memberListShowMicrophoneState,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().memberListShowMicrophoneState = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.showCameraState,
+                  value: CallCache().memberListShowCameraState,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().memberListShowCameraState = value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.screenSharing,
+              [
+                settingsIntEditor(
+                  tips: Translations.settings.screenSharingAutoStopInvalidCount,
+                  value: CallCache().screenSharingAutoStopInvalidCount,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().screenSharingAutoStopInvalidCount = value;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.screenSharingDefaultFullScreen,
+                  value: CallCache().screenSharingDefaultFullScreen,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().screenSharingDefaultFullScreen =
+                          value ?? false;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.pip,
+              [
+                settingsIntEditor(
+                  tips: Translations.settings.pipAspectWidth,
+                  value: CallCache().pipAspectWidth,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().pipAspectWidth = value;
+                    });
+                  },
+                ),
+                settingsIntEditor(
+                  tips: Translations.settings.pipAspectHeight,
+                  value: CallCache().pipAspectHeight,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().pipAspectHeight = value;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.pipEnableWhenBackground,
+                  value: CallCache().pipEnableWhenBackground,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().pipEnableWhenBackground = value ?? true;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.pipIOSSupport,
+                  value: CallCache().pipIOSSupport,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().pipIOSSupport = value ?? true;
+                    });
+                  },
+                ),
+              ],
+            ),
+            settingsGroup(
+              Translations.settings.requiredUser,
+              [
+                settingsCheckBox(
+                  title: Translations.settings.requiredUserEnabled,
+                  value: CallCache().requiredUserEnabled,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().requiredUserEnabled = value ?? false;
+                    });
+                  },
+                ),
+                settingsIntEditor(
+                  tips: Translations.settings.requiredUserDetectSeconds,
+                  value: CallCache().requiredUserDetectSeconds,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().requiredUserDetectSeconds = value;
+                    });
+                  },
+                ),
+                settingsCheckBox(
+                  title: Translations.settings.requiredUserDetectInDebugMode,
+                  value: CallCache().requiredUserDetectInDebugMode,
+                  onChanged: (value) {
+                    setState(() {
+                      CallCache().requiredUserDetectInDebugMode =
+                          value ?? false;
+                    });
+                  },
+                ),
               ],
             ),
             settingsGroup(
@@ -248,10 +567,10 @@ class _CallPageSettingsState extends State<CallPageSettings> {
               [
                 settingsCheckBox(
                   title: Translations.settings.visible,
-                  value: CallCache().videoAspectFill,
+                  value: CallCache().durationVisible,
                   onChanged: (value) {
                     setState(() {
-                      CallCache().videoAspectFill = value ?? true;
+                      CallCache().durationVisible = value ?? true;
                     });
                   },
                 ),
@@ -356,6 +675,26 @@ class _CallPageSettingsState extends State<CallPageSettings> {
           onChanged: (value) {
             setState(() {
               CallCache().invitation.safeArea = value ?? false;
+            });
+          },
+        ),
+        settingsCheckBox(
+          title: '${Translations.settings.endCallWhenInitiatorLeave}(*)',
+          value: CallCache().invitation.endCallWhenInitiatorLeave,
+          onChanged: (value) {
+            setState(() {
+              CallCache().invitation.endCallWhenInitiatorLeave = value ?? false;
+            });
+          },
+        ),
+        settingsCheckBox(
+          title:
+              '${Translations.settings.offlineAutoEnterAcceptedOfflineCall}(*)',
+          value: CallCache().invitation.offlineAutoEnterAcceptedOfflineCall,
+          onChanged: (value) {
+            setState(() {
+              CallCache().invitation.offlineAutoEnterAcceptedOfflineCall =
+                  value ?? true;
             });
           },
         ),

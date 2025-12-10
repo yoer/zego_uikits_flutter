@@ -3,12 +3,14 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
@@ -55,13 +57,58 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
       displayGift: true,
       stateNotifier: liveStateNotifier,
     )
+    // Basic configurations
+    ..turnOnCameraWhenJoining = LiveStreamingCache().turnOnCameraWhenJoining
+    ..useFrontFacingCamera = LiveStreamingCache().useFrontFacingCamera
+    ..turnOnMicrophoneWhenJoining =
+        LiveStreamingCache().turnOnMicrophoneWhenJoining
+    ..useSpeakerWhenJoining = LiveStreamingCache().useSpeakerWhenJoining
+    ..rootNavigator = LiveStreamingCache().rootNavigator
+    ..markAsLargeRoom = LiveStreamingCache().markAsLargeRoom
+    ..slideSurfaceToHide = LiveStreamingCache().slideSurfaceToHide
+    ..showBackgroundTips = LiveStreamingCache().showBackgroundTips
+    ..showToast = LiveStreamingCache().showToast
+    // AudioVideoView configurations
     ..audioVideoView.showUserNameOnView =
         LiveStreamingCache().showUserNameOnView
     ..audioVideoView.useVideoViewAspectFill =
         LiveStreamingCache().videoAspectFill
+    ..audioVideoView.showMicrophoneStateOnView =
+        LiveStreamingCache().showMicrophoneStateOnView
+    ..audioVideoView.isVideoMirror = LiveStreamingCache().isVideoMirror
+    ..audioVideoView.showAvatarInAudioMode =
+        LiveStreamingCache().showAvatarInAudioMode
+    ..audioVideoView.showSoundWavesInAudioMode =
+        LiveStreamingCache().showSoundWavesInAudioMode
+    // TopMenuBar configurations
     ..topMenuBar.buttons = [
       ZegoLiveStreamingMenuBarButtonName.minimizingButton,
     ]
+    ..topMenuBar.showCloseButton = LiveStreamingCache().showCloseButton
+    // BottomMenuBar configurations
+    ..bottomMenuBar.showInRoomMessageButton =
+        LiveStreamingCache().showInRoomMessageButton
+    ..bottomMenuBar.maxCount = LiveStreamingCache().bottomMenuBarMaxCount
+    // MemberList configurations
+    ..memberList.showFakeUser = LiveStreamingCache().showFakeUser
+    // InRoomMessage configurations
+    ..inRoomMessage.visible = LiveStreamingCache().inRoomMessageVisible
+    ..inRoomMessage.notifyUserJoin = LiveStreamingCache().notifyUserJoin
+    ..inRoomMessage.notifyUserLeave = LiveStreamingCache().notifyUserLeave
+    ..inRoomMessage.showFakeMessage = LiveStreamingCache().showFakeMessage
+    ..inRoomMessage.showName = LiveStreamingCache().inRoomMessageShowName
+    ..inRoomMessage.showAvatar = LiveStreamingCache().inRoomMessageShowAvatar
+    ..inRoomMessage.opacity = LiveStreamingCache().inRoomMessageOpacity
+    // Duration configurations
+    ..duration.isVisible = LiveStreamingCache().durationIsVisible
+    // Preview configurations
+    ..preview.showPreviewForHost = LiveStreamingCache().showPreviewForHost
+    ..preview.topBar.isVisible = LiveStreamingCache().previewTopBarIsVisible
+    ..preview.bottomBar.isVisible =
+        LiveStreamingCache().previewBottomBarIsVisible
+    ..preview.bottomBar.showBeautyEffectButton =
+        LiveStreamingCache().previewBottomBarShowBeautyEffectButton
+    // MemberButton configurations
     ..memberButton.builder = (int memberCount) {
       return memberButtonBuilder(memberCount, isHost, liveID);
     }
@@ -84,9 +131,42 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
 
   config.innerText = LiveStreamingInnerText.current(locale);
 
+  // SignalingPlugin configurations
   config.signalingPlugin = ZegoLiveStreamingSignalingPluginConfig(
-    uninitOnDispose: false,
+    uninitOnDispose: LiveStreamingCache().signalingPluginUninitOnDispose,
+    leaveRoomOnDispose: LiveStreamingCache().signalingPluginLeaveRoomOnDispose,
   );
+
+  // CoHost configurations
+  config.coHost.stopCoHostingWhenMicCameraOff =
+      LiveStreamingCache().stopCoHostingWhenMicCameraOff;
+  config.coHost.disableCoHostInvitationReceivedDialog =
+      LiveStreamingCache().disableCoHostInvitationReceivedDialog;
+  config.coHost.maxCoHostCount = LiveStreamingCache().maxCoHostCount;
+  config.coHost.inviteTimeoutSecond = LiveStreamingCache().inviteTimeoutSecond;
+
+  // PKBattle configurations
+  config.pkBattle.userReconnectingSecond =
+      LiveStreamingCache().pkBattleUserReconnectingSecond;
+  config.pkBattle.userDisconnectedSecond =
+      LiveStreamingCache().pkBattleUserDisconnectedSecond;
+  if (LiveStreamingCache().pkBattleTopPadding != null) {
+    config.pkBattle.topPadding = LiveStreamingCache().pkBattleTopPadding;
+  }
+
+  // ScreenSharing configurations
+  config.screenSharing.autoStop.invalidCount =
+      LiveStreamingCache().screenSharingAutoStopInvalidCount;
+  config.screenSharing.defaultFullScreen =
+      LiveStreamingCache().screenSharingDefaultFullScreen;
+
+  // MediaPlayer configurations
+  config.mediaPlayer.supportTransparent =
+      LiveStreamingCache().mediaPlayerSupportTransparent;
+
+  // PIP configurations
+  config.pip.aspectWidth = LiveStreamingCache().pipAspectWidth;
+  config.pip.aspectHeight = LiveStreamingCache().pipAspectHeight;
 
   if (KitCommonCache().supportScreenSharing) {
     config.topMenuBar.buttons.add(
@@ -119,9 +199,6 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
       ),
     ];
   }
-
-  config.audioVideoView.showMicrophoneStateOnView =
-      LiveStreamingCache().showMicrophoneStateOnView;
 
   return config;
 }

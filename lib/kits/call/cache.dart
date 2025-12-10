@@ -24,6 +24,9 @@ class CallInvitationCache {
 
   bool _safeArea = false;
 
+  bool _endCallWhenInitiatorLeave = false;
+  bool _offlineAutoEnterAcceptedOfflineCall = true;
+
   bool _showVideoOnInvitationCall = true;
   bool _uiShowAvatar = true;
   bool _uiShowCentralName = true;
@@ -133,6 +136,23 @@ class CallInvitationCache {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_safeAreaKey, value);
+    });
+  }
+
+  bool get endCallWhenInitiatorLeave => _endCallWhenInitiatorLeave;
+  set endCallWhenInitiatorLeave(bool value) {
+    _endCallWhenInitiatorLeave = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_endCallWhenInitiatorLeaveKey, value);
+    });
+  }
+
+  bool get offlineAutoEnterAcceptedOfflineCall =>
+      _offlineAutoEnterAcceptedOfflineCall;
+  set offlineAutoEnterAcceptedOfflineCall(bool value) {
+    _offlineAutoEnterAcceptedOfflineCall = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_offlineAutoEnterAcceptedOfflineCallKey, value);
     });
   }
 
@@ -295,6 +315,10 @@ class CallInvitationCache {
         (prefs.getBool(_cacheOnlyInitiatorCanInviteInCallingKey) ?? false);
 
     _safeArea = (prefs.getBool(_safeAreaKey) ?? false);
+    _endCallWhenInitiatorLeave =
+        (prefs.getBool(_endCallWhenInitiatorLeaveKey) ?? false);
+    _offlineAutoEnterAcceptedOfflineCall =
+        (prefs.getBool(_offlineAutoEnterAcceptedOfflineCallKey) ?? true);
 
     _showVideoOnInvitationCall =
         prefs.get(_showVideoOnInvitationCallKey) as bool? ?? true;
@@ -337,6 +361,8 @@ class CallInvitationCache {
     _canInvitingInCalling = false;
     _onlyInitiatorCanInviteInCalling = false;
     _safeArea = false;
+    _endCallWhenInitiatorLeave = false;
+    _offlineAutoEnterAcceptedOfflineCall = true;
 
     _showVideoOnInvitationCall = true;
     _uiShowAvatar = true;
@@ -361,6 +387,8 @@ class CallInvitationCache {
     prefs.remove(_cacheSupportInvitingInCallingKey);
     prefs.remove(_cacheOnlyInitiatorCanInviteInCallingKey);
     prefs.remove(_safeAreaKey);
+    prefs.remove(_endCallWhenInitiatorLeaveKey);
+    prefs.remove(_offlineAutoEnterAcceptedOfflineCallKey);
     prefs.remove(_cacheTimeoutSecondKey);
     prefs.remove(_cacheResourceIDKey);
     prefs.remove(_cacheHistoryKey);
@@ -393,6 +421,10 @@ class CallInvitationCache {
       'cache_call_i_s_calling_can_only_invitor_can_invite';
 
   final String _safeAreaKey = 'cache_call_i_s_safe_area';
+  final String _endCallWhenInitiatorLeaveKey =
+      'cache_call_i_end_call_when_initiator_leave';
+  final String _offlineAutoEnterAcceptedOfflineCallKey =
+      'cache_call_i_offline_auto_enter_accepted_offline_call';
 
   final String _cacheTimeoutSecondKey = 'cache_call_i_timeout';
   final String _cacheResourceIDKey = 'cache_call_i_resource_id';
@@ -444,6 +476,53 @@ class CallCache {
   bool _durationVisible = true;
   bool _durationAutoHangUp = false;
   int _durationAutoHangUpSeconds = -1;
+
+  // Basic configurations
+  bool _useFrontCameraWhenJoining = true;
+  bool _rootNavigator = false;
+  bool _enableAccidentalTouchPrevention = true;
+
+  // AudioVideoView configurations
+  bool _isVideoMirror = true;
+  bool _showMicrophoneStateOnView = true;
+  bool _showCameraStateOnView = false;
+  bool _showUserNameOnView = true;
+  bool _showOnlyCameraMicrophoneOpened = false;
+  bool _showLocalUser = true;
+  bool _showWaitingCallAcceptAudioVideoView = true;
+  bool _showAvatarInAudioMode = true;
+  bool _showSoundWavesInAudioMode = true;
+
+  // TopMenuBar configurations
+  bool _topMenuBarIsVisible = true;
+  String _topMenuBarTitle = '';
+  bool _topMenuBarHideAutomatically = true;
+  bool _topMenuBarHideByClick = true;
+
+  // BottomMenuBar configurations
+  bool _bottomMenuBarIsVisible = true;
+  bool _bottomMenuBarHideAutomatically = true;
+  bool _bottomMenuBarHideByClick = true;
+  int _bottomMenuBarMaxCount = 5;
+
+  // MemberList configurations
+  bool _memberListShowMicrophoneState = true;
+  bool _memberListShowCameraState = true;
+
+  // ScreenSharing configurations
+  int _screenSharingAutoStopInvalidCount = 3;
+  bool _screenSharingDefaultFullScreen = false;
+
+  // PIP configurations
+  int _pipAspectWidth = 9;
+  int _pipAspectHeight = 16;
+  bool _pipEnableWhenBackground = true;
+  bool _pipIOSSupport = true;
+
+  // RequiredUser configurations
+  bool _requiredUserEnabled = false;
+  int _requiredUserDetectSeconds = 5;
+  bool _requiredUserDetectInDebugMode = false;
 
   bool get durationVisible => _durationVisible;
   set durationVisible(bool value) {
@@ -517,6 +596,264 @@ class CallCache {
     });
   }
 
+  // Basic configurations
+  bool get useFrontCameraWhenJoining => _useFrontCameraWhenJoining;
+  set useFrontCameraWhenJoining(bool value) {
+    _useFrontCameraWhenJoining = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_useFrontCameraWhenJoiningKey, value);
+    });
+  }
+
+  bool get rootNavigator => _rootNavigator;
+  set rootNavigator(bool value) {
+    _rootNavigator = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_rootNavigatorKey, value);
+    });
+  }
+
+  bool get enableAccidentalTouchPrevention => _enableAccidentalTouchPrevention;
+  set enableAccidentalTouchPrevention(bool value) {
+    _enableAccidentalTouchPrevention = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_enableAccidentalTouchPreventionKey, value);
+    });
+  }
+
+  // AudioVideoView configurations
+  bool get isVideoMirror => _isVideoMirror;
+  set isVideoMirror(bool value) {
+    _isVideoMirror = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_isVideoMirrorKey, value);
+    });
+  }
+
+  bool get showMicrophoneStateOnView => _showMicrophoneStateOnView;
+  set showMicrophoneStateOnView(bool value) {
+    _showMicrophoneStateOnView = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showMicrophoneStateOnViewKey, value);
+    });
+  }
+
+  bool get showCameraStateOnView => _showCameraStateOnView;
+  set showCameraStateOnView(bool value) {
+    _showCameraStateOnView = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showCameraStateOnViewKey, value);
+    });
+  }
+
+  bool get showUserNameOnView => _showUserNameOnView;
+  set showUserNameOnView(bool value) {
+    _showUserNameOnView = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showUserNameOnViewKey, value);
+    });
+  }
+
+  bool get showOnlyCameraMicrophoneOpened => _showOnlyCameraMicrophoneOpened;
+  set showOnlyCameraMicrophoneOpened(bool value) {
+    _showOnlyCameraMicrophoneOpened = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showOnlyCameraMicrophoneOpenedKey, value);
+    });
+  }
+
+  bool get showLocalUser => _showLocalUser;
+  set showLocalUser(bool value) {
+    _showLocalUser = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showLocalUserKey, value);
+    });
+  }
+
+  bool get showWaitingCallAcceptAudioVideoView =>
+      _showWaitingCallAcceptAudioVideoView;
+  set showWaitingCallAcceptAudioVideoView(bool value) {
+    _showWaitingCallAcceptAudioVideoView = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showWaitingCallAcceptAudioVideoViewKey, value);
+    });
+  }
+
+  bool get showAvatarInAudioMode => _showAvatarInAudioMode;
+  set showAvatarInAudioMode(bool value) {
+    _showAvatarInAudioMode = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showAvatarInAudioModeKey, value);
+    });
+  }
+
+  bool get showSoundWavesInAudioMode => _showSoundWavesInAudioMode;
+  set showSoundWavesInAudioMode(bool value) {
+    _showSoundWavesInAudioMode = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_showSoundWavesInAudioModeKey, value);
+    });
+  }
+
+  // TopMenuBar configurations
+  bool get topMenuBarIsVisible => _topMenuBarIsVisible;
+  set topMenuBarIsVisible(bool value) {
+    _topMenuBarIsVisible = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_topMenuBarIsVisibleKey, value);
+    });
+  }
+
+  String get topMenuBarTitle => _topMenuBarTitle;
+  set topMenuBarTitle(String value) {
+    _topMenuBarTitle = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setString(_topMenuBarTitleKey, value);
+    });
+  }
+
+  bool get topMenuBarHideAutomatically => _topMenuBarHideAutomatically;
+  set topMenuBarHideAutomatically(bool value) {
+    _topMenuBarHideAutomatically = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_topMenuBarHideAutomaticallyKey, value);
+    });
+  }
+
+  bool get topMenuBarHideByClick => _topMenuBarHideByClick;
+  set topMenuBarHideByClick(bool value) {
+    _topMenuBarHideByClick = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_topMenuBarHideByClickKey, value);
+    });
+  }
+
+  // BottomMenuBar configurations
+  bool get bottomMenuBarIsVisible => _bottomMenuBarIsVisible;
+  set bottomMenuBarIsVisible(bool value) {
+    _bottomMenuBarIsVisible = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_bottomMenuBarIsVisibleKey, value);
+    });
+  }
+
+  bool get bottomMenuBarHideAutomatically => _bottomMenuBarHideAutomatically;
+  set bottomMenuBarHideAutomatically(bool value) {
+    _bottomMenuBarHideAutomatically = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_bottomMenuBarHideAutomaticallyKey, value);
+    });
+  }
+
+  bool get bottomMenuBarHideByClick => _bottomMenuBarHideByClick;
+  set bottomMenuBarHideByClick(bool value) {
+    _bottomMenuBarHideByClick = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_bottomMenuBarHideByClickKey, value);
+    });
+  }
+
+  int get bottomMenuBarMaxCount => _bottomMenuBarMaxCount;
+  set bottomMenuBarMaxCount(int value) {
+    _bottomMenuBarMaxCount = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(_bottomMenuBarMaxCountKey, value);
+    });
+  }
+
+  // MemberList configurations
+  bool get memberListShowMicrophoneState => _memberListShowMicrophoneState;
+  set memberListShowMicrophoneState(bool value) {
+    _memberListShowMicrophoneState = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_memberListShowMicrophoneStateKey, value);
+    });
+  }
+
+  bool get memberListShowCameraState => _memberListShowCameraState;
+  set memberListShowCameraState(bool value) {
+    _memberListShowCameraState = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_memberListShowCameraStateKey, value);
+    });
+  }
+
+  // ScreenSharing configurations
+  int get screenSharingAutoStopInvalidCount =>
+      _screenSharingAutoStopInvalidCount;
+  set screenSharingAutoStopInvalidCount(int value) {
+    _screenSharingAutoStopInvalidCount = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(_screenSharingAutoStopInvalidCountKey, value);
+    });
+  }
+
+  bool get screenSharingDefaultFullScreen => _screenSharingDefaultFullScreen;
+  set screenSharingDefaultFullScreen(bool value) {
+    _screenSharingDefaultFullScreen = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_screenSharingDefaultFullScreenKey, value);
+    });
+  }
+
+  // PIP configurations
+  int get pipAspectWidth => _pipAspectWidth;
+  set pipAspectWidth(int value) {
+    _pipAspectWidth = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(_pipAspectWidthKey, value);
+    });
+  }
+
+  int get pipAspectHeight => _pipAspectHeight;
+  set pipAspectHeight(int value) {
+    _pipAspectHeight = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(_pipAspectHeightKey, value);
+    });
+  }
+
+  bool get pipEnableWhenBackground => _pipEnableWhenBackground;
+  set pipEnableWhenBackground(bool value) {
+    _pipEnableWhenBackground = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_pipEnableWhenBackgroundKey, value);
+    });
+  }
+
+  bool get pipIOSSupport => _pipIOSSupport;
+  set pipIOSSupport(bool value) {
+    _pipIOSSupport = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_pipIOSSupportKey, value);
+    });
+  }
+
+  // RequiredUser configurations
+  bool get requiredUserEnabled => _requiredUserEnabled;
+  set requiredUserEnabled(bool value) {
+    _requiredUserEnabled = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_requiredUserEnabledKey, value);
+    });
+  }
+
+  int get requiredUserDetectSeconds => _requiredUserDetectSeconds;
+  set requiredUserDetectSeconds(int value) {
+    _requiredUserDetectSeconds = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setInt(_requiredUserDetectSecondsKey, value);
+    });
+  }
+
+  bool get requiredUserDetectInDebugMode => _requiredUserDetectInDebugMode;
+  set requiredUserDetectInDebugMode(bool value) {
+    _requiredUserDetectInDebugMode = value;
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_requiredUserDetectInDebugModeKey, value);
+    });
+  }
+
   void addRoomID(String roomID) {
     roomIDList.value = [
       ...roomIDList.value,
@@ -547,6 +884,53 @@ class CallCache {
     _turnOnMicrophoneWhenJoining = true;
     _useSpeakerWhenJoining = true;
 
+    // Basic configurations
+    _useFrontCameraWhenJoining = true;
+    _rootNavigator = false;
+    _enableAccidentalTouchPrevention = true;
+
+    // AudioVideoView configurations
+    _isVideoMirror = true;
+    _showMicrophoneStateOnView = true;
+    _showCameraStateOnView = false;
+    _showUserNameOnView = true;
+    _showOnlyCameraMicrophoneOpened = false;
+    _showLocalUser = true;
+    _showWaitingCallAcceptAudioVideoView = true;
+    _showAvatarInAudioMode = true;
+    _showSoundWavesInAudioMode = true;
+
+    // TopMenuBar configurations
+    _topMenuBarIsVisible = true;
+    _topMenuBarTitle = '';
+    _topMenuBarHideAutomatically = true;
+    _topMenuBarHideByClick = true;
+
+    // BottomMenuBar configurations
+    _bottomMenuBarIsVisible = true;
+    _bottomMenuBarHideAutomatically = true;
+    _bottomMenuBarHideByClick = true;
+    _bottomMenuBarMaxCount = 5;
+
+    // MemberList configurations
+    _memberListShowMicrophoneState = true;
+    _memberListShowCameraState = true;
+
+    // ScreenSharing configurations
+    _screenSharingAutoStopInvalidCount = 3;
+    _screenSharingDefaultFullScreen = false;
+
+    // PIP configurations
+    _pipAspectWidth = 9;
+    _pipAspectHeight = 16;
+    _pipEnableWhenBackground = true;
+    _pipIOSSupport = true;
+
+    // RequiredUser configurations
+    _requiredUserEnabled = false;
+    _requiredUserDetectSeconds = 5;
+    _requiredUserDetectInDebugMode = false;
+
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_cacheRoomIDListKey);
     prefs.remove(_supportVideoModeKey);
@@ -554,6 +938,42 @@ class CallCache {
     prefs.remove(_turnOnMicrophoneWhenJoiningKey);
     prefs.remove(_useSpeakerWhenJoiningKey);
     prefs.remove(_supportChatKey);
+    prefs.remove(_supportDurationVisibleKey);
+    prefs.remove(_supportDurationAutoHangUpKey);
+    prefs.remove(_supportDurationAutoHangUpSecondKey);
+
+    // Remove new keys
+    prefs.remove(_useFrontCameraWhenJoiningKey);
+    prefs.remove(_rootNavigatorKey);
+    prefs.remove(_enableAccidentalTouchPreventionKey);
+    prefs.remove(_isVideoMirrorKey);
+    prefs.remove(_showMicrophoneStateOnViewKey);
+    prefs.remove(_showCameraStateOnViewKey);
+    prefs.remove(_showUserNameOnViewKey);
+    prefs.remove(_showOnlyCameraMicrophoneOpenedKey);
+    prefs.remove(_showLocalUserKey);
+    prefs.remove(_showWaitingCallAcceptAudioVideoViewKey);
+    prefs.remove(_showAvatarInAudioModeKey);
+    prefs.remove(_showSoundWavesInAudioModeKey);
+    prefs.remove(_topMenuBarIsVisibleKey);
+    prefs.remove(_topMenuBarTitleKey);
+    prefs.remove(_topMenuBarHideAutomaticallyKey);
+    prefs.remove(_topMenuBarHideByClickKey);
+    prefs.remove(_bottomMenuBarIsVisibleKey);
+    prefs.remove(_bottomMenuBarHideAutomaticallyKey);
+    prefs.remove(_bottomMenuBarHideByClickKey);
+    prefs.remove(_bottomMenuBarMaxCountKey);
+    prefs.remove(_memberListShowMicrophoneStateKey);
+    prefs.remove(_memberListShowCameraStateKey);
+    prefs.remove(_screenSharingAutoStopInvalidCountKey);
+    prefs.remove(_screenSharingDefaultFullScreenKey);
+    prefs.remove(_pipAspectWidthKey);
+    prefs.remove(_pipAspectHeightKey);
+    prefs.remove(_pipEnableWhenBackgroundKey);
+    prefs.remove(_pipIOSSupportKey);
+    prefs.remove(_requiredUserEnabledKey);
+    prefs.remove(_requiredUserDetectSecondsKey);
+    prefs.remove(_requiredUserDetectInDebugModeKey);
 
     invitation.clear();
   }
@@ -592,6 +1012,59 @@ class CallCache {
         prefs.get(_supportDurationAutoHangUpKey) as bool? ?? false;
     _durationAutoHangUpSeconds =
         prefs.get(_supportDurationAutoHangUpSecondKey) as int? ?? -1;
+
+    // Load new configurations
+    _useFrontCameraWhenJoining =
+        prefs.get(_useFrontCameraWhenJoiningKey) as bool? ?? true;
+    _rootNavigator = prefs.get(_rootNavigatorKey) as bool? ?? false;
+    _enableAccidentalTouchPrevention =
+        prefs.get(_enableAccidentalTouchPreventionKey) as bool? ?? true;
+    _isVideoMirror = prefs.get(_isVideoMirrorKey) as bool? ?? true;
+    _showMicrophoneStateOnView =
+        prefs.get(_showMicrophoneStateOnViewKey) as bool? ?? true;
+    _showCameraStateOnView =
+        prefs.get(_showCameraStateOnViewKey) as bool? ?? false;
+    _showUserNameOnView = prefs.get(_showUserNameOnViewKey) as bool? ?? true;
+    _showOnlyCameraMicrophoneOpened =
+        prefs.get(_showOnlyCameraMicrophoneOpenedKey) as bool? ?? false;
+    _showLocalUser = prefs.get(_showLocalUserKey) as bool? ?? true;
+    _showWaitingCallAcceptAudioVideoView =
+        prefs.get(_showWaitingCallAcceptAudioVideoViewKey) as bool? ?? true;
+    _showAvatarInAudioMode =
+        prefs.get(_showAvatarInAudioModeKey) as bool? ?? true;
+    _showSoundWavesInAudioMode =
+        prefs.get(_showSoundWavesInAudioModeKey) as bool? ?? true;
+    _topMenuBarIsVisible = prefs.get(_topMenuBarIsVisibleKey) as bool? ?? true;
+    _topMenuBarTitle = prefs.get(_topMenuBarTitleKey) as String? ?? '';
+    _topMenuBarHideAutomatically =
+        prefs.get(_topMenuBarHideAutomaticallyKey) as bool? ?? true;
+    _topMenuBarHideByClick =
+        prefs.get(_topMenuBarHideByClickKey) as bool? ?? true;
+    _bottomMenuBarIsVisible =
+        prefs.get(_bottomMenuBarIsVisibleKey) as bool? ?? true;
+    _bottomMenuBarHideAutomatically =
+        prefs.get(_bottomMenuBarHideAutomaticallyKey) as bool? ?? true;
+    _bottomMenuBarHideByClick =
+        prefs.get(_bottomMenuBarHideByClickKey) as bool? ?? true;
+    _bottomMenuBarMaxCount = prefs.get(_bottomMenuBarMaxCountKey) as int? ?? 5;
+    _memberListShowMicrophoneState =
+        prefs.get(_memberListShowMicrophoneStateKey) as bool? ?? true;
+    _memberListShowCameraState =
+        prefs.get(_memberListShowCameraStateKey) as bool? ?? true;
+    _screenSharingAutoStopInvalidCount =
+        prefs.get(_screenSharingAutoStopInvalidCountKey) as int? ?? 3;
+    _screenSharingDefaultFullScreen =
+        prefs.get(_screenSharingDefaultFullScreenKey) as bool? ?? false;
+    _pipAspectWidth = prefs.get(_pipAspectWidthKey) as int? ?? 9;
+    _pipAspectHeight = prefs.get(_pipAspectHeightKey) as int? ?? 16;
+    _pipEnableWhenBackground =
+        prefs.get(_pipEnableWhenBackgroundKey) as bool? ?? true;
+    _pipIOSSupport = prefs.get(_pipIOSSupportKey) as bool? ?? true;
+    _requiredUserEnabled = prefs.get(_requiredUserEnabledKey) as bool? ?? false;
+    _requiredUserDetectSeconds =
+        prefs.get(_requiredUserDetectSecondsKey) as int? ?? 5;
+    _requiredUserDetectInDebugMode =
+        prefs.get(_requiredUserDetectInDebugModeKey) as bool? ?? false;
   }
 
   static List<String> defaultRoomIDList() {
@@ -613,6 +1086,60 @@ class CallCache {
       'cache_call_duration_auto_hangup';
   final String _supportDurationAutoHangUpSecondKey =
       'cache_call_duration_auto_hangup_sec';
+
+  // New keys
+  final String _useFrontCameraWhenJoiningKey =
+      'cache_call_use_front_camera_when_joining';
+  final String _rootNavigatorKey = 'cache_call_root_navigator';
+  final String _enableAccidentalTouchPreventionKey =
+      'cache_call_enable_accidental_touch_prevention';
+  final String _isVideoMirrorKey = 'cache_call_is_video_mirror';
+  final String _showMicrophoneStateOnViewKey =
+      'cache_call_show_microphone_state_on_view';
+  final String _showCameraStateOnViewKey =
+      'cache_call_show_camera_state_on_view';
+  final String _showUserNameOnViewKey = 'cache_call_show_user_name_on_view';
+  final String _showOnlyCameraMicrophoneOpenedKey =
+      'cache_call_show_only_camera_microphone_opened';
+  final String _showLocalUserKey = 'cache_call_show_local_user';
+  final String _showWaitingCallAcceptAudioVideoViewKey =
+      'cache_call_show_waiting_call_accept_audio_video_view';
+  final String _showAvatarInAudioModeKey =
+      'cache_call_show_avatar_in_audio_mode';
+  final String _showSoundWavesInAudioModeKey =
+      'cache_call_show_sound_waves_in_audio_mode';
+  final String _topMenuBarIsVisibleKey = 'cache_call_top_menu_bar_is_visible';
+  final String _topMenuBarTitleKey = 'cache_call_top_menu_bar_title';
+  final String _topMenuBarHideAutomaticallyKey =
+      'cache_call_top_menu_bar_hide_automatically';
+  final String _topMenuBarHideByClickKey =
+      'cache_call_top_menu_bar_hide_by_click';
+  final String _bottomMenuBarIsVisibleKey =
+      'cache_call_bottom_menu_bar_is_visible';
+  final String _bottomMenuBarHideAutomaticallyKey =
+      'cache_call_bottom_menu_bar_hide_automatically';
+  final String _bottomMenuBarHideByClickKey =
+      'cache_call_bottom_menu_bar_hide_by_click';
+  final String _bottomMenuBarMaxCountKey =
+      'cache_call_bottom_menu_bar_max_count';
+  final String _memberListShowMicrophoneStateKey =
+      'cache_call_member_list_show_microphone_state';
+  final String _memberListShowCameraStateKey =
+      'cache_call_member_list_show_camera_state';
+  final String _screenSharingAutoStopInvalidCountKey =
+      'cache_call_screen_sharing_auto_stop_invalid_count';
+  final String _screenSharingDefaultFullScreenKey =
+      'cache_call_screen_sharing_default_full_screen';
+  final String _pipAspectWidthKey = 'cache_call_pip_aspect_width';
+  final String _pipAspectHeightKey = 'cache_call_pip_aspect_height';
+  final String _pipEnableWhenBackgroundKey =
+      'cache_call_pip_enable_when_background';
+  final String _pipIOSSupportKey = 'cache_call_pip_ios_support';
+  final String _requiredUserEnabledKey = 'cache_call_required_user_enabled';
+  final String _requiredUserDetectSecondsKey =
+      'cache_call_required_user_detect_seconds';
+  final String _requiredUserDetectInDebugModeKey =
+      'cache_call_required_user_detect_in_debug_mode';
 
   bool _isLoaded = false;
 

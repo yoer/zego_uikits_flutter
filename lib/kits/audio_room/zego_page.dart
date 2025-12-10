@@ -86,11 +86,63 @@ class _ZegoAudioRoomPageState extends State<ZegoAudioRoomPage> {
       ]
       ..userAvatarUrl = avatarURL(widget.userID);
 
-    config.pip.enableWhenBackground = true;
+    // Basic configurations
+    config.turnOnMicrophoneWhenJoining =
+        AudioRoomCache().turnOnMicrophoneWhenJoining;
+    config.useSpeakerWhenJoining = AudioRoomCache().useSpeakerWhenJoining;
+    config.rootNavigator = AudioRoomCache().rootNavigator;
 
-    /// call invitation need keep login status
+    // Seat configurations
+    config.seat.closeWhenJoining = AudioRoomCache().seatCloseWhenJoining;
+    config.seat.showSoundWaveInAudioMode =
+        AudioRoomCache().seatShowSoundWaveInAudioMode;
+    config.seat.keepOriginalForeground =
+        AudioRoomCache().seatKeepOriginalForeground;
+
+    // BottomMenuBar configurations
+    config.bottomMenuBar.visible = AudioRoomCache().bottomMenuBarVisible;
+    config.bottomMenuBar.showInRoomMessageButton =
+        AudioRoomCache().bottomMenuBarShowInRoomMessageButton;
+    config.bottomMenuBar.maxCount = AudioRoomCache().bottomMenuBarMaxCount;
+
+    // InRoomMessage configurations
+    config.inRoomMessage.visible = AudioRoomCache().inRoomMessageVisible;
+    if (AudioRoomCache().inRoomMessageWidth != null) {
+      config.inRoomMessage.width = AudioRoomCache().inRoomMessageWidth;
+    }
+    if (AudioRoomCache().inRoomMessageHeight != null) {
+      config.inRoomMessage.height = AudioRoomCache().inRoomMessageHeight;
+    }
+    config.inRoomMessage.showName = AudioRoomCache().inRoomMessageShowName;
+    config.inRoomMessage.showAvatar = AudioRoomCache().inRoomMessageShowAvatar;
+    config.inRoomMessage.opacity = AudioRoomCache().inRoomMessageOpacity;
+
+    // Duration configurations
+    config.duration.isVisible = AudioRoomCache().durationIsVisible;
+
+    // PIP configurations
+    config.pip.aspectWidth = AudioRoomCache().pipAspectWidth;
+    config.pip.aspectHeight = AudioRoomCache().pipAspectHeight;
+    config.pip.enableWhenBackground = AudioRoomCache().pipEnableWhenBackground;
+    config.pip.android.showUserName = AudioRoomCache().pipAndroidShowUserName;
+
+    // MediaPlayer configurations
+    config.mediaPlayer.supportTransparent =
+        AudioRoomCache().mediaPlayerSupportTransparent;
+    config.mediaPlayer.defaultPlayer.support =
+        AudioRoomCache().mediaPlayerDefaultPlayerSupport;
+
+    // BackgroundMedia configurations
+    if (AudioRoomCache().backgroundMediaPath != null) {
+      config.backgroundMedia.path = AudioRoomCache().backgroundMediaPath;
+    }
+    config.backgroundMedia.enableRepeat =
+        AudioRoomCache().backgroundMediaEnableRepeat;
+
+    // SignalingPlugin configurations
     config.signalingPlugin = ZegoLiveAudioRoomSignalingPluginConfig(
-      uninitOnDispose: false,
+      leaveRoomOnDispose: AudioRoomCache().signalingPluginLeaveRoomOnDispose,
+      uninitOnDispose: AudioRoomCache().signalingPluginUninitOnDispose,
     );
 
     /// multi-lingual

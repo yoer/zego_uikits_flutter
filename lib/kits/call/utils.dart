@@ -51,15 +51,16 @@ Future<bool> initCallInvitation() async {
           ZegoCallInvitationPermission.systemAlertWindow,
           ZegoCallInvitationPermission.manuallyByUser,
         ],
-
-        /// beta config
+        endCallWhenInitiatorLeave:
+            CallCache().invitation.endCallWhenInitiatorLeave,
         pip: ZegoCallInvitationPIPConfig(
           iOS: ZegoCallInvitationPIPIOSConfig(
-            support: KitCommonCache().supportPIP,
+            support: CallCache().pipIOSSupport,
           ),
         ),
         offline: ZegoCallInvitationOfflineConfig(
-          autoEnterAcceptedOfflineCall: false,
+          autoEnterAcceptedOfflineCall:
+              CallCache().invitation.offlineAutoEnterAcceptedOfflineCall,
         ),
         inCalling: ZegoCallInvitationInCallingConfig(
           canInvitingInCalling: CallCache().invitation.canInvitingInCalling,
@@ -283,7 +284,33 @@ ZegoUIKitPrebuiltCallConfig callConfig({
           ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
           : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall());
 
+  // Basic configurations
+  config.turnOnCameraWhenJoining = CallCache().turnOnCameraWhenJoining;
+  config.useFrontCameraWhenJoining = CallCache().useFrontCameraWhenJoining;
+  config.turnOnMicrophoneWhenJoining = CallCache().turnOnMicrophoneWhenJoining;
+  config.useSpeakerWhenJoining = CallCache().useSpeakerWhenJoining;
+  config.rootNavigator = CallCache().rootNavigator;
+  config.enableAccidentalTouchPrevention =
+      CallCache().enableAccidentalTouchPrevention;
+
+  // AudioVideoView configurations
   config.audioVideoView.useVideoViewAspectFill = CallCache().videoAspectFill;
+  config.audioVideoView.isVideoMirror = CallCache().isVideoMirror;
+  config.audioVideoView.showMicrophoneStateOnView =
+      CallCache().showMicrophoneStateOnView;
+  config.audioVideoView.showCameraStateOnView =
+      CallCache().showCameraStateOnView;
+  config.audioVideoView.showUserNameOnView = CallCache().showUserNameOnView;
+  config.audioVideoView.showOnlyCameraMicrophoneOpened =
+      CallCache().showOnlyCameraMicrophoneOpened;
+  config.audioVideoView.showLocalUser = CallCache().showLocalUser;
+  config.audioVideoView.showWaitingCallAcceptAudioVideoView =
+      CallCache().showWaitingCallAcceptAudioVideoView;
+  config.audioVideoView.showAvatarInAudioMode =
+      CallCache().showAvatarInAudioMode;
+  config.audioVideoView.showSoundWavesInAudioMode =
+      CallCache().showSoundWavesInAudioMode;
+
   config.avatarBuilder = (
     BuildContext context,
     Size size,
@@ -293,13 +320,50 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     return avatar(user?.id ?? '');
   };
 
-  config.topMenuBar.isVisible = true;
+  // TopMenuBar configurations
+  config.topMenuBar.isVisible = CallCache().topMenuBarIsVisible;
+  config.topMenuBar.title = CallCache().topMenuBarTitle;
+  config.topMenuBar.hideAutomatically = CallCache().topMenuBarHideAutomatically;
+  config.topMenuBar.hideByClick = CallCache().topMenuBarHideByClick;
 
   /// support minimizing, show minimizing button
-  config.topMenuBar.buttons.insert(
-    0,
-    ZegoCallMenuBarButtonName.minimizingButton,
-  );
+  if (CallCache().topMenuBarIsVisible) {
+    config.topMenuBar.buttons.insert(
+      0,
+      ZegoCallMenuBarButtonName.minimizingButton,
+    );
+  }
+
+  // BottomMenuBar configurations
+  config.bottomMenuBar.isVisible = CallCache().bottomMenuBarIsVisible;
+  config.bottomMenuBar.hideAutomatically =
+      CallCache().bottomMenuBarHideAutomatically;
+  config.bottomMenuBar.hideByClick = CallCache().bottomMenuBarHideByClick;
+  config.bottomMenuBar.maxCount = CallCache().bottomMenuBarMaxCount;
+
+  // MemberList configurations
+  config.memberList.showMicrophoneState =
+      CallCache().memberListShowMicrophoneState;
+  config.memberList.showCameraState = CallCache().memberListShowCameraState;
+
+  // ScreenSharing configurations
+  config.screenSharing.autoStop.invalidCount =
+      CallCache().screenSharingAutoStopInvalidCount;
+  config.screenSharing.defaultFullScreen =
+      CallCache().screenSharingDefaultFullScreen;
+
+  // PIP configurations
+  config.pip.aspectWidth = CallCache().pipAspectWidth;
+  config.pip.aspectHeight = CallCache().pipAspectHeight;
+  config.pip.enableWhenBackground = CallCache().pipEnableWhenBackground;
+  config.pip.iOS.support = CallCache().pipIOSSupport;
+
+  // RequiredUser configurations
+  config.user.requiredUsers.enabled = CallCache().requiredUserEnabled;
+  config.user.requiredUsers.detectSeconds =
+      CallCache().requiredUserDetectSeconds;
+  config.user.requiredUsers.detectInDebugMode =
+      CallCache().requiredUserDetectInDebugMode;
 
   /// duration
   config.duration.isVisible = CallCache().durationVisible;
@@ -442,8 +506,7 @@ ZegoUIKitPrebuiltCallConfig callConfig({
     ];
   }
 
-  config.pip.enableWhenBackground = KitCommonCache().supportPIP;
-  config.pip.iOS.support = KitCommonCache().supportPIP;
+  // PIP is already configured above from CallCache
   if (KitCommonCache().supportPIP) {
     config.topMenuBar.buttons.add(
       ZegoCallMenuBarButtonName.pipButton,
