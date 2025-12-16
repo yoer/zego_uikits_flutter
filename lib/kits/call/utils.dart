@@ -121,7 +121,6 @@ Future<bool> initCallInvitation() async {
       ),
       notificationConfig: ZegoCallInvitationNotificationConfig(
         androidNotificationConfig: ZegoCallAndroidNotificationConfig(
-          showFullScreen: true,
           fullScreenBackgroundAssetURL: CallAssets.offlineBackground,
           callChannel: ZegoCallAndroidNotificationChannelConfig(
             channelID: "call_invitation",
