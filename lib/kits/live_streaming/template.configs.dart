@@ -3,14 +3,12 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
@@ -33,6 +31,11 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
 
   final hostConfig =
       ZegoUIKitPrebuiltLiveStreamingConfig.host(plugins: plugins);
+  hostConfig
+    ..turnOnCameraWhenJoining = LiveStreamingCache().turnOnCameraWhenJoining
+    ..turnOnMicrophoneWhenJoining =
+        LiveStreamingCache().turnOnMicrophoneWhenJoining;
+
   hostConfig.audioVideoView.foregroundBuilder = (
     BuildContext context,
     Size size,
@@ -58,10 +61,7 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
       stateNotifier: liveStateNotifier,
     )
     // Basic configurations
-    ..turnOnCameraWhenJoining = LiveStreamingCache().turnOnCameraWhenJoining
     ..useFrontFacingCamera = LiveStreamingCache().useFrontFacingCamera
-    ..turnOnMicrophoneWhenJoining =
-        LiveStreamingCache().turnOnMicrophoneWhenJoining
     ..useSpeakerWhenJoining = LiveStreamingCache().useSpeakerWhenJoining
     ..rootNavigator = LiveStreamingCache().rootNavigator
     ..markAsLargeRoom = LiveStreamingCache().markAsLargeRoom
