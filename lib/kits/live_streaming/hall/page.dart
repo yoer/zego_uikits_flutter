@@ -1,17 +1,16 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
+
 import '../template.configs.dart';
 import '../template.events.dart';
 
@@ -43,7 +42,7 @@ class _LiveStreamingLiveHallPageState extends State<LiveStreamingLiveHallPage> {
               .map((entry) => ZegoLiveStreamingHallHost(
                     user: ZegoUIKitUser(
                       id: entry.key,
-                      name: '',
+                      name: 'user_${entry.key}',
                       isAnotherRoomUser: true,
                     ),
                     roomID: 'live_${entry.value}',

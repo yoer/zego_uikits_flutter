@@ -109,7 +109,7 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
     ..preview.bottomBar.showBeautyEffectButton =
         LiveStreamingCache().previewBottomBarShowBeautyEffectButton
     // MemberButton configurations
-    ..memberButton.builder = (int memberCount) {
+    ..memberButton.builder = (int memberCount, String liveID) {
       return memberButtonBuilder(memberCount, isHost, liveID);
     }
 
