@@ -1,11 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/user.dart';
@@ -14,6 +9,7 @@ import 'package:zego_uikits_demo/firestore/kits_service.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/pk/config.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/zego_page.dart';
 import 'package:zego_uikits_demo/kits/room_list.dart';
+
 import 'cache.dart';
 import 'foreground.dart';
 
@@ -80,14 +76,6 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
       configQuery: (config) {
         // config.mediaPlayer.defaultPlayer.support = false;
 
-        config.audioVideoView.foregroundBuilder = (
-          BuildContext context,
-          Size size,
-          ZegoUIKitUser? user,
-          Map<String, dynamic> extraInfo,
-        ) {
-          return foregroundBuilder(isHost, context, size, user, extraInfo);
-        };
         config.pkBattle = pkConfig();
 
         config.foreground = LiveStreamingForeground(
@@ -207,88 +195,6 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
         };
 
         return events;
-      },
-    );
-  }
-
-  Widget foregroundBuilder(
-    bool isHost,
-    BuildContext context,
-    Size size,
-    ZegoUIKitUser? user,
-    extraInfo,
-  ) {
-    if (user == null) {
-      return Container();
-    }
-
-    return ValueListenableBuilder(
-      valueListenable: liveStateNotifier,
-      builder: (context, state, _) {
-        return state == ZegoLiveStreamingState.inPKBattle
-            ? Stack(
-                children: [
-                  /// camera state
-                  Positioned(
-                    bottom: 10.r,
-                    right: 10.r * 2 + 20.r,
-                    child: SizedBox(
-                      width: 20.r,
-                      height: 20.r,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.black.withValues(alpha: 0.5),
-                        child: Icon(
-                          user.camera.value
-                              ? Icons.videocam
-                              : Icons.videocam_off,
-                          color: Colors.white,
-                          size: 18.r,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  /// microphone state
-                  Positioned(
-                    bottom: 10.r,
-                    right: 10.r,
-                    child: SizedBox(
-                      width: 20.r,
-                      height: 20.r,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.black.withValues(alpha: 0.5),
-                        child: Icon(
-                          user.microphone.value ? Icons.mic : Icons.mic_off,
-                          color: Colors.white,
-                          size: 18.r,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  /// name
-                  Positioned(
-                    bottom: 10.r,
-                    left: 10.r,
-                    child: Container(
-                      height: 40.r,
-                      padding: EdgeInsets.all(5.r),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(4.r)),
-                        color: Colors.black.withValues(alpha: 0.5),
-                      ),
-                      child: Text(
-                        user.name,
-                        style: TextStyle(
-                          fontSize: 20.r,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : const SizedBox();
       },
     );
   }

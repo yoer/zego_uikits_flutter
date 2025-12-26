@@ -3,14 +3,12 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/kits/cache.dart';
@@ -37,22 +35,6 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
     ..turnOnCameraWhenJoining = LiveStreamingCache().turnOnCameraWhenJoining
     ..turnOnMicrophoneWhenJoining =
         LiveStreamingCache().turnOnMicrophoneWhenJoining;
-
-  hostConfig.audioVideoView.foregroundBuilder = (
-    BuildContext context,
-    Size size,
-    ZegoUIKitUser? user,
-    Map<String, dynamic> extraInfo,
-  ) {
-    return hostAudioVideoViewForegroundBuilder(
-      context,
-      size,
-      user,
-      extraInfo,
-      localUserID,
-      liveID,
-    );
-  };
 
   final audienceConfig =
       ZegoUIKitPrebuiltLiveStreamingConfig.audience(plugins: plugins);
@@ -82,6 +64,22 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
         LiveStreamingCache().showAvatarInAudioMode
     ..audioVideoView.showSoundWavesInAudioMode =
         LiveStreamingCache().showSoundWavesInAudioMode
+    ..audioVideoView.foregroundBuilder = (
+      BuildContext context,
+      Size size,
+      ZegoUIKitUser? user,
+      Map<String, dynamic> extraInfo,
+    ) {
+      return audioVideoViewForegroundBuilder(
+        isHost,
+        context,
+        size,
+        user,
+        extraInfo,
+        localUserID,
+        liveID,
+      );
+    }
     // TopMenuBar configurations
     ..topMenuBar.buttons = [
       ZegoLiveStreamingMenuBarButtonName.minimizingButton,
@@ -205,7 +203,8 @@ ZegoUIKitPrebuiltLiveStreamingConfig getConfigs(
   return config;
 }
 
-Widget hostAudioVideoViewForegroundBuilder(
+Widget audioVideoViewForegroundBuilder(
+  bool isHost,
   BuildContext context,
   Size size,
   ZegoUIKitUser? user,
@@ -222,7 +221,7 @@ Widget hostAudioVideoViewForegroundBuilder(
   const toolbarCameraOff = 'assets/icons/toolbar_camera_off.png';
   const toolbarMicNormal = 'assets/icons/toolbar_mic_normal.png';
   const toolbarMicOff = 'assets/icons/toolbar_mic_off.png';
-  return Positioned(
+  final controllableForeground = Positioned(
     top: 15,
     right: 0,
     child: Row(
@@ -241,9 +240,10 @@ Widget hostAudioVideoViewForegroundBuilder(
                   userID: user.id,
                 );
               },
-              child: SizedBox(
-                width: size.width * 0.4,
-                height: size.width * 0.4,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.redAccent),
+                // width: size.width * 0.4,
+                // height: size.width * 0.4,
                 child: prebuiltImage(
                   isCameraEnabled ? toolbarCameraNormal : toolbarCameraOff,
                 ),
@@ -273,9 +273,10 @@ Widget hostAudioVideoViewForegroundBuilder(
                   muteMode: true,
                 );
               },
-              child: SizedBox(
-                width: size.width * 0.4,
-                height: size.width * 0.4,
+              child: Container(
+                decoration: BoxDecoration(color: Colors.redAccent),
+                // width: size.width * 0.4,
+                // height: size.width * 0.4,
                 child: prebuiltImage(
                   isMicrophoneEnabled ? toolbarMicNormal : toolbarMicOff,
                 ),
@@ -286,6 +287,69 @@ Widget hostAudioVideoViewForegroundBuilder(
       ],
     ),
   );
+
+  final displayForeground = Stack(
+    children: [
+      /// camera state
+      Positioned(
+        bottom: 10.r,
+        right: 10.r * 2 + 20.r,
+        child: SizedBox(
+          width: 20.r,
+          height: 20.r,
+          child: CircleAvatar(
+            backgroundColor: Colors.black.withValues(alpha: 0.5),
+            child: Icon(
+              user.camera.value ? Icons.videocam : Icons.videocam_off,
+              color: Colors.white,
+              size: 18.r,
+            ),
+          ),
+        ),
+      ),
+
+      /// microphone state
+      Positioned(
+        bottom: 10.r,
+        right: 10.r,
+        child: SizedBox(
+          width: 20.r,
+          height: 20.r,
+          child: CircleAvatar(
+            backgroundColor: Colors.black.withValues(alpha: 0.5),
+            child: Icon(
+              user.microphone.value ? Icons.mic : Icons.mic_off,
+              color: Colors.white,
+              size: 18.r,
+            ),
+          ),
+        ),
+      ),
+
+      /// name
+      Positioned(
+        bottom: 10.r,
+        left: 10.r,
+        child: Container(
+          height: 40.r,
+          padding: EdgeInsets.all(5.r),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4.r)),
+            color: Colors.black.withValues(alpha: 0.5),
+          ),
+          child: Text(
+            user.name,
+            style: TextStyle(
+              fontSize: 20.r,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    ],
+  );
+
+  return isHost ? controllableForeground : displayForeground;
 }
 
 Widget memberButtonBuilder(
