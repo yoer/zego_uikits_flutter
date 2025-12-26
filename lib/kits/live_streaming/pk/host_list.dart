@@ -145,19 +145,28 @@ class _LiveStreamingPKForegroundState extends State<LiveStreamingPKHostList> {
 
   /// 当firebase失效无法拉取用户列表
   Widget noFirebaseHostList() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _noFirebaseEmptyTips(),
-          SizedBox(height: 40.r),
-          _manualInputSection(),
-          SizedBox(height: 20.r),
-          _sendInviteButton(),
-          SizedBox(height: 60.r),
-          _noFirebasePKControlButtons(),
-        ],
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _noFirebaseEmptyTips(),
+                  SizedBox(height: 40.r),
+                  _manualInputSection(),
+                  SizedBox(height: 20.r),
+                  _sendInviteButton(),
+                  SizedBox(height: 60.r),
+                  _noFirebasePKControlButtons(),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

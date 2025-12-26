@@ -32,6 +32,14 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
   );
 
   @override
+  void initState() {
+    super.initState();
+
+    liveStateNotifier.value =
+        ZegoUIKitPrebuiltLiveStreamingController().liveState;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return RoomList(
       cover: Image.asset(
@@ -168,7 +176,12 @@ class _LiveStreamingPKPageState extends State<LiveStreamingPKPage> {
         );
 
         events.onStateUpdated = (state) {
-          liveStateNotifier.value = state;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!mounted) {
+              return;
+            }
+            liveStateNotifier.value = state;
+          });
 
           final pkState =
               ZegoUIKitPrebuiltLiveStreamingController().pk.stateNotifier.value;
