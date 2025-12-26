@@ -241,9 +241,6 @@ Widget audioVideoViewForegroundBuilder(
                 );
               },
               child: Container(
-                decoration: BoxDecoration(color: Colors.redAccent),
-                // width: size.width * 0.4,
-                // height: size.width * 0.4,
                 child: prebuiltImage(
                   isCameraEnabled ? toolbarCameraNormal : toolbarCameraOff,
                 ),
@@ -274,9 +271,6 @@ Widget audioVideoViewForegroundBuilder(
                 );
               },
               child: Container(
-                decoration: BoxDecoration(color: Colors.redAccent),
-                // width: size.width * 0.4,
-                // height: size.width * 0.4,
                 child: prebuiltImage(
                   isMicrophoneEnabled ? toolbarMicNormal : toolbarMicOff,
                 ),
@@ -349,7 +343,11 @@ Widget audioVideoViewForegroundBuilder(
     ],
   );
 
-  return isHost ? controllableForeground : displayForeground;
+  return ZegoUIKitPrebuiltLiveStreamingController().pk.isInPK
+      ? displayForeground
+      : isHost
+          ? controllableForeground
+          : displayForeground;
 }
 
 Widget memberButtonBuilder(
