@@ -18,6 +18,7 @@ class LiveStreamingCache {
   final liveListMap = ValueNotifier<Map<String, String>>({});
 
   bool _pkAutoAccept = false;
+  bool _pkCustomLayout = false;
   bool _useModulePrefix = false;
 
   String _mediaDefaultURL = '';
@@ -219,6 +220,16 @@ class LiveStreamingCache {
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cachePKAutoAcceptKey, value);
+    });
+  }
+
+  bool get pkCustomLayout => _pkCustomLayout;
+
+  set pkCustomLayout(bool value) {
+    _pkCustomLayout = value;
+
+    SharedPreferences.getInstance().then((prefs) {
+      prefs.setBool(_cachePKCustomLayoutKey, value);
     });
   }
 
@@ -872,6 +883,7 @@ class LiveStreamingCache {
     } catch (e) {}
 
     _pkAutoAccept = prefs.get(_cachePKAutoAcceptKey) as bool? ?? false;
+    _pkCustomLayout = prefs.get(_cachePKCustomLayoutKey) as bool? ?? false;
     _useModulePrefix = prefs.get(_cacheUseModulePrefixKey) as bool? ?? false;
 
     _autoPlayMedia = prefs.get(_supportMediaAutoPlayKey) as bool? ?? true;
@@ -1002,6 +1014,7 @@ class LiveStreamingCache {
   final String _cacheLiveListMapKey = 'cache_ls_live_list_map';
 
   final String _cachePKAutoAcceptKey = 'cache_ls_pk_auto_accept';
+  final String _cachePKCustomLayoutKey = 'cache_ls_pk_custom_layout';
   final String _cacheUseModulePrefixKey = 'cache_ls_use_module_prefix';
 
   final String _supportShowUserNameKey = 'cache_ls_show_user_name';

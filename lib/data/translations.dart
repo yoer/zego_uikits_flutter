@@ -409,6 +409,8 @@ class TranslationsSettings {
 
   String get pkBattleTopPadding => tr('${base}pk.top_padding');
 
+  String get pkCustomLayout => tr('${base}pk.custom_layout');
+
   // ScreenSharing configurations
   String get screenSharingAutoStopInvalidCount =>
       tr('${base}screen_sharing.auto_stop_invalid_count');

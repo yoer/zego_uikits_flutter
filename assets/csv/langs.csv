@@ -112,6 +112,7 @@ settings.preview.bottom_bar_show_beauty_effect_button,"Show Beauty Effect Button
 settings.pk.user_reconnecting_second,"PK User Reconnecting Second",PK用户重连等待时间(秒),"PK उपयोगकर्ता पुन: कनेक्ट करने का समय (सेकंड)"
 settings.pk.user_disconnected_second,"PK User Disconnected Second",PK用户断开超时时间(秒),"PK उपयोगकर्ता डिस्कनेक्ट टाइमआउट (सेकंड)"
 settings.pk.top_padding,"PK Top Padding",PK顶部内边距,"PK शीर्ष पैडिंग"
+settings.pk.custom_layout,"Use Custom Layout","是否使用自定义布局","Use Custom Layout"
 settings.screen_sharing.auto_stop_invalid_count,"Auto Stop Invalid Count",自动停止无效计数,"स्वचालित रोक अमान्य गणना"
 settings.screen_sharing.default_full_screen,"Default Full Screen",默认全屏,"डिफ़ॉल्ट पूर्ण स्क्रीन"
 settings.media_player,"Media Player",媒体播放器,"मीडिया प्लेयर"

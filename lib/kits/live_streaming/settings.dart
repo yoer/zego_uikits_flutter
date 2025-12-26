@@ -411,6 +411,15 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
             ),
             settingsGroup(Translations.settings.pk, [
               settingsCheckBox(
+                title: Translations.settings.pkCustomLayout,
+                value: LiveStreamingCache().pkCustomLayout,
+                onChanged: (value) {
+                  setState(() {
+                    LiveStreamingCache().pkCustomLayout = value ?? false;
+                  });
+                },
+              ),
+              settingsCheckBox(
                 title: Translations.settings.pkAutoAccept,
                 value: LiveStreamingCache().pkAutoAccept,
                 onChanged: (value) {
