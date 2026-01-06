@@ -286,7 +286,7 @@ Widget audioVideoViewForegroundBuilder(
     children: [
       /// camera state
       Positioned(
-        bottom: 10.r,
+        top: 10.r,
         right: 10.r * 2 + 20.r,
         child: SizedBox(
           width: 20.r,
@@ -304,7 +304,7 @@ Widget audioVideoViewForegroundBuilder(
 
       /// microphone state
       Positioned(
-        bottom: 10.r,
+        top: 10.r,
         right: 10.r,
         child: SizedBox(
           width: 20.r,
@@ -347,7 +347,7 @@ Widget audioVideoViewForegroundBuilder(
       ? displayForeground
       : isHost
           ? controllableForeground
-          : displayForeground;
+          : Container();
 }
 
 Widget memberButtonBuilder(
