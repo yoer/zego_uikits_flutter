@@ -16,9 +16,12 @@ class StringListListTextEditor extends StatefulWidget {
     this.defaultLeftValues = const [],
     this.defaultRightValues = const [],
     this.defaultLeftRightMap = const {},
+    this.thirdHeader,
+    this.defaultLeftThirdMap = const {},
     this.onAdd,
     this.onDelete,
     this.onUpdate,
+    this.onUpdateThird,
     super.key,
   });
 
@@ -29,8 +32,11 @@ class StringListListTextEditor extends StatefulWidget {
   final List<String> defaultLeftValues;
   final List<String> defaultRightValues;
   final Map<String, String> defaultLeftRightMap;
+  final String? thirdHeader;
+  final Map<String, bool> defaultLeftThirdMap;
   final void Function(String left, String right)? onAdd;
   final void Function(String left, String right)? onUpdate;
+  final void Function(String left, bool value)? onUpdateThird;
   final void Function(String left)? onDelete;
 
   @override
@@ -106,6 +112,24 @@ class _StringListListTextEditorState extends State<StringListListTextEditor> {
           itemCount: defaultLeftValues.length + 1,
           itemBuilder: (context, index) {
             if (index == 0) {
+              final headers = <Widget>[
+                Text(
+                  widget.leftHeader,
+                  style: textStyle,
+                ),
+                Text(
+                  widget.rightHeader,
+                  style: textStyle,
+                ),
+              ];
+              if (widget.thirdHeader != null) {
+                headers.add(
+                  Text(
+                    widget.thirdHeader!,
+                    style: textStyle,
+                  ),
+                );
+              }
               return Container(
                 width: width,
                 height: 8.r * 2 + widget.fontSize,
@@ -113,16 +137,7 @@ class _StringListListTextEditorState extends State<StringListListTextEditor> {
                 color: Colors.blue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      widget.leftHeader,
-                      style: textStyle,
-                    ),
-                    Text(
-                      widget.rightHeader,
-                      style: textStyle,
-                    ),
-                  ],
+                  children: headers,
                 ),
               );
             }
@@ -138,6 +153,7 @@ class _StringListListTextEditorState extends State<StringListListTextEditor> {
                   ? ''
                   : widget.defaultRightValues.first;
             }
+            final thirdValue = widget.defaultLeftThirdMap[leftValue] ?? false;
             return Stack(
               children: [
                 Container(
@@ -167,6 +183,19 @@ class _StringListListTextEditorState extends State<StringListListTextEditor> {
                           return Text(value, style: textStyle);
                         },
                       ),
+                      if (widget.thirdHeader != null)
+                        Checkbox(
+                          value: thirdValue,
+                          onChanged: (value) {
+                            final newValue = value ?? false;
+                            widget.onUpdateThird?.call(
+                              leftValue,
+                              newValue,
+                            );
+                          },
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                        ),
                       IconButton(
                         icon: Icon(Icons.close, size: widget.fontSize),
                         onPressed: () => _removeValue(dataIndex),

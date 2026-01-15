@@ -11,11 +11,41 @@ import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_stre
 // Project imports:
 import 'package:zego_uikits_demo/data/assets.dart';
 
+/// 直播列表项，包含直播间ID与是否PK状态
+class LiveListItem {
+  /// 直播间ID
+  final String liveID;
+
+  /// 是否开启PK
+  final bool isPK;
+
+  LiveListItem({
+    required this.liveID,
+    required this.isPK,
+  });
+
+  /// 转为持久化JSON
+  Map<String, dynamic> toJson() => {
+        'liveID': liveID,
+        'isPK': isPK,
+      };
+
+  /// 从持久化JSON恢复
+  factory LiveListItem.fromJson(Map<String, dynamic> json) {
+    return LiveListItem(
+      liveID: json['liveID'] as String? ?? '',
+      isPK: json['isPK'] as bool? ?? false,
+    );
+  }
+}
+
 class LiveStreamingCache {
   final roomIDList = ValueNotifier<List<String>>(
     LiveStreamingCache.defaultRoomIDList(),
   );
-  final liveListMap = ValueNotifier<Map<String, String>>({});
+
+  /// 主播ID -> 直播配置（直播间ID + PK状态）
+  final liveListMap = ValueNotifier<Map<String, LiveListItem>>({});
 
   bool _pkAutoAccept = false;
   bool _pkCustomLayout = false;
@@ -184,33 +214,68 @@ class LiveStreamingCache {
   }
 
   void addLiveList(String hostID, String liveID) {
-    final currentValue = Map<String, String>.from(liveListMap.value);
-    currentValue[hostID] = liveID;
-    liveListMap.value = currentValue;
+    final currentLiveList = Map<String, LiveListItem>.from(liveListMap.value);
+    currentLiveList[hostID] = LiveListItem(liveID: liveID, isPK: false);
+    liveListMap.value = currentLiveList;
 
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(_cacheLiveListMapKey, jsonEncode(liveListMap.value));
+      prefs.setString(
+        _cacheLiveListMapKey,
+        jsonEncode(
+          currentLiveList.map((k, v) => MapEntry(k, v.toJson())),
+        ),
+      );
     });
   }
 
   void updateLiveList(String hostID, String liveID) {
-    final currentValue = Map<String, String>.from(liveListMap.value);
-    currentValue[hostID] = liveID;
-    liveListMap.value = currentValue;
+    final currentLiveList = Map<String, LiveListItem>.from(liveListMap.value);
+    final old = currentLiveList[hostID];
+    currentLiveList[hostID] =
+        LiveListItem(liveID: liveID, isPK: old?.isPK ?? false);
+    liveListMap.value = currentLiveList;
 
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(_cacheLiveListMapKey, jsonEncode(liveListMap.value));
+      prefs.setString(
+        _cacheLiveListMapKey,
+        jsonEncode(
+          currentLiveList.map((k, v) => MapEntry(k, v.toJson())),
+        ),
+      );
     });
   }
 
   void removeLiveList(String hostID) {
-    final currentValue = Map<String, String>.from(liveListMap.value);
-    currentValue.removeWhere((k, v) => k == hostID);
-    liveListMap.value = currentValue;
+    final currentLiveList = Map<String, LiveListItem>.from(liveListMap.value);
+    currentLiveList.removeWhere((k, v) => k == hostID);
+    liveListMap.value = currentLiveList;
 
     SharedPreferences.getInstance().then((prefs) {
-      prefs.setString(_cacheLiveListMapKey, jsonEncode(liveListMap.value));
+      prefs.setString(
+        _cacheLiveListMapKey,
+        jsonEncode(
+          currentLiveList.map((k, v) => MapEntry(k, v.toJson())),
+        ),
+      );
     });
+  }
+
+  void updateLiveListPK(String hostID, bool isPK) {
+    final currentLiveList = Map<String, LiveListItem>.from(liveListMap.value);
+    final old = currentLiveList[hostID];
+    if (old != null) {
+      currentLiveList[hostID] = LiveListItem(liveID: old.liveID, isPK: isPK);
+      liveListMap.value = currentLiveList;
+
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setString(
+          _cacheLiveListMapKey,
+          jsonEncode(
+            currentLiveList.map((k, v) => MapEntry(k, v.toJson())),
+          ),
+        );
+      });
+    }
   }
 
   bool get pkAutoAccept => _pkAutoAccept;
@@ -879,7 +944,22 @@ class LiveStreamingCache {
 
     final liveListMapJson = prefs.get(_cacheLiveListMapKey) as String? ?? '';
     try {
-      liveListMap.value = Map<String, String>.from(jsonDecode(liveListMapJson));
+      final decoded = jsonDecode(liveListMapJson);
+      if (decoded is Map<String, dynamic>) {
+        final mapped = decoded.map((k, v) {
+          if (v is Map<String, dynamic>) {
+            return MapEntry(k, LiveListItem.fromJson(v));
+          } else if (v is String) {
+            // 兼容旧存储：字符串表示liveID
+            return MapEntry(k, LiveListItem(liveID: v, isPK: false));
+          } else {
+            return MapEntry(k, LiveListItem(liveID: '', isPK: false));
+          }
+        });
+        liveListMap.value = Map<String, LiveListItem>.from(mapped);
+      } else {
+        liveListMap.value = {};
+      }
     } catch (e) {}
 
     _pkAutoAccept = prefs.get(_cachePKAutoAcceptKey) as bool? ?? false;

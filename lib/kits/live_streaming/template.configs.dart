@@ -221,68 +221,74 @@ Widget audioVideoViewForegroundBuilder(
   const toolbarCameraOff = 'assets/icons/toolbar_camera_off.png';
   const toolbarMicNormal = 'assets/icons/toolbar_mic_normal.png';
   const toolbarMicOff = 'assets/icons/toolbar_mic_off.png';
-  final controllableForeground = Positioned(
-    top: 15,
-    right: 0,
-    child: Row(
-      children: [
-        ValueListenableBuilder<bool>(
-          valueListenable: ZegoUIKit().getCameraStateNotifier(
-            targetRoomID: liveID,
-            user.id,
-          ),
-          builder: (context, isCameraEnabled, _) {
-            return GestureDetector(
-              onTap: () {
-                ZegoUIKit().turnCameraOn(
-                  targetRoomID: liveID,
-                  !isCameraEnabled,
-                  userID: user.id,
+  final controllableForeground = Stack(
+    fit: StackFit.expand,
+    children: [
+      Positioned(
+        top: 15,
+        right: 0,
+        child: Row(
+          children: [
+            ValueListenableBuilder<bool>(
+              valueListenable: ZegoUIKit().getCameraStateNotifier(
+                targetRoomID: liveID,
+                user.id,
+              ),
+              builder: (context, isCameraEnabled, _) {
+                return GestureDetector(
+                  onTap: () {
+                    ZegoUIKit().turnCameraOn(
+                      targetRoomID: liveID,
+                      !isCameraEnabled,
+                      userID: user.id,
+                    );
+                  },
+                  child: Container(
+                    child: prebuiltImage(
+                      isCameraEnabled ? toolbarCameraNormal : toolbarCameraOff,
+                    ),
+                  ),
                 );
               },
-              child: Container(
-                child: prebuiltImage(
-                  isCameraEnabled ? toolbarCameraNormal : toolbarCameraOff,
-                ),
+            ),
+            SizedBox(width: size.width * 0.1),
+            ValueListenableBuilder<bool>(
+              valueListenable: ZegoUIKit().getMicrophoneStateNotifier(
+                targetRoomID: liveID,
+                user.id,
               ),
-            );
-          },
-        ),
-        SizedBox(width: size.width * 0.1),
-        ValueListenableBuilder<bool>(
-          valueListenable: ZegoUIKit().getMicrophoneStateNotifier(
-            targetRoomID: liveID,
-            user.id,
-          ),
-          builder: (context, isMicrophoneEnabled, _) {
-            return GestureDetector(
-              onTap: () {
-                ZegoUIKit().turnMicrophoneOn(
-                  targetRoomID: liveID,
-                  !isMicrophoneEnabled,
-                  userID: user.id,
+              builder: (context, isMicrophoneEnabled, _) {
+                return GestureDetector(
+                  onTap: () {
+                    ZegoUIKit().turnMicrophoneOn(
+                      targetRoomID: liveID,
+                      !isMicrophoneEnabled,
+                      userID: user.id,
 
-                  ///  if you don't want to stop co-hosting automatically when both camera and microphone are off,
-                  ///  set the [muteMode] parameter to true.
-                  ///
-                  ///  However, in this case, your [ZegoUIKitPrebuiltLiveStreamingConfig.stopCoHostingWhenMicCameraOff]
-                  ///  should also be set to false.
-                  muteMode: true,
+                      ///  if you don't want to stop co-hosting automatically when both camera and microphone are off,
+                      ///  set the [muteMode] parameter to true.
+                      ///
+                      ///  However, in this case, your [ZegoUIKitPrebuiltLiveStreamingConfig.stopCoHostingWhenMicCameraOff]
+                      ///  should also be set to false.
+                      muteMode: true,
+                    );
+                  },
+                  child: Container(
+                    child: prebuiltImage(
+                      isMicrophoneEnabled ? toolbarMicNormal : toolbarMicOff,
+                    ),
+                  ),
                 );
               },
-              child: Container(
-                child: prebuiltImage(
-                  isMicrophoneEnabled ? toolbarMicNormal : toolbarMicOff,
-                ),
-              ),
-            );
-          },
+            ),
+          ],
         ),
-      ],
-    ),
+      ),
+    ],
   );
 
   final displayForeground = Stack(
+    fit: StackFit.expand,
     children: [
       /// camera state
       Positioned(

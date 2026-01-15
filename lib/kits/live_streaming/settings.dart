@@ -637,30 +637,49 @@ class _LiveStreamingPageSettingsState extends State<LiveStreamingPageSettings> {
     return ValueListenableBuilder<List<String>>(
       valueListenable: LiveStreamingCache().roomIDList,
       builder: (context, roomIDList, _) {
-        return ValueListenableBuilder(
-            valueListenable: LiveStreamingCache().liveListMap,
-            builder: (context, liveList, _) {
-              return StringListListTextEditor(
-                tips: Translations.settings.liveListIdTips,
-                fontSize: 20.r,
-                leftHeader: Translations.settings.liveListIdHostID,
-                rightHeader: Translations.settings.liveListIdLiveID,
-                defaultLeftValues: liveList.keys.toList(),
-                defaultLeftRightMap: liveList,
-                defaultRightValues: roomIDList,
-                onAdd: (String hostID, String liveID) {
-                  LiveStreamingCache().addLiveList(hostID, liveID);
-                },
-                onUpdate: (String hostID, String liveID) {
-                  setState(() {
-                    LiveStreamingCache().addLiveList(hostID, liveID);
-                  });
-                },
-                onDelete: (String hostID) {
-                  LiveStreamingCache().removeLiveList(hostID);
-                },
-              );
-            });
+        return ValueListenableBuilder<Map<String, LiveListItem>>(
+          valueListenable: LiveStreamingCache().liveListMap,
+          builder: (context, liveList, _) {
+            final defaultLeftValues = liveList.keys.toList();
+            final defaultLeftRightMap = Map<String, String>.fromEntries(
+              liveList.entries.map(
+                (e) => MapEntry(e.key, e.value.liveID),
+              ),
+            );
+            final defaultLeftThirdMap = Map<String, bool>.fromEntries(
+              liveList.entries.map(
+                (e) => MapEntry(e.key, e.value.isPK),
+              ),
+            );
+            return StringListListTextEditor(
+              tips: Translations.settings.liveListIdTips,
+              fontSize: 20.r,
+              leftHeader: Translations.settings.liveListIdHostID,
+              rightHeader: Translations.settings.liveListIdLiveID,
+              thirdHeader: 'PK',
+              defaultLeftValues: defaultLeftValues,
+              defaultLeftRightMap: defaultLeftRightMap,
+              defaultRightValues: roomIDList,
+              defaultLeftThirdMap: defaultLeftThirdMap,
+              onAdd: (String hostID, String liveID) {
+                LiveStreamingCache().addLiveList(hostID, liveID);
+              },
+              onUpdate: (String hostID, String liveID) {
+                setState(() {
+                  LiveStreamingCache().updateLiveList(hostID, liveID);
+                });
+              },
+              onUpdateThird: (String hostID, bool isPK) {
+                setState(() {
+                  LiveStreamingCache().updateLiveListPK(hostID, isPK);
+                });
+              },
+              onDelete: (String hostID) {
+                LiveStreamingCache().removeLiveList(hostID);
+              },
+            );
+          },
+        );
       },
     );
   }

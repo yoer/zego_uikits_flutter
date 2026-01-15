@@ -65,6 +65,7 @@ class PKGridLayout extends ZegoLiveStreamingPKMixerLayout {
   Size getResolution() => const Size(1080, 960);
 
   @override
+
   /// 2 hosts: 1x2
   /// ┌-------┬-------┐
   /// |   1   |   2   |
