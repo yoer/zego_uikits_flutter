@@ -1,10 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
 
+// Project imports:
 import 'package:zego_uikits_demo/kits/live_streaming/cache.dart';
 
 ZegoLiveStreamingPKBattleConfig pkConfig() {
@@ -62,7 +64,7 @@ ZegoLiveStreamingPKBattleConfig pkConfig() {
 
 class PKGridLayout extends ZegoLiveStreamingPKMixerLayout {
   @override
-  Size getResolution() => const Size(1080, 960);
+  Size getResolution() => const Size(810, 720);
 
   @override
 
