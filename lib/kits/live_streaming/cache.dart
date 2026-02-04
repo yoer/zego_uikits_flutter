@@ -196,7 +196,7 @@ class LiveStreamingCache {
     roomIDList.value = [
       ...roomIDList.value,
       roomID,
-    ];
+    ]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -206,7 +206,7 @@ class LiveStreamingCache {
   void removeRoomID(String roomID) {
     final oldValue = roomIDList.value;
     oldValue.removeWhere((e) => e == roomID);
-    roomIDList.value = [...oldValue];
+    roomIDList.value = [...oldValue]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -938,9 +938,10 @@ class LiveStreamingCache {
         (prefs.get(_cacheRoomIDListKey) as List<Object?>? ?? [])
             .map((e) => e as String)
             .toList();
-    roomIDList.value = cacheRoomIDList.isNotEmpty
+    roomIDList.value = (cacheRoomIDList.isNotEmpty
         ? cacheRoomIDList
-        : LiveStreamingCache.defaultRoomIDList();
+        : LiveStreamingCache.defaultRoomIDList())
+      ..sort();
 
     final liveListMapJson = prefs.get(_cacheLiveListMapKey) as String? ?? '';
     try {

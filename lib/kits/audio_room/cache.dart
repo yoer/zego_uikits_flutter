@@ -354,7 +354,7 @@ class AudioRoomCache {
     roomIDList.value = [
       ...roomIDList.value,
       roomID,
-    ];
+    ]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -364,7 +364,7 @@ class AudioRoomCache {
   void removeRoomID(String roomID) {
     final oldValue = roomIDList.value;
     oldValue.removeWhere((e) => e == roomID);
-    roomIDList.value = [...oldValue];
+    roomIDList.value = [...oldValue]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -384,9 +384,10 @@ class AudioRoomCache {
         (prefs.get(_cacheRoomIDListKey) as List<Object?>? ?? [])
             .map((e) => e as String)
             .toList();
-    roomIDList.value = cacheRoomIDList.isNotEmpty
+    roomIDList.value = (cacheRoomIDList.isNotEmpty
         ? cacheRoomIDList
-        : AudioRoomCache.defaultRoomIDList();
+        : AudioRoomCache.defaultRoomIDList())
+      ..sort();
 
     _showBackground = prefs.get(_cacheShowBackgroundKey) as bool? ?? true;
     _showHostInfo = prefs.get(_cacheShowHostInfoKey) as bool? ?? true;

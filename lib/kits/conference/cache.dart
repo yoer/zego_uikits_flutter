@@ -279,7 +279,7 @@ class ConferenceCache {
     roomIDList.value = [
       ...roomIDList.value,
       roomID,
-    ];
+    ]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -289,7 +289,7 @@ class ConferenceCache {
   void removeRoomID(String roomID) {
     final oldValue = roomIDList.value;
     oldValue.removeWhere((e) => e == roomID);
-    roomIDList.value = [...oldValue];
+    roomIDList.value = [...oldValue]..sort();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setStringList(_cacheRoomIDListKey, roomIDList.value);
@@ -375,9 +375,10 @@ class ConferenceCache {
         (prefs.get(_cacheRoomIDListKey) as List<Object?>? ?? [])
             .map((e) => e as String)
             .toList();
-    roomIDList.value = cacheRoomIDList.isNotEmpty
+    roomIDList.value = (cacheRoomIDList.isNotEmpty
         ? cacheRoomIDList
-        : ConferenceCache.defaultRoomIDList();
+        : ConferenceCache.defaultRoomIDList())
+      ..sort();
 
     _videoAspectFill = prefs.get(_supportVideoModeKey) as bool? ?? true;
 

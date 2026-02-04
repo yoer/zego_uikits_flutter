@@ -57,7 +57,10 @@ class _RoomListState extends State<RoomList> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<String>>(
       valueListenable: widget.valueNotifier,
-      builder: (context, roomIDList, _) {
+      builder: (context, unsortedRoomIDList, _) {
+        /// sort the room list
+        final roomIDList = List<String>.from(unsortedRoomIDList)..sort();
+
         final emptyTips = Text(
           'The room list is empty, please add the list manually in settings.',
           style: TextStyle(
