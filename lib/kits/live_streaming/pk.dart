@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:zego_uikit_prebuilt_live_streaming/zego_uikit_prebuilt_live_streaming.dart';
+
 // Project imports:
 import 'package:zego_uikits_demo/data/assets.dart';
 import 'package:zego_uikits_demo/data/user.dart';
@@ -9,7 +12,6 @@ import 'package:zego_uikits_demo/firestore/kits_service.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/pk/config.dart';
 import 'package:zego_uikits_demo/kits/live_streaming/zego_page.dart';
 import 'package:zego_uikits_demo/kits/room_list.dart';
-
 import 'cache.dart';
 import 'foreground.dart';
 

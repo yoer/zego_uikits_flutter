@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:random_name_generator/random_name_generator.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,7 +34,7 @@ class LoginPageState extends State<LoginPage> {
 
     getUniqueUserId().then((userID) {
       userIdController.text = userID;
-      userNameController.text = 'user_$userID';
+      userNameController.text = RandomNames(Zone.us).fullName();
       buttonValidNotifier.value = true;
     });
   }
