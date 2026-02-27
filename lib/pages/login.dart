@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:random_name_generator/random_name_generator.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:random_name_generator/random_name_generator.dart';
 
 // Project imports:
 import 'package:zego_uikits_demo/common/connect_status.dart';

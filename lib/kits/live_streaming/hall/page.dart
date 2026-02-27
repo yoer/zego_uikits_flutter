@@ -35,7 +35,7 @@ class _LiveStreamingLiveHallPageState extends State<LiveStreamingLiveHallPage> {
   Widget build(BuildContext context) {
     return hallList(
         context.locale,
-        ZegoUIKitHallRoomListModel.fromActiveStreamUsers(
+        ZegoLiveStreamingHallListModel.fromActiveStreamUsers(
           activeStreamUsers: LiveStreamingCache()
               .liveListMap
               .value

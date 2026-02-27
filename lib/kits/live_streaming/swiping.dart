@@ -99,7 +99,8 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
                     /// 更新滑动页的主播间滑动上下文
                     config.swiping = ZegoLiveStreamingSwipingConfig(
                       streamMode: LiveStreamingCache().streamMode,
-                      model: ZegoUIKitHallRoomListModel.fromActiveStreamUsers(
+                      model:
+                          ZegoLiveStreamingSwipingModel.fromActiveStreamUsers(
                         activeStreamUsers: hallHosts,
                       ),
                     );
@@ -118,7 +119,7 @@ class _LiveStreamingSwipingPageState extends State<LiveStreamingSwipingPage> {
             padding: EdgeInsets.symmetric(
               vertical: 20.r,
               horizontal: 20.r,
-            ), // 设置高度和宽度
+            ),
           ),
           child: Text(
             Translations.tips.join,
