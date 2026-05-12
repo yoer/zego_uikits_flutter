@@ -49,6 +49,9 @@ class _GroupCallPageState extends State<GroupCallPage> {
           roomID: 'call_g_$callID',
           isGroup: true,
           isVideo: CallCache().turnOnCameraWhenJoining,
+          configQuery: (config) {
+            return config;
+          },
         ),
       ),
     );

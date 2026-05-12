@@ -28,71 +28,88 @@ class FcmService {
   }
 
   static Future<void> initialize() async {
-    if (_initialized) return;
+    debugPrint('FcmService.initialize: Starting...');
+    
+    if (_initialized) {
+      debugPrint('FcmService.initialize: Already initialized, skipping');
+      return;
+    }
 
     // Ensure Firebase is initialized (uses the same app name as KitsFirebaseService)
+    // Step 1: Ensure Firebase is initialized
     try {
       if (Firebase.apps.where((a) => a.name == firebaseProjectName).isEmpty) {
         await Firebase.initializeApp(
           name: firebaseProjectName,
           options: DefaultFirebaseOptions.currentPlatform,
         );
-      }
-    } catch (_) {
-      // Already initialized; ignore
+      } 
+    } catch (e) {
+      debugPrint('FcmService.initialize: Firebase configuration error (this is usually OK): $e');
     }
 
+    // Step 2: Configure local notifications
     await _configureLocalNotifications();
 
+    // Step 3: Request permissions
     if (Platform.isIOS) {
       await _requestPermissionIOS();
     } else if (Platform.isAndroid) {
       await _requestPermissionAndroid();
     }
 
-    // Retrieve and print the token (you can upload it to your server/Firestore here)
+    // Step 4: Get FCM token
     try {
-      // Add timeout mechanism to avoid infinite waiting
       final token = await _messaging.getToken().timeout(
-        const Duration(seconds: 10),
+        const Duration(seconds: 2),
         onTimeout: () {
           throw TimeoutException(
-              'FCM token request timeout', const Duration(seconds: 10));
+              'FCM token request timeout', const Duration(seconds: 2));
         },
       );
-      debugPrint('FCM token: $token');
     } catch (e) {
-      // Token fetch failure should not prevent the entire service initialization
-      debugPrint('FCM token fetch failed: $e');
+      debugPrint('FcmService.initialize: FCM token fetch failed (non-critical): $e');
     }
 
-    // Listen for token refresh
+    // Step 5: Listen for token refresh
     _messaging.onTokenRefresh.listen((newToken) {
-      debugPrint('FCM token refreshed: $newToken');
+      debugPrint('FcmService.initialize: FCM token refreshed: ${newToken.substring(0, 20)}...');
     });
 
-    // Foreground messages
+    // Step 6: Set up message listeners
     FirebaseMessaging.onMessage.listen(handleForegroundMessage);
-
-    // Tapping a notification to return to the app
+    
     FirebaseMessaging.onMessageOpenedApp.listen(handleMessageOpenedApp);
 
-    // Handle cold start launched via notification
-    final initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
-      handleMessageOpenedApp(initialMessage);
+    // Step 7: Handle cold start via notification (with timeout to avoid blocking)
+    try {
+      final initialMessage = await _messaging.getInitialMessage().timeout(
+        const Duration(seconds: 2),
+        onTimeout: () {
+          debugPrint('FcmService.initialize: getInitialMessage timeout (no notification launched app)');
+          return null;
+        },
+      );
+      if (initialMessage != null) {
+        handleMessageOpenedApp(initialMessage);
+      }
+    } catch (e) {
+      debugPrint('FcmService.initialize: getInitialMessage error (non-critical): $e');
     }
 
     _initialized = true;
+    debugPrint('FcmService.initialize: COMPLETED SUCCESSFULLY');
   }
 
   static Future<void> _configureLocalNotifications() async {
+    debugPrint('FcmService._configureLocalNotifications: Starting...');
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings();
 
     await _localNotifications.initialize(
       const InitializationSettings(android: androidInit, iOS: iosInit),
     );
+    debugPrint('FcmService._configureLocalNotifications: Initialized');
 
     if (Platform.isAndroid) {
       final android = _localNotifications.resolvePlatformSpecificImplementation<
@@ -103,30 +120,32 @@ class FcmService {
         description: 'Used for important notifications.',
         importance: Importance.max,
       ));
+      debugPrint('FcmService._configureLocalNotifications: Android channel created');
     }
   }
 
   static Future<void> _requestPermissionIOS() async {
+    debugPrint('FcmService._requestPermissionIOS: Requesting permission...');
     final settings = await _messaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,
       provisional: false,
     );
-    debugPrint('iOS Notification permission: ${settings.authorizationStatus}');
+    debugPrint('FcmService._requestPermissionIOS: Permission status: ${settings.authorizationStatus}');
   }
 
   static Future<void> _requestPermissionAndroid() async {
-    // Notification permission for Android 13+
+    debugPrint('FcmService._requestPermissionAndroid: Requesting permission...');
     await _messaging.requestPermission();
+    debugPrint('FcmService._requestPermissionAndroid: Permission requested');
   }
 
   static void handleForegroundMessage(RemoteMessage message) {
     final notification = message.notification;
     final android = notification?.android;
 
-    debugPrint('fcm handleForegroundMessage, ${notification?.title} '
-        '${notification?.body}');
+    debugPrint('FcmService.handleForegroundMessage: ${notification?.title} - ${notification?.body}');
 
     if (notification != null) {
       _localNotifications.show(

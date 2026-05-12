@@ -23,6 +23,7 @@ class ZegoCallPage extends StatefulWidget {
     required this.roomID,
     required this.isGroup,
     required this.isVideo,
+    required this.configQuery,
   });
 
   final int appID;
@@ -33,6 +34,8 @@ class ZegoCallPage extends StatefulWidget {
   final String roomID;
   final bool isVideo;
   final bool isGroup;
+  final ZegoUIKitPrebuiltCallConfig Function(ZegoUIKitPrebuiltCallConfig config)
+      configQuery;
 
   @override
   State<ZegoCallPage> createState() {
@@ -87,7 +90,7 @@ class _ZegoCallPageState extends State<ZegoCallPage> {
       );
     }
 
-    return config;
+    return widget.configQuery(config);
   }
 
   void onAudioRouteChanged() {

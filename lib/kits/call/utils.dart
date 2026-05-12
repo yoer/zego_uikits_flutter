@@ -275,6 +275,7 @@ ZegoUIKitPrebuiltCallConfig callConfig({
           ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
           : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall());
 
+  config.useSpeakerWhenJoining = CallCache().useSpeakerWhenJoining;
   config.audioVideoView.useVideoViewAspectFill = CallCache().videoAspectFill;
   config.avatarBuilder = (
     BuildContext context,
@@ -415,6 +416,11 @@ ZegoUIKitPrebuiltCallConfig callConfig({
   }
 
   config.translationText = CallInnerText.current(context.locale);
+
+  config.noResponseEnd = ZegoCallNoResponseEndConfig(
+    enabled: true,
+    timeoutSeconds: 3,
+  );
 
   return config;
 }
