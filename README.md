@@ -1,6 +1,8 @@
 - [中文](README.zh.md)
 - [हिन्दी](README.hi.md)
 
+Baseline: all_in_one demo (ZIMKit integration verified against code on 2026-10-14)
+
 # Code Structure
 
 ```
@@ -299,7 +301,11 @@ Before using, you need to register Firestore and ZEGO AppID/AppSign.
         </div>
     </div>
 
-- chat
+- chat (ZIMKit)
+  - Start one-to-one chats, create or join group chats, and manage conversations from the chat screen.
+  - Send text, voice, image, video, and file messages. The message page also supports common message actions and multi-select.
+  - Open group details to view members, invite users by ID, and manage member roles according to the current user's permissions.
+  - Use the voice and video call actions in the composer to start the existing Call Kit flow. The demo also includes a custom red-envelope message.
     <div style="overflow-x: auto; white-space: nowrap;">
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/chat_1.png" alt="chat" style="width: 150px;">
