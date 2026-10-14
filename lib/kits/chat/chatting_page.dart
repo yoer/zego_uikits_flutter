@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+import 'package:zego_zim_audio/zego_zim_audio.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 import 'chatting_page_mixins.dart';
@@ -40,8 +41,8 @@ class _DemoChattingMessageListPageState
     subscriptions = [
       if (widget.conversationType == ZIMConversationType.group)
         ZIMKit().getGroupStateChangedEventStream().listen(
-          onGroupStateChangedEvent,
-        ),
+              onGroupStateChangedEvent,
+            ),
     ];
     // When on the chat page, the notification for that chat page is not displayed.
     NotificationManager().ignoreConversationID = widget.conversationID;
@@ -142,14 +143,14 @@ class _DemoChattingMessageListPageState
               MaterialPageRoute(
                 builder: (context) =>
                     widget.conversationType == ZIMConversationType.group
-                    ? ZIMKitGroupDetailPage(
-                        groupID: widget.conversationID,
-                        onInviteMembers: _showInviteMembersDialog,
-                      )
-                    : ZIMKitSingleChatDetailPage(
-                        conversationID: widget.conversationID,
-                        conversationType: widget.conversationType,
-                      ),
+                        ? ZIMKitGroupDetailPage(
+                            groupID: widget.conversationID,
+                            onInviteMembers: _showInviteMembersDialog,
+                          )
+                        : ZIMKitSingleChatDetailPage(
+                            conversationID: widget.conversationID,
+                            conversationType: widget.conversationType,
+                          ),
               ),
             );
           },
@@ -192,8 +193,7 @@ class _DemoChattingMessageListPageState
             'onMessageSent error: ${message.info.error!.message}, ${message.info.error!.code}',
           );
           BotToast.showText(
-            text:
-                'message send failed:'
+            text: 'message send failed:'
                 '${message.info.error!.message}, '
                 'code:${message.info.error!.code}',
             contentColor: Colors.red,
@@ -211,9 +211,8 @@ class _DemoChattingMessageListPageState
     List<ZIMKitGroupMemberInfo> currentMembers,
   ) async {
     final controller = TextEditingController();
-    final existingUserIDs = currentMembers
-        .map((member) => member.userID)
-        .toSet();
+    final existingUserIDs =
+        currentMembers.map((member) => member.userID).toSet();
     final result = await showDialog<List<String>>(
       context: context,
       builder: (context) => AlertDialog(
@@ -256,7 +255,7 @@ class _DemoChattingMessageListPageState
         debugPrint('onRecordFailed: $errorCode');
         var errorMessage = 'record failed:$errorCode';
         switch (errorCode) {
-          case 32:
+          case ZIMAudioErrorCode.recorderTimeTooShort:
             errorMessage = 'recording time is too short';
             break;
         }
