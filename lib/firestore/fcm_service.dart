@@ -107,7 +107,7 @@ class FcmService {
     const iosInit = DarwinInitializationSettings();
 
     await _localNotifications.initialize(
-      const InitializationSettings(android: androidInit, iOS: iosInit),
+      settings: const InitializationSettings(android: androidInit, iOS: iosInit),
     );
     debugPrint('FcmService._configureLocalNotifications: Initialized');
 
@@ -149,10 +149,10 @@ class FcmService {
 
     if (notification != null) {
       _localNotifications.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
+        id: notification.hashCode,
+        title: notification.title,
+        body: notification.body,
+        notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             'high_importance_channel',
             'High Importance Notifications',

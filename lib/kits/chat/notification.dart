@@ -53,7 +53,7 @@ class NotificationManager {
     }
 
     await flutterLocalNotificationsPlugin.initialize(
-      const InitializationSettings(
+      settings: const InitializationSettings(
         android: AndroidInitializationSettings('@drawable/message'),
         iOS: DarwinInitializationSettings(
             // requestSoundPermission: true,
@@ -124,10 +124,10 @@ class NotificationManager {
       });
 
       await flutterLocalNotificationsPlugin.show(
-        notificationID,
-        senderName,
-        content,
-        const NotificationDetails(
+        id: notificationID,
+        title: senderName,
+        body: content,
+        notificationDetails: const NotificationDetails(
           android: AndroidNotificationDetails(
             demoChannelID,
             demoChannelName,

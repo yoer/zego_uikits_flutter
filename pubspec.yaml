@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  zego_zim: ^2.28.0
+  zego_zim: ^3.2.0
   zego_zim_audio: ^1.0.0+7
 
   zego_uikit: ^2.29.4
@@ -36,12 +36,12 @@ dependencies:
   device_info_plus: any
   shared_preferences: ^2.2.3
   fluttertoast: ^10.0.2
-  cached_network_image: ^3.4.1
-  connectivity_plus: ^6.1.0
+  cached_network_image: ^4.0.4
+  connectivity_plus: ^7.3.2
   introduction_screen: ^5.0.1
   easy_localization: ^3.0.7
   easy_localization_loader: ^2.0.2
-  flutter_local_notifications: ^19.4.2
+  flutter_local_notifications: ^22.3.2
   flutter_email_sender: ^7.0.0
   url_launcher: ^6.3.1
   permission_handler: ^13.0.2
@@ -60,6 +60,7 @@ dependencies:
 
 dependency_overrides:
   intl: ^0.20.2
+  connectivity_plus: ^7.3.2
   flutter_dtmf:
     path: ./3rdparty/flutter_dtmf-3.0.2
 
