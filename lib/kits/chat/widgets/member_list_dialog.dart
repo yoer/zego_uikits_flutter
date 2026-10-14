@@ -31,12 +31,14 @@ Future<dynamic> showDefaultGroupMemberListDialog(
     ZIMGroupMemberInfo memberItem,
     String memberItemName,
   ) {
+    final avatarUrl = memberItem.userAvatarUrl;
+
     return CachedNetworkImage(
       width: 60,
       height: 60,
-      imageUrl: memberItem.memberAvatarUrl.isEmpty
+      imageUrl: avatarUrl.isEmpty
           ? 'https://robohash.org/${memberItem.userID}.png?set=set4'
-          : memberItem.memberAvatarUrl,
+          : avatarUrl,
       fit: BoxFit.cover,
       progressIndicatorBuilder: (__, _, ___) => CircleAvatar(
         child: Text(memberItemName[0]),
