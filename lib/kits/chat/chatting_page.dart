@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+import 'package:zego_zim_audio/zego_zim_audio.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
 import 'chatting_page_mixins.dart';
@@ -113,20 +114,6 @@ class _DemoChattingMessageListPageState
           ZIMKitMessageInputAction.more(
             buildZIMKitInputMoreActionItem(
               context,
-              icon: Icons.call,
-              label: 'Call',
-              onTap: () {
-                showCallOptions(
-                  context: context,
-                  conversationID: widget.conversationID,
-                  conversationType: widget.conversationType,
-                );
-              },
-            ),
-          ),
-          ZIMKitMessageInputAction.more(
-            buildZIMKitInputMoreActionItem(
-              context,
               icon: Icons.attach_money,
               backgroundColor: Colors.redAccent,
               label: 'Red Envelop',
@@ -154,21 +141,23 @@ class _DemoChattingMessageListPageState
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ZIMKitSingleChatDetailPage(
-                  conversationID: widget.conversationID,
-                  conversationType: widget.conversationType,
-                ),
+                builder: (context) =>
+                    widget.conversationType == ZIMConversationType.group
+                        ? ZIMKitGroupDetailPage(
+                            groupID: widget.conversationID,
+                            onInviteMembers: _showInviteMembersDialog,
+                          )
+                        : ZIMKitSingleChatDetailPage(
+                            conversationID: widget.conversationID,
+                            conversationType: widget.conversationType,
+                          ),
               ),
             );
           },
         ),
       ],
       messageList: ZIMKitMessageListStyles(
-        messageContentBuilder: (
-          context,
-          message,
-          defaultWidget,
-        ) {
+        messageContentBuilder: (context, message, defaultWidget) {
           if (message.type == ZIMMessageType.custom &&
               message.customContent?.type ==
                   DemoCustomMessageType.redEnvelope.index) {
@@ -190,6 +179,14 @@ class _DemoChattingMessageListPageState
 
   ZIMKitMessageInputEvents _messageInputEvents() {
     return ZIMKitMessageInputEvents(
+      onCallTap: (button) {
+        makeCallFromInputButton(
+          context: context,
+          conversationID: widget.conversationID,
+          conversationType: widget.conversationType,
+          isVideoCall: button == ZIMKitInputButtonName.videoCall,
+        );
+      },
       onMessageSent: (ZIMKitMessage message) {
         if (message.info.error != null) {
           debugPrint(
@@ -209,6 +206,48 @@ class _DemoChattingMessageListPageState
     );
   }
 
+  Future<List<String>?> _showInviteMembersDialog(
+    BuildContext context,
+    List<ZIMKitGroupMemberInfo> currentMembers,
+  ) async {
+    final controller = TextEditingController();
+    final existingUserIDs =
+        currentMembers.map((member) => member.userID).toSet();
+    final result = await showDialog<List<String>>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add users to group'),
+        content: TextField(
+          controller: controller,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'User IDs',
+            hintText: 'Separate IDs with commas',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(
+              controller.text
+                  .split(',')
+                  .map((id) => id.trim())
+                  .where((id) => id.isNotEmpty && !existingUserIDs.contains(id))
+                  .toList(),
+            ),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    return result;
+  }
+
   ZIMKitAudioRecordEvents _audioRecordEvents() {
     return ZIMKitAudioRecordEvents(
       onFailed: (int errorCode) {
@@ -216,7 +255,7 @@ class _DemoChattingMessageListPageState
         debugPrint('onRecordFailed: $errorCode');
         var errorMessage = 'record failed:$errorCode';
         switch (errorCode) {
-          case 32:
+          case ZIMAudioErrorCode.recorderTimeTooShort:
             errorMessage = 'recording time is too short';
             break;
         }

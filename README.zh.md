@@ -1,6 +1,8 @@
 - [English](README.md)
 - [हिन्दी](README.hi.md)
 
+基准：all_in_one demo（ZIMKit 集成，2026-10-14 与代码核对）
+
 # 代码结构
 
 ```
@@ -303,7 +305,11 @@ demo中介绍了五个kit的基本功能，通过firestore简单的将虚拟用�
     </div>
 
 
-- chat
+- chat（ZIMKit）
+  - 支持发起单聊、创建或加入群聊，并在聊天入口管理会话。
+  - 支持发送文本、语音、图片、视频和文件；消息页支持常用消息操作和多选。
+  - 群详情页可查看成员、按用户 ID 邀请成员，并按当前用户权限管理群成员角色。
+  - 输入框里的语音和视频呼叫入口接入现有 Call Kit；群聊会邀请其他群成员，超过单次通话人数上限时由用户选择本次通话对象。demo 还展示了红包自定义消息。
     <div style="overflow-x: auto; white-space: nowrap;">
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/chat_1.png" alt="chat" style="width: 150px;">
