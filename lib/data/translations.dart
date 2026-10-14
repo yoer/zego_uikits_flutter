@@ -333,4 +333,16 @@ class TranslationsChat {
   String get groupIdPlaceHolder => tr('${base}group_id_place_holder');
   String get userIdsPlaceHolder => tr('${base}user_ids_place_holder');
   String get userIdsTips => tr('${base}user_ids_tips');
+  String get callMemberSelectionTitle =>
+      tr('${base}call_member_selection_title');
+  String callMemberSelectionTip(int max) =>
+      tr('${base}call_member_selection_tip', args: [max.toString()]);
+  String callMemberSelectionCount(int selected, int max) => tr(
+        '${base}call_member_selection_count',
+        args: [selected.toString(), max.toString()],
+      );
+  String get startCall => tr('${base}start_call');
+  String get callNoOtherMembers => tr('${base}call_no_other_members');
+  String get callInvitationFailed => tr('${base}call_invitation_failed');
+  String get callStartFailed => tr('${base}call_start_failed');
 }

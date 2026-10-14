@@ -1,23 +1,97 @@
-import 'dart:convert';
+import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+import 'package:zego_zim/zego_zim.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
+import 'package:zego_uikits_demo/data/translations.dart';
 
 enum DemoCustomMessageType { redEnvelope }
 
+const int maxGroupCallInviteeCount = 9;
+
+typedef GroupMemberPageQuery = Future<ZIMGroupMemberListQueriedResult> Function(
+  String groupID,
+  ZIMGroupMemberQueryConfig config,
+);
+
+Future<List<ZegoCallUser>> queryGroupCallInvitees({
+  required String groupID,
+  required String currentUserID,
+  GroupMemberPageQuery? queryPage,
+}) async {
+  final query = queryPage ??
+      (groupID, config) {
+        final zim = ZIM.getInstance();
+        if (zim == null) {
+          throw StateError('ZIM is not initialized');
+        }
+        return zim.queryGroupMemberList(groupID, config);
+      };
+
+  final inviteesByID = <String, ZegoCallUser>{};
+  final seenNextFlags = <int>{};
+  var nextFlag = 0;
+
+  while (true) {
+    final result = await query(
+      groupID,
+      ZIMGroupMemberQueryConfig(count: 100, nextFlag: nextFlag),
+    );
+
+    for (final member in result.userList) {
+      if (member.userID.isEmpty || member.userID == currentUserID) {
+        continue;
+      }
+
+      final nickname = member.memberNickname.trim();
+      final name = nickname.isNotEmpty ? nickname : member.userName;
+      inviteesByID[member.userID] = ZegoCallUser(
+        member.userID,
+        name.isNotEmpty ? name : member.userID,
+      );
+    }
+
+    if (result.nextFlag == 0) {
+      break;
+    }
+    if (!seenNextFlags.add(result.nextFlag)) {
+      throw StateError('Group member query pagination did not advance');
+    }
+    nextFlag = result.nextFlag;
+  }
+
+  return inviteesByID.values.toList(growable: false);
+}
+
+List<ZegoCallUser> selectGroupCallInvitees({
+  required List<ZegoCallUser> availableInvitees,
+  required Set<String> selectedUserIDs,
+}) {
+  final selected = availableInvitees
+      .where((invitee) => selectedUserIDs.contains(invitee.id))
+      .toList(growable: false);
+  if (selected.length > maxGroupCallInviteeCount) {
+    throw ArgumentError.value(
+      selected.length,
+      'selectedUserIDs',
+      'A group call can invite at most $maxGroupCallInviteeCount users.',
+    );
+  }
+
+  return selected;
+}
+
 mixin DemoChattingMessageListPageCallMixin {
   void makeCallFromInputButton({
+    required BuildContext context,
     required String conversationID,
     required ZIMConversationType conversationType,
     required bool isVideoCall,
   }) {
     _makeCall(
+      context: context,
       isVideoCall: isVideoCall,
-      userID: conversationID,
       conversationID: conversationID,
       conversationType: conversationType,
     );
@@ -28,17 +102,10 @@ mixin DemoChattingMessageListPageCallMixin {
     required String conversationID,
     required ZIMConversationType conversationType,
   }) {
-    // Get the call buttons using the original logic
-    final callButtons = _peerChatCallButtons(
-      context,
-      conversationID,
-      conversationType,
-    );
-
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) {
+      builder: (sheetContext) {
         return Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -53,14 +120,12 @@ mixin DemoChattingMessageListPageCallMixin {
               children: [
                 _audioCallButton(
                   context: context,
-                  callButtons: callButtons,
                   conversationID: conversationID,
                   conversationType: conversationType,
                 ),
                 const Divider(height: 1),
                 _videoCallButton(
                   context: context,
-                  callButtons: callButtons,
                   conversationID: conversationID,
                   conversationType: conversationType,
                 ),
@@ -68,7 +133,7 @@ mixin DemoChattingMessageListPageCallMixin {
                 _buildCallOption(
                   label: 'Cancel',
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.pop(sheetContext);
                   },
                   textColor: Colors.black54,
                 ),
@@ -83,7 +148,6 @@ mixin DemoChattingMessageListPageCallMixin {
 
   Widget _audioCallButton({
     required BuildContext context,
-    required List<Widget> callButtons,
     required String conversationID,
     required ZIMConversationType conversationType,
   }) {
@@ -92,25 +156,18 @@ mixin DemoChattingMessageListPageCallMixin {
       label: 'Audio Call',
       onTap: () {
         Navigator.pop(context);
-        // Trigger the audio call button (isVideoCall: false)
-        if (callButtons.length > 1) {
-          // callButtons[1] is audio call (isVideoCall: false)
-          // We need to programmatically trigger it
-          // For now, show the call UI manually
-          _makeCall(
-            isVideoCall: false,
-            userID: conversationID,
-            conversationID: conversationID,
-            conversationType: conversationType,
-          );
-        }
+        _makeCall(
+          context: context,
+          isVideoCall: false,
+          conversationID: conversationID,
+          conversationType: conversationType,
+        );
       },
     );
   }
 
   Widget _videoCallButton({
     required BuildContext context,
-    required List<Widget> callButtons,
     required String conversationID,
     required ZIMConversationType conversationType,
   }) {
@@ -119,76 +176,201 @@ mixin DemoChattingMessageListPageCallMixin {
       label: 'Video Call',
       onTap: () {
         Navigator.pop(context);
-        // Trigger the video call button (isVideoCall: true)
-        if (callButtons.isNotEmpty) {
-          // callButtons[0] is video call (isVideoCall: true)
-          _makeCall(
-            isVideoCall: true,
-            userID: conversationID,
-            conversationID: conversationID,
-            conversationType: conversationType,
-          );
-        }
+        _makeCall(
+          context: context,
+          isVideoCall: true,
+          conversationID: conversationID,
+          conversationType: conversationType,
+        );
       },
     );
   }
 
-  List<Widget> _peerChatCallButtons(
-    BuildContext context,
-    String conversationID,
-    ZIMConversationType type,
-  ) {
-    return [
-      for (final isVideoCall in [true, false])
-        ZegoSendCallInvitationButton(
-          iconSize: const Size(40, 40),
-          buttonSize: const Size(50, 50),
-          isVideoCall: isVideoCall,
-          resourceID: 'zego_data',
-          invitees: [
-            ZegoUIKitUser(
-              id: conversationID,
-              name: ZIMKit().getConversation(conversationID, type).value.name,
-            ),
-          ],
-          onPressed: (String code, String message, List<String> errorInvitees) {
-            var log = '';
-            if (errorInvitees.isNotEmpty) {
-              log = "User doesn't exist or is offline: ${errorInvitees[0]}";
-              if (code.isNotEmpty) {
-                log += ', code: $code, message:$message';
-              }
-            } else if (code.isNotEmpty) {
-              log = 'code: $code, message:$message';
-            }
-            if (log.isEmpty) {
-              return;
-            }
-
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(log)));
-          },
-        ),
-    ];
-  }
-
   void _makeCall({
-    required String userID,
+    required BuildContext context,
     required bool isVideoCall,
     required String conversationID,
     required ZIMConversationType conversationType,
   }) {
-    // Use the original call logic from peerChatCallButtons
-    ZegoUIKitPrebuiltCallInvitationService().send(
-      invitees: [
-        ZegoCallUser(
-          userID,
-          ZIMKit().getConversation(conversationID, conversationType).value.name,
-        ),
-      ],
-      isVideoCall: isVideoCall,
-      resourceID: 'zego_data',
+    unawaited(
+      _sendCallInvitation(
+        context: context,
+        messenger: ScaffoldMessenger.maybeOf(context),
+        isVideoCall: isVideoCall,
+        conversationID: conversationID,
+        conversationType: conversationType,
+      ),
     );
+  }
+
+  Future<void> _sendCallInvitation({
+    required BuildContext context,
+    required ScaffoldMessengerState? messenger,
+    required bool isVideoCall,
+    required String conversationID,
+    required ZIMConversationType conversationType,
+  }) async {
+    try {
+      final List<ZegoCallUser> invitees;
+      if (conversationType == ZIMConversationType.group) {
+        final currentUserID = ZIMKit().currentUser()?.baseInfo.userID;
+        if (currentUserID == null || currentUserID.isEmpty) {
+          throw StateError('Current user is not logged in');
+        }
+
+        final groupInvitees = await queryGroupCallInvitees(
+          groupID: conversationID,
+          currentUserID: currentUserID,
+        );
+        if (groupInvitees.isEmpty) {
+          _showCallError(
+            messenger,
+            Translations.chat.callNoOtherMembers,
+          );
+          return;
+        }
+
+        if (groupInvitees.length > maxGroupCallInviteeCount) {
+          if (!context.mounted) {
+            return;
+          }
+
+          final selectedInvitees = await _selectGroupCallInvitees(
+            context: context,
+            availableInvitees: groupInvitees,
+          );
+          if (selectedInvitees == null) {
+            return;
+          }
+          invitees = selectedInvitees;
+        } else {
+          invitees = groupInvitees;
+        }
+      } else {
+        invitees = [
+          ZegoCallUser(
+            conversationID,
+            ZIMKit()
+                .getConversation(conversationID, conversationType)
+                .value
+                .name,
+          ),
+        ];
+      }
+
+      final sent = await ZegoUIKitPrebuiltCallInvitationService().send(
+        invitees: invitees,
+        isVideoCall: isVideoCall,
+        resourceID: 'zego_data',
+      );
+      if (!sent) {
+        _showCallError(messenger, Translations.chat.callInvitationFailed);
+      }
+    } catch (error, stackTrace) {
+      debugPrint('Failed to prepare the call invitation: $error\n$stackTrace');
+      _showCallError(
+        messenger,
+        Translations.chat.callStartFailed,
+      );
+    }
+  }
+
+  Future<List<ZegoCallUser>?> _selectGroupCallInvitees({
+    required BuildContext context,
+    required List<ZegoCallUser> availableInvitees,
+  }) {
+    final selectedUserIDs = <String>{};
+    return showDialog<List<ZegoCallUser>>(
+      context: context,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(Translations.chat.callMemberSelectionTitle),
+              content: SizedBox(
+                width: double.maxFinite,
+                height: 360,
+                child: Column(
+                  children: [
+                    Text(
+                      Translations.chat.callMemberSelectionTip(
+                        maxGroupCallInviteeCount,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        Translations.chat.callMemberSelectionCount(
+                          selectedUserIDs.length,
+                          maxGroupCallInviteeCount,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: availableInvitees.length,
+                        itemBuilder: (context, index) {
+                          final invitee = availableInvitees[index];
+                          final isSelected = selectedUserIDs.contains(
+                            invitee.id,
+                          );
+                          final isLimitReached = selectedUserIDs.length >=
+                              maxGroupCallInviteeCount;
+                          return CheckboxListTile(
+                            value: isSelected,
+                            title: Text(invitee.name),
+                            subtitle: Text(invitee.id),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: !isSelected && isLimitReached
+                                ? null
+                                : (selected) {
+                                    setState(() {
+                                      if (selected == true) {
+                                        selectedUserIDs.add(invitee.id);
+                                      } else {
+                                        selectedUserIDs.remove(invitee.id);
+                                      }
+                                    });
+                                  },
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: Text(Translations.tips.cancel),
+                ),
+                TextButton(
+                  onPressed: selectedUserIDs.isEmpty
+                      ? null
+                      : () => Navigator.of(dialogContext).pop(
+                            selectGroupCallInvitees(
+                              availableInvitees: availableInvitees,
+                              selectedUserIDs: selectedUserIDs,
+                            ),
+                          ),
+                  child: Text(Translations.chat.startCall),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showCallError(ScaffoldMessengerState? messenger, String message) {
+    if (messenger?.mounted != true) {
+      return;
+    }
+
+    messenger!.showSnackBar(SnackBar(content: Text(message)));
   }
 
   Widget _buildCallOption({

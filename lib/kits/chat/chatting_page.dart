@@ -180,6 +180,7 @@ class _DemoChattingMessageListPageState
     return ZIMKitMessageInputEvents(
       onCallTap: (button) {
         makeCallFromInputButton(
+          context: context,
           conversationID: widget.conversationID,
           conversationType: widget.conversationType,
           isVideoCall: button == ZIMKitInputButtonName.videoCall,
