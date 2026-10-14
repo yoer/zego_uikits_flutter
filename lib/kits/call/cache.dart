@@ -10,6 +10,7 @@ import 'invitation/history.dart';
 
 class CallInvitationCache {
   final historyNotifier = ValueNotifier<List<CallRecord>>([]);
+  final configNotifier = ValueNotifier<int>(0);
 
   int _timeoutSecond = 30;
   String _resourceID = "zego_data";
@@ -31,7 +32,7 @@ class CallInvitationCache {
   bool _uiUseVideoViewAspectFill = false;
   bool _uiDefaultMicrophoneOn = true;
   bool _uiDefaultCameraOn = true;
-  bool _uiDefaultSpeakerOn = true;
+  bool _uiDefaultSpeakerOn = false;
   bool _uiShowMainButtonsText = false;
   bool _uiShowSubButtonsText = true;
 
@@ -47,6 +48,10 @@ class CallInvitationCache {
   CallRecord? queryHistory(String callID) {
     final index = historyNotifier.value.indexWhere((e) => e.callID == callID);
     return -1 != index ? historyNotifier.value[index] : null;
+  }
+
+  void _notifyConfigChanged() {
+    configNotifier.value++;
   }
 
   void addHistory(CallRecord value) {
@@ -94,6 +99,7 @@ class CallInvitationCache {
   bool get supportMissedNotificationReDial => _supportMissedNotificationReDial;
   set supportMissedNotificationReDial(bool value) {
     _supportMissedNotificationReDial = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cacheSupportMissNotificationReDialKey, value);
@@ -103,6 +109,7 @@ class CallInvitationCache {
   bool get supportMissedNotification => _supportMissedNotification;
   set supportMissedNotification(bool value) {
     _supportMissedNotification = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cacheSupportMissNotificationKey, value);
@@ -112,6 +119,7 @@ class CallInvitationCache {
   bool get canInvitingInCalling => _canInvitingInCalling;
   set canInvitingInCalling(bool value) {
     _canInvitingInCalling = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cacheSupportInvitingInCallingKey, value);
@@ -121,6 +129,7 @@ class CallInvitationCache {
   bool get onlyInitiatorCanInviteInCalling => _onlyInitiatorCanInviteInCalling;
   set onlyInitiatorCanInviteInCalling(bool value) {
     _onlyInitiatorCanInviteInCalling = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_cacheOnlyInitiatorCanInviteInCallingKey, value);
@@ -130,6 +139,7 @@ class CallInvitationCache {
   bool get safeArea => _safeArea;
   set safeArea(bool value) {
     _safeArea = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_safeAreaKey, value);
@@ -139,6 +149,7 @@ class CallInvitationCache {
   int get timeoutSecond => _timeoutSecond;
   set timeoutSecond(int value) {
     _timeoutSecond = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setInt(_cacheTimeoutSecondKey, value);
@@ -148,6 +159,7 @@ class CallInvitationCache {
   String get resourceID => _resourceID;
   set resourceID(String value) {
     _resourceID = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setString(_cacheResourceIDKey, value);
@@ -157,6 +169,7 @@ class CallInvitationCache {
   bool get uiShowAvatar => _uiShowAvatar;
   set uiShowAvatar(bool value) {
     _uiShowAvatar = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiShowAvatarKey, value);
     });
@@ -165,6 +178,7 @@ class CallInvitationCache {
   bool get uiShowCentralName => _uiShowCentralName;
   set uiShowCentralName(bool value) {
     _uiShowCentralName = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiShowCentralNameKey, value);
     });
@@ -173,6 +187,7 @@ class CallInvitationCache {
   bool get uiShowCallingText => _uiShowCallingText;
   set uiShowCallingText(bool value) {
     _uiShowCallingText = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiShowCallingTextKey, value);
     });
@@ -181,6 +196,7 @@ class CallInvitationCache {
   bool get uiUseVideoViewAspectFill => _uiUseVideoViewAspectFill;
   set uiUseVideoViewAspectFill(bool value) {
     _uiUseVideoViewAspectFill = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiUseVideoViewAspectFillKey, value);
     });
@@ -189,6 +205,7 @@ class CallInvitationCache {
   bool get uiDefaultMicrophoneOn => _uiDefaultMicrophoneOn;
   set uiDefaultMicrophoneOn(bool value) {
     _uiDefaultMicrophoneOn = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiDefaultMicrophoneOnKey, value);
     });
@@ -197,6 +214,7 @@ class CallInvitationCache {
   bool get uiDefaultCameraOn => _uiDefaultCameraOn;
   set uiDefaultCameraOn(bool value) {
     _uiDefaultCameraOn = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiDefaultCameraOnKey, value);
     });
@@ -205,6 +223,7 @@ class CallInvitationCache {
   bool get uiDefaultSpeakerOn => _uiDefaultSpeakerOn;
   set uiDefaultSpeakerOn(bool value) {
     _uiDefaultSpeakerOn = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiDefaultSpeakerOnKey, value);
     });
@@ -213,6 +232,7 @@ class CallInvitationCache {
   bool get uiShowMainButtonsText => _uiShowMainButtonsText;
   set uiShowMainButtonsText(bool value) {
     _uiShowMainButtonsText = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiShowMainButtonsTextKey, value);
     });
@@ -221,6 +241,7 @@ class CallInvitationCache {
   bool get uiShowSubButtonsText => _uiShowSubButtonsText;
   set uiShowSubButtonsText(bool value) {
     _uiShowSubButtonsText = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiShowSubButtonsTextKey, value);
     });
@@ -231,6 +252,7 @@ class CallInvitationCache {
       _uiInviterMinimizedCancelButtonVisible;
   set uiInviterMinimizedCancelButtonVisible(bool value) {
     _uiInviterMinimizedCancelButtonVisible = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiInviterMinimizedCancelButtonVisibleKey, value);
     });
@@ -239,6 +261,7 @@ class CallInvitationCache {
   bool get uiInviterMinimizedShowTips => _uiInviterMinimizedShowTips;
   set uiInviterMinimizedShowTips(bool value) {
     _uiInviterMinimizedShowTips = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiInviterMinimizedShowTipsKey, value);
     });
@@ -249,6 +272,7 @@ class CallInvitationCache {
       _uiInviteeMinimizedAcceptButtonVisible;
   set uiInviteeMinimizedAcceptButtonVisible(bool value) {
     _uiInviteeMinimizedAcceptButtonVisible = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiInviteeMinimizedAcceptButtonVisibleKey, value);
     });
@@ -258,6 +282,7 @@ class CallInvitationCache {
       _uiInviteeMinimizedDeclineButtonVisible;
   set uiInviteeMinimizedDeclineButtonVisible(bool value) {
     _uiInviteeMinimizedDeclineButtonVisible = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiInviteeMinimizedDeclineButtonVisibleKey, value);
     });
@@ -266,6 +291,7 @@ class CallInvitationCache {
   bool get uiInviteeMinimizedShowTips => _uiInviteeMinimizedShowTips;
   set uiInviteeMinimizedShowTips(bool value) {
     _uiInviteeMinimizedShowTips = value;
+    _notifyConfigChanged();
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_uiInviteeMinimizedShowTipsKey, value);
     });
@@ -274,6 +300,7 @@ class CallInvitationCache {
   bool get showVideoOnInvitationCall => _showVideoOnInvitationCall;
   set showVideoOnInvitationCall(bool value) {
     _showVideoOnInvitationCall = value;
+    _notifyConfigChanged();
 
     SharedPreferences.getInstance().then((prefs) {
       prefs.setBool(_showVideoOnInvitationCallKey, value);
@@ -306,7 +333,7 @@ class CallInvitationCache {
     _uiDefaultMicrophoneOn =
         prefs.get(_uiDefaultMicrophoneOnKey) as bool? ?? true;
     _uiDefaultCameraOn = prefs.get(_uiDefaultCameraOnKey) as bool? ?? true;
-    _uiDefaultSpeakerOn = prefs.get(_uiDefaultSpeakerOnKey) as bool? ?? true;
+    _uiDefaultSpeakerOn = prefs.get(_uiDefaultSpeakerOnKey) as bool? ?? false;
     _uiShowMainButtonsText =
         prefs.get(_uiShowMainButtonsTextKey) as bool? ?? false;
     _uiShowSubButtonsText =
@@ -327,6 +354,8 @@ class CallInvitationCache {
     historyNotifier.value = (prefs.getStringList(_cacheHistoryKey) ?? [])
         .map((e) => CallRecord.fromJson(e))
         .toList();
+
+    _notifyConfigChanged();
   }
 
   Future<void> clear() async {
@@ -345,6 +374,7 @@ class CallInvitationCache {
     _uiUseVideoViewAspectFill = false;
     _uiDefaultMicrophoneOn = true;
     _uiDefaultCameraOn = true;
+    _uiDefaultSpeakerOn = false;
     _uiShowMainButtonsText = false;
     _uiShowSubButtonsText = true;
 
@@ -382,6 +412,8 @@ class CallInvitationCache {
     prefs.remove(_uiInviteeMinimizedAcceptButtonVisibleKey);
     prefs.remove(_uiInviteeMinimizedDeclineButtonVisibleKey);
     prefs.remove(_uiInviteeMinimizedShowTipsKey);
+
+    _notifyConfigChanged();
   }
 
   final String _cacheSupportMissNotificationKey = 'cache_call_i_s_miss_call';

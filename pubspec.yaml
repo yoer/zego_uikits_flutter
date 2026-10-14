@@ -15,15 +15,15 @@ dependencies:
   zego_zim: ^2.28.0
   zego_zim_audio: ^1.0.0+7
 
-  zego_uikit: ^2.28.32
-  zego_uikit_signaling_plugin: ^2.8.19
-  zego_uikit_beauty_plugin: ^2.0.2
+  zego_uikit: ^2.29.4
+  zego_uikit_signaling_plugin: ^2.8.23
+  zego_uikit_beauty_plugin: ^2.0.7
   zego_plugin_adapter: ^2.14.0
 
-  zego_uikit_prebuilt_video_conference: ^2.10.5
-  zego_uikit_prebuilt_call: ^4.21.0
-  zego_uikit_prebuilt_live_audio_room: ^3.16.8
-  zego_uikit_prebuilt_live_streaming: ^3.15.0
+  zego_uikit_prebuilt_video_conference: ^2.11.3
+  zego_uikit_prebuilt_call: ^4.24.6
+  zego_uikit_prebuilt_live_audio_room: ^3.16.12
+  zego_uikit_prebuilt_live_streaming: ^3.15.8
   zego_zimkit:
     git:
       url: https://github.com/ZEGOCLOUD/zego_zimkit_flutter.git
@@ -35,16 +35,16 @@ dependencies:
   flutter_screenutil: ^5.9.3
   device_info_plus: any
   shared_preferences: ^2.2.3
-  fluttertoast: ^8.2.6
+  fluttertoast: ^10.0.2
   cached_network_image: ^3.4.1
   connectivity_plus: ^6.1.0
-  introduction_screen: ^3.1.14
+  introduction_screen: ^5.0.1
   easy_localization: ^3.0.7
   easy_localization_loader: ^2.0.2
   flutter_local_notifications: ^19.4.2
   flutter_email_sender: ^7.0.0
   url_launcher: ^6.3.1
-  permission_handler: ^12.0.1
+  permission_handler: ^13.0.2
   lottie: ^3.1.2
   circular_countdown: ^2.1.0
   cloud_firestore: ^5.6.1
@@ -73,6 +73,9 @@ dev_dependencies:
   lints: ^6.0.0
 
 flutter:
+  config:
+    # 改成 ​false​ 就是在该项目关闭 SPM。项目配置优先于全局设置；如果项目文件里没有这项，才使用全局设置。Flutter 3.47.0 在两处都未设置时默认开启。
+    enable-swift-package-manager: true
   uses-material-design: true
   assets:
     - assets/csv/

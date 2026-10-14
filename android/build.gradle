@@ -22,7 +22,7 @@ rootProject.buildDir = "../build"
 subprojects {
     afterEvaluate {
         android {
-            compileSdkVersion 36 // flutter.compileSdkVersion
+            compileSdkVersion 37 // permission_handler_android 14.1.0 requires Android 37 APIs
         }
     }
 

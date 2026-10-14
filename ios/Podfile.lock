@@ -1,0 +1,61 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_dtmf (1.0.1):
+    - Flutter
+  - zego_callkit_for_uikit (1.0.0):
+    - Flutter
+  - zego_zim (2.26.0):
+    - Flutter
+    - ZIM (= 2.29.0)
+  - zego_zim_audio (1.1.0):
+    - Flutter
+    - ZIMAudio (= 1.1.1)
+  - zego_zpns (2.6.0):
+    - Flutter
+    - ZPNs (= 2.7.0)
+  - ZIM (2.29.0)
+  - ZIMAudio (1.1.1)
+  - ZPNs (2.7.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_dtmf (from `.symlinks/plugins/flutter_dtmf/ios`)
+  - zego_callkit_for_uikit (from `.symlinks/plugins/zego_callkit_for_uikit/ios`)
+  - zego_zim (from `.symlinks/plugins/zego_zim/ios`)
+  - zego_zim_audio (from `.symlinks/plugins/zego_zim_audio/ios`)
+  - zego_zpns (from `.symlinks/plugins/zego_zpns/ios`)
+
+SPEC REPOS:
+  trunk:
+    - ZIM
+    - ZIMAudio
+    - ZPNs
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_dtmf:
+    :path: ".symlinks/plugins/flutter_dtmf/ios"
+  zego_callkit_for_uikit:
+    :path: ".symlinks/plugins/zego_callkit_for_uikit/ios"
+  zego_zim:
+    :path: ".symlinks/plugins/zego_zim/ios"
+  zego_zim_audio:
+    :path: ".symlinks/plugins/zego_zim_audio/ios"
+  zego_zpns:
+    :path: ".symlinks/plugins/zego_zpns/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  flutter_dtmf: 637e453658148b677dd32bb9849d1d7223d5033d
+  zego_callkit_for_uikit: b7fe78d4d554f7c406adeec1b4191b4eb6c918ef
+  zego_zim: 1f92e538dec9e159a91b7c186484f8b29eb2957e
+  zego_zim_audio: c7a38bf54db6e46bb863eb43044be6dd23687cd0
+  zego_zpns: 9b41a69051477ba7067fd2e27937d62d4a90d79e
+  ZIM: 5776b00e3acfdba37550b0767a8144eae335ca08
+  ZIMAudio: 8e1befa38e0d1c583e50d128cd061fdb90726d53
+  ZPNs: d0b2f60087ee72756d18a59642bae87b77bdc6ce
+
+PODFILE CHECKSUM: d76a7592d7a7ec6f51f49d3bbab65b14683cffdd
+
+COCOAPODS: 1.16.2

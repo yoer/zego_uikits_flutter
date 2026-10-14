@@ -6,6 +6,7 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_beauty_plugin/zego_uikit_beauty_plugin.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+
 // Project imports:
 import 'package:zego_uikits_demo/common/avatar.dart';
 import 'package:zego_uikits_demo/common/constant.dart';
@@ -20,6 +21,104 @@ import 'package:zego_uikits_demo/kits/call/cache.dart';
 import 'package:zego_uikits_demo/kits/call/invitation/history.dart';
 import 'package:zego_uikits_demo/kits/call/language.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
+
+bool _isInvitationConfigListenerRegistered = false;
+
+ZegoCallInvitationConfig _invitationConfig() {
+  return ZegoCallInvitationConfig(
+    permissions: const [
+      ZegoCallInvitationPermission.camera,
+      ZegoCallInvitationPermission.microphone,
+      ZegoCallInvitationPermission.systemAlertWindow,
+      ZegoCallInvitationPermission.manuallyByUser,
+    ],
+    pip: ZegoCallInvitationPIPConfig(
+      iOS: ZegoCallInvitationPIPIOSConfig(
+        support: KitCommonCache().supportPIP,
+      ),
+    ),
+    offline: ZegoCallInvitationOfflineConfig(
+      autoEnterAcceptedOfflineCall: false,
+    ),
+    inCalling: ZegoCallInvitationInCallingConfig(
+      canInvitingInCalling: CallCache().invitation.canInvitingInCalling,
+      onlyInitiatorCanInvite:
+          CallCache().invitation.onlyInitiatorCanInviteInCalling,
+    ),
+    missedCall: ZegoCallInvitationMissedCallConfig(
+      enabled: CallCache().invitation.supportMissedNotification,
+      resourceID: CallCache().invitation.resourceID,
+      timeoutSeconds: CallCache().invitation.timeoutSecond,
+      enableDialBack: CallCache().invitation.supportMissedNotificationReDial,
+    ),
+  );
+}
+
+ZegoCallInvitationUIConfig _invitationUIConfig() {
+  return ZegoCallInvitationUIConfig(
+    withSafeArea: CallCache().invitation.safeArea,
+    inviter: ZegoCallInvitationInviterUIConfig(
+      useVideoViewAspectFill:
+          CallCache().invitation.uiUseVideoViewAspectFill,
+      showAvatar: CallCache().invitation.uiShowAvatar,
+      showCentralName: CallCache().invitation.uiShowCentralName,
+      showCallingText: CallCache().invitation.uiShowCallingText,
+      defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
+      defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
+      defaultSpeakerOn: CallCache().invitation.uiDefaultSpeakerOn,
+      showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
+      showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
+      minimized: ZegoCallInvitationInviterMinimizedUIConfig(
+        cancelButton: ZegoCallButtonUIConfig(
+          visible:
+              CallCache().invitation.uiInviterMinimizedCancelButtonVisible,
+        ),
+        showTips: CallCache().invitation.uiInviterMinimizedShowTips,
+      ),
+    ),
+    invitee: ZegoCallInvitationInviteeUIConfig(
+      showAvatar: CallCache().invitation.uiShowAvatar,
+      showCentralName: CallCache().invitation.uiShowCentralName,
+      showCallingText: CallCache().invitation.uiShowCallingText,
+      useVideoViewAspectFill:
+          CallCache().invitation.uiUseVideoViewAspectFill,
+      showVideoOnCalling: CallCache().invitation.showVideoOnInvitationCall,
+      defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
+      defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
+      defaultSpeakerOn: CallCache().invitation.uiDefaultSpeakerOn,
+      showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
+      showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
+      minimized: ZegoCallInvitationInviteeMinimizedUIConfig(
+        acceptButton: ZegoCallButtonUIConfig(
+          visible:
+              CallCache().invitation.uiInviteeMinimizedAcceptButtonVisible,
+        ),
+        declineButton: ZegoCallButtonUIConfig(
+          visible:
+              CallCache().invitation.uiInviteeMinimizedDeclineButtonVisible,
+        ),
+        showTips: CallCache().invitation.uiInviteeMinimizedShowTips,
+      ),
+    ),
+  );
+}
+
+void _registerInvitationConfigListener() {
+  if (_isInvitationConfigListenerRegistered) {
+    return;
+  }
+  _isInvitationConfigListenerRegistered = true;
+
+  CallCache().invitation.configNotifier.addListener(() {
+    final service = ZegoUIKitPrebuiltCallInvitationService();
+    if (!service.isInit) {
+      return;
+    }
+
+    service.updateInvitationConfig(_invitationConfig());
+    service.updateUIConfig(_invitationUIConfig());
+  });
+}
 
 Future<bool> initCallInvitation() async {
   if (!SettingsCache().isAppKeyValid) {
@@ -42,81 +141,8 @@ Future<bool> initCallInvitation() async {
             ? [ZegoUIKitBeautyPlugin()]
             : []),
       ],
-      config: ZegoCallInvitationConfig(
-        permissions: const [
-          ZegoCallInvitationPermission.camera,
-          ZegoCallInvitationPermission.microphone,
-          ZegoCallInvitationPermission.systemAlertWindow,
-          ZegoCallInvitationPermission.manuallyByUser,
-        ],
-
-        /// beta config
-        pip: ZegoCallInvitationPIPConfig(
-          iOS: ZegoCallInvitationPIPIOSConfig(
-            support: KitCommonCache().supportPIP,
-          ),
-        ),
-        offline: ZegoCallInvitationOfflineConfig(
-          autoEnterAcceptedOfflineCall: false,
-        ),
-        inCalling: ZegoCallInvitationInCallingConfig(
-          canInvitingInCalling: CallCache().invitation.canInvitingInCalling,
-          onlyInitiatorCanInvite:
-              CallCache().invitation.onlyInitiatorCanInviteInCalling,
-        ),
-        missedCall: ZegoCallInvitationMissedCallConfig(
-          enabled: CallCache().invitation.supportMissedNotification,
-          resourceID: CallCache().invitation.resourceID,
-          timeoutSeconds: CallCache().invitation.timeoutSecond,
-          enableDialBack:
-              CallCache().invitation.supportMissedNotificationReDial,
-        ),
-      ),
-      uiConfig: ZegoCallInvitationUIConfig(
-        withSafeArea: CallCache().invitation.safeArea,
-        inviter: ZegoCallInvitationInviterUIConfig(
-          useVideoViewAspectFill:
-              CallCache().invitation.uiUseVideoViewAspectFill,
-          showAvatar: CallCache().invitation.uiShowAvatar,
-          showCentralName: CallCache().invitation.uiShowCentralName,
-          showCallingText: CallCache().invitation.uiShowCallingText,
-          defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
-          defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
-          defaultSpeakerOn: CallCache().invitation.uiDefaultSpeakerOn,
-          showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
-          showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
-          minimized: ZegoCallInvitationInviterMinimizedUIConfig(
-            cancelButton: ZegoCallButtonUIConfig(
-                visible: CallCache()
-                    .invitation
-                    .uiInviterMinimizedCancelButtonVisible),
-            showTips: CallCache().invitation.uiInviterMinimizedShowTips,
-          ),
-        ),
-        invitee: ZegoCallInvitationInviteeUIConfig(
-          showAvatar: CallCache().invitation.uiShowAvatar,
-          showCentralName: CallCache().invitation.uiShowCentralName,
-          showCallingText: CallCache().invitation.uiShowCallingText,
-          useVideoViewAspectFill:
-              CallCache().invitation.uiUseVideoViewAspectFill,
-          showVideoOnCalling: CallCache().invitation.showVideoOnInvitationCall,
-          defaultMicrophoneOn: CallCache().invitation.uiDefaultMicrophoneOn,
-          defaultCameraOn: CallCache().invitation.uiDefaultCameraOn,
-          showMainButtonsText: CallCache().invitation.uiShowMainButtonsText,
-          showSubButtonsText: CallCache().invitation.uiShowSubButtonsText,
-          minimized: ZegoCallInvitationInviteeMinimizedUIConfig(
-            acceptButton: ZegoCallButtonUIConfig(
-                visible: CallCache()
-                    .invitation
-                    .uiInviteeMinimizedAcceptButtonVisible),
-            declineButton: ZegoCallButtonUIConfig(
-                visible: CallCache()
-                    .invitation
-                    .uiInviteeMinimizedDeclineButtonVisible),
-            showTips: CallCache().invitation.uiInviteeMinimizedShowTips,
-          ),
-        ),
-      ),
+      config: _invitationConfig(),
+      uiConfig: _invitationUIConfig(),
       notificationConfig: ZegoCallInvitationNotificationConfig(
         androidNotificationConfig: ZegoCallAndroidNotificationConfig(
           showOnFullScreen: true,
@@ -257,6 +283,7 @@ Future<bool> initCallInvitation() async {
         },
       ),
     );
+    _registerInvitationConfigListener();
   });
 
   return true;
@@ -419,7 +446,7 @@ ZegoUIKitPrebuiltCallConfig callConfig({
 
   config.noResponseEnd = ZegoCallNoResponseEndConfig(
     enabled: true,
-    timeoutSeconds: 3,
+    timeoutSeconds: 15,
   );
 
   return config;
