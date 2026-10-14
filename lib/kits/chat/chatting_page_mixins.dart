@@ -7,11 +7,22 @@ import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import 'package:zego_zimkit/zego_zimkit.dart';
 
-enum DemoCustomMessageType {
-  redEnvelope,
-}
+enum DemoCustomMessageType { redEnvelope }
 
 mixin DemoChattingMessageListPageCallMixin {
+  void makeCallFromInputButton({
+    required String conversationID,
+    required ZIMConversationType conversationType,
+    required bool isVideoCall,
+  }) {
+    _makeCall(
+      isVideoCall: isVideoCall,
+      userID: conversationID,
+      conversationID: conversationID,
+      conversationType: conversationType,
+    );
+  }
+
   void showCallOptions({
     required BuildContext context,
     required String conversationID,
@@ -138,7 +149,7 @@ mixin DemoChattingMessageListPageCallMixin {
             ZegoUIKitUser(
               id: conversationID,
               name: ZIMKit().getConversation(conversationID, type).value.name,
-            )
+            ),
           ],
           onPressed: (String code, String message, List<String> errorInvitees) {
             var log = '';
@@ -154,11 +165,10 @@ mixin DemoChattingMessageListPageCallMixin {
               return;
             }
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(log)),
-            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(log)));
           },
-        )
+        ),
     ];
   }
 

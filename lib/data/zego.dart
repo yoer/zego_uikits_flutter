@@ -11,6 +11,7 @@ import 'package:zego_uikits_demo/common/zim_audio_express_integration.dart';
 import 'package:zego_uikits_demo/data/settings.dart';
 import 'package:zego_uikits_demo/data/user.dart';
 import 'package:zego_uikits_demo/kits/call/utils.dart';
+
 import '../kits/chat/cache.dart';
 
 class ZegoSDKer {
@@ -48,6 +49,14 @@ class ZegoSDKer {
         appID: int.parse(SettingsCache().appID),
         appSign: SettingsCache().appSign,
         config: ZIMKitConfig(
+          inputConfig: ZIMKitInputConfig(
+            expandButtons: const [
+              ZIMKitInputButtonName.takePhoto,
+              ZIMKitInputButtonName.file,
+              ZIMKitInputButtonName.voiceCall,
+              ZIMKitInputButtonName.videoCall,
+            ],
+          ),
           notificationConfig: ZegoZIMKitNotificationConfig(
             resourceID: ChatCache().resourceID,
             androidNotificationConfig: ZegoZIMKitAndroidNotificationConfig(
@@ -69,6 +78,7 @@ class ZegoSDKer {
         id: user.id,
         name: user.name,
         avatarUrl: avatarURL(user.id),
+        token: SettingsCache().appToken,
       );
 
       ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);

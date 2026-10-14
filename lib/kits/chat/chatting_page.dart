@@ -40,8 +40,8 @@ class _DemoChattingMessageListPageState
     subscriptions = [
       if (widget.conversationType == ZIMConversationType.group)
         ZIMKit().getGroupStateChangedEventStream().listen(
-              onGroupStateChangedEvent,
-            ),
+          onGroupStateChangedEvent,
+        ),
     ];
     // When on the chat page, the notification for that chat page is not displayed.
     NotificationManager().ignoreConversationID = widget.conversationID;
@@ -113,20 +113,6 @@ class _DemoChattingMessageListPageState
           ZIMKitMessageInputAction.more(
             buildZIMKitInputMoreActionItem(
               context,
-              icon: Icons.call,
-              label: 'Call',
-              onTap: () {
-                showCallOptions(
-                  context: context,
-                  conversationID: widget.conversationID,
-                  conversationType: widget.conversationType,
-                );
-              },
-            ),
-          ),
-          ZIMKitMessageInputAction.more(
-            buildZIMKitInputMoreActionItem(
-              context,
               icon: Icons.attach_money,
               backgroundColor: Colors.redAccent,
               label: 'Red Envelop',
@@ -154,21 +140,23 @@ class _DemoChattingMessageListPageState
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ZIMKitSingleChatDetailPage(
-                  conversationID: widget.conversationID,
-                  conversationType: widget.conversationType,
-                ),
+                builder: (context) =>
+                    widget.conversationType == ZIMConversationType.group
+                    ? ZIMKitGroupDetailPage(
+                        groupID: widget.conversationID,
+                        onInviteMembers: _showInviteMembersDialog,
+                      )
+                    : ZIMKitSingleChatDetailPage(
+                        conversationID: widget.conversationID,
+                        conversationType: widget.conversationType,
+                      ),
               ),
             );
           },
         ),
       ],
       messageList: ZIMKitMessageListStyles(
-        messageContentBuilder: (
-          context,
-          message,
-          defaultWidget,
-        ) {
+        messageContentBuilder: (context, message, defaultWidget) {
           if (message.type == ZIMMessageType.custom &&
               message.customContent?.type ==
                   DemoCustomMessageType.redEnvelope.index) {
@@ -190,13 +178,21 @@ class _DemoChattingMessageListPageState
 
   ZIMKitMessageInputEvents _messageInputEvents() {
     return ZIMKitMessageInputEvents(
+      onCallTap: (button) {
+        makeCallFromInputButton(
+          conversationID: widget.conversationID,
+          conversationType: widget.conversationType,
+          isVideoCall: button == ZIMKitInputButtonName.videoCall,
+        );
+      },
       onMessageSent: (ZIMKitMessage message) {
         if (message.info.error != null) {
           debugPrint(
             'onMessageSent error: ${message.info.error!.message}, ${message.info.error!.code}',
           );
           BotToast.showText(
-            text: 'message send failed:'
+            text:
+                'message send failed:'
                 '${message.info.error!.message}, '
                 'code:${message.info.error!.code}',
             contentColor: Colors.red,
@@ -207,6 +203,49 @@ class _DemoChattingMessageListPageState
         }
       },
     );
+  }
+
+  Future<List<String>?> _showInviteMembersDialog(
+    BuildContext context,
+    List<ZIMKitGroupMemberInfo> currentMembers,
+  ) async {
+    final controller = TextEditingController();
+    final existingUserIDs = currentMembers
+        .map((member) => member.userID)
+        .toSet();
+    final result = await showDialog<List<String>>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add users to group'),
+        content: TextField(
+          controller: controller,
+          maxLines: 3,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'User IDs',
+            hintText: 'Separate IDs with commas',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(
+              controller.text
+                  .split(',')
+                  .map((id) => id.trim())
+                  .where((id) => id.isNotEmpty && !existingUserIDs.contains(id))
+                  .toList(),
+            ),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    return result;
   }
 
   ZIMKitAudioRecordEvents _audioRecordEvents() {
