@@ -312,6 +312,10 @@ demo中介绍了五个kit的基本功能，通过firestore简单的将虚拟用�
   - 输入框里的语音和视频呼叫入口接入现有 Call Kit；群聊会邀请其他群成员，超过单次通话人数上限时由用户选择本次通话对象。demo 还展示了红包自定义消息。
     <div style="overflow-x: auto; white-space: nowrap;">
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
+            <img src="images/zimkit.gif" alt="chat" style="width: 300px;">
+            <div>效果展示</div>
+        </div>
+        <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/chat_1.png" alt="chat" style="width: 150px;">
             <div>从通讯录中选择联系人</div>
         </div>

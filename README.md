@@ -308,6 +308,10 @@ Before using, you need to register Firestore and ZEGO AppID/AppSign.
   - Use the voice and video call actions in the composer to start the existing Call Kit flow. Group chats invite other members; when a group has more invitees than one call supports, the user selects who to call. The demo also includes a custom red-envelope message.
     <div style="overflow-x: auto; white-space: nowrap;">
         <div style="display: inline-block; text-align: center; margin-right: 20px;">
+            <img src="images/zimkit.gif" alt="chat" style="width: 300px;">
+            <div>Run Effects</div>
+        </div>
+        <div style="display: inline-block; text-align: center; margin-right: 20px;">
             <img src="images/chat_1.png" alt="chat" style="width: 150px;">
             <div>Select contacts from the address book.</div>
         </div>
